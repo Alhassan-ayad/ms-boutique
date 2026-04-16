@@ -1,0 +1,660 @@
+﻿<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>YASSO bags</title>
+  <meta name="author" content="vecuro">
+  <meta name="description" content="Luxrio - The Fashion & Bags E-Commerce HTML5 Template">
+  <meta name="keywords" content="Luxrio - The Fashion & Bags E-Commerce HTML5 Template">
+  <meta name="robots" content="INDEX,FOLLOW">
+  <!-- Mobile Specific Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Favicon -->
+  <link rel="icon" type="image/jpeg" href="assets/img/yasso%20logo.jpg">
+  <link rel="apple-touch-icon" href="assets/img/yasso%20logo.jpg">
+  <!--==============================
+	  Google Fonts
+	============================== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=Italiana&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <!--==============================
+	    All CSS File
+	============================== -->
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <!-- Fontawesome Icon -->
+  <link rel="stylesheet" href="assets/css/fontawesome.min.css">
+  <!-- Magnific Popup -->
+  <link rel="stylesheet" href="assets/css/magnific-popup.min.css">
+  <!-- Slick Slider -->
+  <link rel="stylesheet" href="assets/css/slick.min.css">
+  <!-- Animation CSS -->
+  <link rel="stylesheet" href="assets/css/animate.min.css">
+  <!-- Theme Custom CSS -->
+  <link rel="stylesheet" href="assets/css/style.css?v=8">
+  <link rel="stylesheet" href="assets/css/audio-player.css">
+  <style>
+    /* Checkout page color overrides */
+
+    /* Main section background */
+    .vs-checkout-wrapper,
+    .woocommerce-checkout,
+    section.space,
+    section.space-extra-bottom,
+    .checkout-section,
+    .space {
+      background-color: #f5ede0 !important;
+    }
+
+    /* Top info notices */
+    .woocommerce-message,
+    .woocommerce-info {
+      background-color: #e5dac1;
+      color: #000000;
+    }
+    .woocommerce-message:before,
+    .woocommerce-info:before {
+      color: #5C4033;
+    }
+    .woocommerce-info a,
+    .woocommerce-message a {
+      color: #5C4033;
+    }
+
+    /* Form labels and headings */
+    .woocommerce-billing-fields h3,
+    .woocommerce-shipping-fields h3,
+    .woocommerce-checkout h3,
+    .woocommerce-checkout h2,
+    .woocommerce-checkout label,
+    .form-label,
+    .billing-title,
+    .order-notes h3 {
+      color: #000000 !important;
+    }
+
+    /* Form inputs */
+    .woocommerce-checkout .form-control,
+    .woocommerce-checkout .form-select,
+    .woocommerce-checkout .select2-container,
+    .woocommerce-checkout textarea,
+    .woocommerce-form-login .form-control,
+    .woocommerce-form-coupon .form-control {
+      background-color: #e5dac1 !important;
+      border-color: #c9b99a !important;
+      color: #000000 !important;
+    }
+    /* Override browser autofill dark background */
+    .woocommerce-checkout .form-control:-webkit-autofill,
+    .woocommerce-checkout .form-control:-webkit-autofill:hover,
+    .woocommerce-checkout .form-control:-webkit-autofill:focus,
+    .woocommerce-form-login .form-control:-webkit-autofill,
+    .woocommerce-form-login .form-control:-webkit-autofill:hover,
+    .woocommerce-form-login .form-control:-webkit-autofill:focus {
+      -webkit-box-shadow: 0 0 0 1000px #e5dac1 inset !important;
+      -webkit-text-fill-color: #000000 !important;
+      caret-color: #000000;
+    }
+    .woocommerce-checkout .form-control::placeholder,
+    .woocommerce-checkout .form-select::placeholder,
+    .woocommerce-checkout textarea::placeholder,
+    .woocommerce-form-login .form-control::placeholder,
+    .woocommerce-form-coupon .form-control::placeholder {
+      color: #5C4033 !important;
+      opacity: 1;
+    }
+
+    /* Order table (Your Order section) */
+    .checkout-ordertable th,
+    .checkout-ordertable td {
+      border-color: #c9b99a !important;
+      color: #000000 !important;
+    }
+    .checkout-ordertable .order-total .amount {
+      color: #5C4033 !important;
+    }
+
+    /* Cart table used in Your Order section */
+    .cart_table {
+      background-color: #f5ede0 !important;
+      border-color: #c9b99a !important;
+    }
+    .cart_table thead th {
+      color: #5C4033 !important;
+    }
+    .cart_table td:before,
+    .cart_table th {
+      color: #000000 !important;
+    }
+    .cart_table td {
+      border-color: #c9b99a !important;
+      color: #000000 !important;
+    }
+    .cart_table .cart-productname {
+      color: #5C4033 !important;
+    }
+    .cart_table .product-quantity {
+      color: #000000 !important;
+    }
+    .summary-title {
+      color: #000000 !important;
+    }
+
+    /* Payment section */
+    .woocommerce-checkout-payment ul li {
+      border-color: #c9b99a;
+    }
+    .woocommerce-checkout-payment ul input[type=radio] ~ label {
+      color: #000000 !important;
+    }
+    .woocommerce-checkout-payment .payment_box {
+      background-color: #e5dac1;
+      border-color: #c9b99a;
+    }
+    .woocommerce-checkout-payment .payment_box p {
+      color: #5C4033;
+    }
+
+    /* Login/coupon toggle labels */
+    .woocommerce-checkout #accountNewCreate + label,
+    .woocommerce-checkout #ship-to-different-address label {
+      color: #000000;
+    }
+
+    /* Login & coupon toggle info bars */
+    .woocommerce-form-login-toggle .woocommerce-info,
+    .woocommerce-form-coupon-toggle .woocommerce-info {
+      background-color: #e5dac1;
+      color: #000000;
+    }
+    .woocommerce-form-login-toggle .woocommerce-info a,
+    .woocommerce-form-coupon-toggle .woocommerce-info a {
+      color: #5C4033 !important;
+    }
+    .woocommerce-form-login-toggle .woocommerce-info:before,
+    .woocommerce-form-coupon-toggle .woocommerce-info:before {
+      color: #5C4033;
+    }
+
+    /* Login & coupon expanded form boxes */
+    .woocommerce-form-login,
+    .woocommerce-form-coupon {
+      background-color: #f5ede0;
+      border: 1px solid #c9b99a;
+      padding: 25px;
+      margin-bottom: 20px;
+    }
+    .woocommerce-form-login label,
+    .woocommerce-form-coupon label {
+      color: #000000 !important;
+    }
+    .woocommerce-form-login .lost-link {
+      color: #5C4033;
+    }
+    .woocommerce-form-login .lost-link:hover {
+      color: #000000;
+    }
+    .woocommerce-form-login .custom-checkbox label {
+      color: #000000;
+    }
+
+    /* Shipping destination text */
+    .woocommerce-shipping-destination {
+      color: #5C4033;
+    }
+
+    /* Order total row */
+    .order-total td,
+    .order-total th {
+      color: #000000 !important;
+    }
+  </style>
+  <style>
+    /* Header: beige top, dark nav */
+    .vs-header.layout2 { background-color: #f5ede0 !important; padding: 0 !important; }
+    .vs-header.layout2 .sticky-wrapper { background-color: #2C1A00 !important; }
+    .vs-header.layout2 .header-search input { color: #5C4033 !important; }
+    .vs-header.layout2 .header-search input::-moz-placeholder { color: #5C4033 !important; }
+    .vs-header.layout2 .header-search input::placeholder { color: #5C4033 !important; }
+    .vs-header.layout2 .header-search button { color: #5C4033 !important; }
+    .vs-header.layout2 .header-search::after { background-color: #5C4033 !important; }
+    .header-logo img.logo, .header-logo img { max-height: 80px !important; }
+    .header-logo { margin-top: 20px; }
+  </style>
+</head>
+
+<body class="vs-body">
+  <!--[if lte IE 9]>
+    	<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]-->
+  <!--********************************
+   		Code Start From Here 
+	******************************** -->
+  <!--==============================
+		Preloader
+	==============================-->
+  <div class="preloader">
+    <button class="vs-btn preloaderCls">Cancel Preloader </button>
+    <div class="preloader-inner">
+      <img src="assets/img/yasso%20logo.jpg" alt="logo">
+      <span class="loader"></span>
+    </div>
+  </div>
+  <!--==============================
+		Mobile Menu
+	============================== -->
+  <div class="vs-menu-wrapper">
+    <div class="vs-menu-area text-center">
+      <div class="mobile-logo">
+        <a href="index.html"><img src="assets/img/yasso%20logo.jpg" alt="Yasso" class="logo"></a>
+        <button class="vs-menu-toggle"><i class="fal fa-times"></i></button>
+      </div>
+      <div class="vs-mobile-menu">
+        <ul>
+          <li>
+            <a href="index.html">Home</a>
+          </li>
+          <li>
+            <a href="shop-sidebar.html">Products</a>
+          </li>
+          <li>
+            <a href="about.html">About</a>
+          </li>
+          <li>
+            <a href="blog.html">Newsletter</a>
+          </li>
+          <li>
+            <a href="contact.html">Contact</a>
+          </li>
+        </ul>
+      </div>
+      <!-- Mobile: Language Switcher + Audio Player -->
+      <div class="mobile-extras">
+        <div class="mobile-lang-switcher">
+          <button class="lang-btn-en active" title="English">EN</button>
+          <span class="lang-sep">|</span>
+          <button class="lang-btn-ar" title="Arabic">AR</button>
+        </div>
+        <div class="mobile-audio-wrap" id="mobileAudioWrap" style="display:none">
+          <button class="mobile-audio-btn" id="mobileAudioToggleBtn" aria-label="Play or pause music">
+            <i class="fas fa-play" id="mobileAudioToggleIcon"></i>
+          </button>
+          <div class="mobile-wave-container" id="mobileWaveContainer"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- ==============================
+       Announcement Popup
+  ============================== -->
+  <div id="announcementOverlay">
+    <div id="announcementPopup">
+      <button id="announcementClose" aria-label="Close">&times;</button>
+      <!-- Content populated dynamically from database via announcement-popup.js -->
+    </div>
+  </div>
+    </div>
+  </div>
+  <!-- ==============================
+    	Main Section Wrapper
+  	============================== -->
+  <main class="main">
+    <!--==============================
+    Header Area
+==============================-->
+    <header class="vs-header layout2">
+      <div class="container custom-container">
+        <div class="header-top">
+          <div class="row align-items-end justify-content-between">
+            <div class="col-md-4 d-none d-md-block">
+              <div class="header-audio-player" id="headerAudioPlayer" style="display:none">
+                <button class="audio-toggle-btn" id="audioToggleBtn" aria-label="Play or pause music">
+                  <i class="fas fa-play" id="audioToggleIcon"></i>
+                </button>
+                <div class="wave-container" id="waveContainer"></div>
+                <audio id="siteAudio" preload="auto"></audio>
+              </div>
+            </div>
+            <div class="col-md-4 text-center">
+              <div class="header-logo">
+                <a href="index.html"><img src="assets/img/yasso%20logo.jpg" alt="Yasso" class="logo"></a>
+              </div>
+            </div>
+            <div class="col-md-4 text-end d-none d-md-block">
+              <button class="sideMenuToggler">
+                <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M0 10V0H10.5L15 5L20 0H29.5V10L25.5 15L29.5 19.5V30H20L15 25.5L10.5 30H0V19.5L5 15L0 10Z" fill="#5C4033" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Main Menu Area -->
+      <div class="sticky-wrapper">
+        <div class="sticky-active">
+          <div class="container custom-container">
+            <div class="row justify-content-between align-items-center">
+              <div class="col-xl-3 col-md-auto d-none d-lg-flex align-items-center">
+                <div class="lang-switcher">
+                  <button class="lang-btn-en active" title="English">EN</button>
+                  <span class="lang-sep">|</span>
+                  <button class="lang-btn-ar" title="Arabic">AR</button>
+                </div>
+              </div>
+              <div class="col-xl-auto col-md-auto col-auto">
+                <nav class="main-menu d-none d-lg-block">
+                  <ul>
+                    <li>
+                      <a href="index.html">Home</a>
+                    </li>
+                    <li class="menu-item-has-children">
+                      <a href="shop-sidebar.html">Products</a>
+                    </li>
+                    <li>
+                      <a href="about.html">About</a>
+                    </li>
+                    <li>
+                      <a href="blog.html">Newsletter</a>
+                    </li>
+                    <li>
+                      <a href="contact.html">Contact</a>
+                    </li>
+                  </ul>
+                </nav>
+                <button class="vs-menu-toggle d-inline-block d-lg-none"><i class="fal fa-bars"></i></button>
+              </div>
+              <div class="col-xl-3 col-md-auto col-auto">
+                <div class="header-wc">
+                  <a class="wc-link" href="cart.html">bag <span class="cart-count">0</span>
+                    <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M5.33315 6.33334V3.12501C5.33315 1.75001 6.24982 0.833344 7.62482 0.833344H10.3748C11.7498 0.833344 12.6665 1.75001 12.6665 3.12501V6.33334M16.709 14.6108H5.33315M5.70002 4.95834H12.3C15.4167 4.95834 15.7284 6.41584 15.9392 8.19418L16.7642 15.0692C17.03 17.3242 16.3334 19.1667 13.125 19.1667H4.88419C1.66669 19.1667 0.970022 17.3242 1.24502 15.0692L2.07003 8.19418C2.2717 6.41584 2.58336 4.95834 5.70002 4.95834Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!--==============================
+    Header Area end
+==============================-->
+    <!--==============================
+          Breadcumb
+      ============================== -->
+    <div class="breadcumb-wrapper" data-bg-src="assets/img/bg/breadcumb-bg-4.jpg">
+      <img src="assets/img/shapes/dot-shape.svg" alt="dot" class="breadcumb-element">
+      <div class="container z-index-common">
+        <div class="breadcumb-content">
+          <h1 class="breadcumb-title">Cart</h1>
+          <div class="breadcumb-menu-wrap">
+            <ul class="breadcumb-menu">
+              <li><a href="index.html">Home</a></li>
+              <li>Cart</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Checkout -->
+    <div class="vs-checkout-wrapper space-top space-extra-bottom">
+      <div class="container">
+        <div class="woocommerce-form-login-toggle">
+          <div class="woocommerce-info">Returning customer? <a href="#" class="showlogin">Click here to login</a>
+          </div>
+        </div>
+        <form action="#" class="woocommerce-form-login">
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="form-group"><input type="text" class="form-control" placeholder="Username or email">
+              </div>
+              <div class="form-group"><input type="text" class="form-control" placeholder="Password"></div>
+              <div class="form-group">
+                <div class="custom-checkbox"><input type="checkbox" id="remembermylogin"> <label for="remembermylogin">Remember Me</label></div>
+              </div>
+              <div class="form-group"><button type="submit" class="vs-btn">Login</button>
+                <p class="mb-0 pt-2"><a class="lost-link" href="#">Lost your password?</a></p>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="woocommerce-form-coupon-toggle">
+          <div class="woocommerce-info">Have a coupon? <a href="#" class="showcoupon">Click here to enter your
+              code</a></div>
+        </div>
+        <form action="#" class="woocommerce-form-coupon">
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="form-group"><input type="text" class="form-control" placeholder="Write your coupon code"></div>
+              <div class="form-group"><button type="submit" class="vs-btn">Apply coupon</button>
+              </div>
+            </div>
+          </div>
+        </form>
+        <form action="#" class="woocommerce-checkout mt-40 space-extra-top space-extra-bottom">
+          <div class="row">
+            <div class="col-lg-6">
+              <h3 class="h4 summary-title">Billing Details</h3>
+              <div class="row">
+                <div class="col-12 form-group">
+                  <input type="text" id="customerName" class="form-control" placeholder="Full Name *" required>
+                </div>
+                <div class="col-12 form-group">
+                  <input type="email" id="customerEmail" class="form-control" placeholder="Email Address *" required>
+                </div>
+                <div class="col-12 form-group">
+                  <input type="tel" id="customerPhone" class="form-control" placeholder="Phone Number *" required>
+                </div>
+                <div class="col-12 form-group">
+                  <input type="tel" id="whatsappNumber" class="form-control" placeholder="WhatsApp Number (optional)">
+                </div>
+                <div class="col-12 form-group">
+                  <input type="text" id="city" class="form-control" placeholder="City *" required>
+                </div>
+                <div class="col-12 form-group">
+                  <input type="text" id="streetName" class="form-control" placeholder="Street Name *" required>
+                </div>
+                <div class="col-md-6 form-group">
+                  <input type="text" id="buildingNumber" class="form-control" placeholder="Building Number *" required>
+                </div>
+                <div class="col-md-6 form-group">
+                  <input type="text" id="floor" class="form-control" placeholder="Floor (optional)">
+                </div>
+                <div class="col-12 form-group">
+                  <input type="text" id="apartmentNumber" class="form-control" placeholder="Apartment Number (optional)">
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <h3 class="h4 summary-title">Order Notes</h3>
+              <div class="col-12 form-group">
+                <textarea id="orderNotes" cols="20" rows="8" class="form-control" placeholder="Notes about your order, e.g. special notes for delivery, preferred delivery time, etc."></textarea>
+              </div>
+            </div>
+          </div>
+        </form>
+        <h4 class="h4 summary-title">Your Order</h4>
+        <form action="#" class="woocommerce-cart-form">
+          <table class="cart_table mb-20">
+            <thead>
+              <tr>
+                <th class="cart-col-image">Image</th>
+                <th class="cart-col-productname">Product Name</th>
+                <th class="cart-col-price">Price</th>
+                <th class="cart-col-quantity">Quantity</th>
+                <th class="cart-col-total">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="cart_item">
+                <td data-title="Product">
+                  <a class="cart-productimage" href="shop-sidebar.html">
+                    <img width="91" height="91" src="assets/img/shop/product-1-1.png" alt="Image">
+                  </a>
+                </td>
+                <td data-title="Name">
+                  <a class="cart-productname" href="shop-sidebar.html">BMW Car Lexus GS Steering...</a>
+                </td>
+                <td data-title="Price"><span class="amount"><bdi><span>$</span>200</bdi></span></td>
+                <td data-title="Quantity"><strong class="product-quantity">01</strong></td>
+                <td data-title="Total"><span class="amount"><bdi><span>$</span>200</bdi></span></td>
+              </tr>
+            </tbody>
+            <tfoot class="checkout-ordertable">
+              <tr class="cart-subtotal">
+                <th>Subtotal</th>
+                <td data-title="Subtotal" colspan="4">
+                  <span class="woocommerce-Price-amount amount">
+                <bdi>
+                  <span class="woocommerce-Price-currencySymbol">$</span>200
+                  </bdi>
+                  </span>
+                </td>
+              </tr>
+              <tr class="woocommerce-shipping-totals shipping">
+                <th>Shipping</th>
+                <td data-title="Shipping" colspan="4">Enter your address to view shipping options.</td>
+              </tr>
+              <tr class="order-total">
+                <th>Total</th>
+                <td data-title="Total" colspan="4"><strong><span class="woocommerce-Price-amount amount"><bdi><span
+                      class="woocommerce-Price-currencySymbol">$</span>200</bdi></span></strong>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </form>
+        <div class="mt-lg-3 mb-30">
+          <div class="woocommerce-checkout-payment">
+            <div class="form-row place-order"><button type="button" id="placeOrderBtn" class="vs-btn">Place order</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Checkout End -->
+    <!--==============================
+        Footer Area
+    ==============================-->
+    <footer class="footer-layout2" data-bg-src="assets/img/footer/footer-image-1-1.png">
+      <div class="footer-widgets">
+        <div class="container">
+          <div class="row gy-4 justify-content-between">
+            <div class="col-lg-3">
+              <div class="footer-logo">
+                <a href="index.html"><img src="assets/img/yasso%20logo.jpg" alt="logo"></a>
+              </div>
+              <div class="footer-info style2">
+                <p>
+                  <span class="lang-show-en"><span>Address :</span> No. 37, Al-Zaher street<br>Moharam Bek - Alexandria</span>
+                  <span class="lang-show-ar"><span>العنوان :</span> رقم 37، شارع الزاهر<br>محرم بك - الإسكندرية</span>
+                </p>
+                <p>
+                  <span class="lang-show-en"><span>Phone :</span> <a href="tel:+201156685444" style="color:inherit">+201156685444</a></span>
+                  <span class="lang-show-ar"><span>الهاتف :</span> <a href="tel:+201156685444" style="color:inherit">+201156685444</a></span>
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-auto">
+              <div class="footer-widget">
+                <h3 class="footer-title">Shopping</h3>
+                <div class="footer-menu2">
+                  <a href="shop-sidebar.html">Shop</a>
+                  <a href="blog.html">Blog</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-auto">
+              <div class="footer-widget">
+                <h3 class="footer-title">About Store</h3>
+                <div class="footer-menu2">
+                  <a href="index.html">Home</a>
+                  <a href="about.html">About Us</a>
+                  <a href="contact.html">Contact Us</a>
+                  <a href="blog.html">Blog</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-auto">
+              <div class="footer-widget">
+                <h3 class="footer-title">Subscribe for <span>newsletter</span></h3>
+                <form class="footer-newsletter" action="#">
+                  <input type="email" placeholder="Enter your email">
+                  <button type="submit">
+                    <svg width="20" height="14" viewBox="0 0 20 14" fill="none">
+                      <path d="M12.43 0.930176L18.5 7.00018L12.43 13.0702M1.5 7.00018H18.33" stroke="#F5F1E6" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </button>
+                </form>
+                <h4 class="footer-title">follow</h4>
+                <div class="social-style">
+                  <a class="facebook" href="https://www.facebook.com/YASSO.BAGS1"><i class="fab fa-facebook-f"></i></a>
+                  <a class="instagram" href="https://www.instagram.com/yass0bags?igsh=NG9nazhlbTJyczZh&utm_source=qr"><i class="fab fa-instagram"></i></a>
+                  <a class="twitter" href="https://www.tiktok.com/@yasso.bags5?_r=1&_t=ZS-94bnN0yODEz"><i class="fab fa-tiktok"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="footer-copyright style2">
+        Copyright ? 2026 YASSO All Rights Reserved<br>
+        Designed by <a href="https://alt-mate.com/" target="_blank" rel="noopener noreferrer">Alt Mate</a>
+      </p>
+    </footer>
+    <!--==============================
+        Footer Area End
+    ==============================-->
+  </main>
+  <!-- ==============================
+    	Main Section Wrapper End
+  	============================== -->
+  <a href="#" class="scrollToTop scroll-btn"><i class="far fa-arrow-up"></i></a>
+  <!--********************************
+		Code End  Here 
+******************************** -->
+  <!--==============================
+        All Js File
+    ============================== -->
+  <!-- Jquery -->
+  <script src="assets/js/vendor/jquery-3.6.0.min.js"></script>
+  <!-- Jquery UI -->
+  <script src="assets/js/jquery-ui.min.js"></script>
+  <!-- Slick Slider -->
+  <script src="assets/js/slick.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="assets/js/bootstrap.min.js"></script>
+  <!-- WOW.js Animation -->
+  <script src="assets/js/wow.min.js"></script>
+  <!-- Magnific Popup -->
+  <script src="assets/js/jquery.magnific-popup.min.js"></script>
+  <!-- Image Loaded Jquery -->
+  <script src="assets/js/imagesloaded.pkgd.min.js"></script>
+  <!-- Gsap -->
+  <script src="assets/js/gsap.min.js"></script>
+  <!-- ScrollTrigger -->
+  <script src="assets/js/ScrollTrigger.min.js"></script>
+  <!-- ScrollToPlugin -->
+  <script src="assets/js/ScrollToPlugin.min.js"></script>
+  <!-- SplitText -->
+  <script src="assets/js/SplitText.min.js"></script>
+  <!-- Lenis -->
+  <script src="assets/js/bundled-lenis.min.js"></script>
+  <!-- Main Js File -->
+  <script src="assets/js/main.js"></script>
+  <!-- Announcement Popup -->
+  <!-- i18n bilingual engine -->
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/announcement-popup.js"></script>
+  <!-- Global Cart Counter -->
+  <script src="assets/js/global-cart-counter.js"></script>
+  <!-- Checkout Handler -->
+  <script src="assets/js/checkout.js"></script>
+  <script src="assets/js/audio-player.js"></script>
+</body>
+
+</html>

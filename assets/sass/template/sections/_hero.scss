@@ -1,0 +1,370 @@
+.vs-hero {
+  position: relative;
+}
+.hero-main {
+  padding-left: 460px;
+  min-height: 785px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  @include xl {
+    padding-left: 20%;
+  }
+  @include lg {
+    padding-left: 0;
+  }
+  @include md {
+    padding-left: 10%;
+    min-height: 550px;
+  }
+  @include sm {
+    min-height: 420px;
+    padding-left: 0%;
+    text-align: center;
+  }
+  .hbtn1 {
+    @include sm {
+      justify-content: center;
+    }
+  }
+  .hero-img1,
+  .hero-img2,
+  .hero-img3,
+  .hero-img4 {
+    position: absolute;
+    animation-delay: 1s;
+  }
+  .hero-img1 {
+    left: 0;
+    top: 0;
+    bottom: 0;
+    animation-delay: 0.8s;
+    @include lg {
+      display: none;
+    }
+  }
+  .hero-img2 {
+    top: 40px;
+    left: 227px;
+    animation-delay: 0.6s;
+    @include xl {
+      display: none;
+    }
+    @include md {
+      left: 0;
+    }
+    @include sm {
+      top: 0;
+      max-width: 90px;
+    }
+  }
+  .hero-img3 {
+    left: auto;
+    right: 0;
+    @include lg {
+      max-width: 330px;
+      height: 100%;
+      object-fit: cover;
+    }
+    @include md {
+      display: none;
+    }
+  }
+  .hero-img4 {
+    right: 32%;
+    top: 20px;
+    @include lg {
+      display: none;
+    }
+    @include md {
+      right: 0;
+    }
+    @include sm {
+      display: none;
+    }
+  }
+  .hero-title {
+    font-size: 100px;
+    text-transform: uppercase;
+    line-height: 0.95;
+    font-family: var(--special-font);
+    font-weight: 400;
+    overflow: hidden;
+    @include lg {
+      font-size: 80px;
+    }
+    @include sm {
+      font-size: 50px;
+      line-height: 1;
+    }
+    .highlight {
+      color: var(--theme-color);
+    }
+    span {
+      display: block;
+    }
+    .htext1 {
+      animation-delay: 0s;
+    }
+    .htext2 {
+      animation-delay: 0.15s;
+    }
+  }
+  .hero-subtitle {
+    display: block;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+    overflow: hidden;
+    animation-delay: 0.2s;
+    span {
+      display: block;
+    }
+    a {
+      color: var(--theme-color);
+    }
+  }
+  .hbtn1 {
+    animation-delay: 0.4s;
+  }
+  &.style3 {
+    padding: 200px 0 200px;
+    min-height: 990px;
+    align-items: flex-end;
+    @include xl {
+      min-height: 830px;
+    }
+    @include sm {
+      min-height: 680px;
+      padding-right: 120px;
+      text-align: left;
+    }
+    .hero-title {
+      letter-spacing: -0.3px;
+      @include xl {
+        max-width: 70%;
+      }
+      @include lg {
+        max-width: 100%;
+      }
+      @include sm {
+        font-size: 38px;
+      }
+      span {
+        display: inline-block;
+      }
+    }
+    .hero-subtitle {
+      color: var(--text-color3);
+      font-weight: 700;
+      @include sm {
+        margin-bottom: 20px;
+      }
+    }
+    .vs-btn {
+      background-color: var(--bg-color9);
+      @include sm {
+        padding: 19px 40px;
+        justify-content: flex-start;
+      }
+      &::before,
+      &::after {
+        background-color: var(--theme-color);
+      }
+    }
+    .hbtn1 {
+      @include sm {
+        justify-content: flex-start;
+      }
+    }
+  }
+  &.style4 {
+    padding: 0;
+    min-height: 930px;
+    justify-content: center;
+    z-index: 1;
+    overflow: hidden;
+    @include md {
+      min-height: 434px;
+      margin-top: -5px;
+      padding-top: 150px;
+    }
+    @include sm {
+      padding-top: 170px;
+    }
+    .hero-title {
+      font-size: 200px;
+      color: var(--text-color6);
+      @include md {
+        font-size: 120px;
+      }
+      @include sm {
+        font-size: 90px;
+      }
+      & > span {
+        display: inline-flex;
+        justify-content: center;
+        gap: 55px;
+        padding: 0 4%;
+        @include sm {
+          gap: 0;
+          padding: 0 0;
+          flex-direction: column;
+          text-align: center;
+        }
+      }
+      .htext1 {
+        z-index: -1;
+      }
+      .htext2 {
+        z-index: 2;
+      }
+    }
+    .hero-img3 {
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+      z-index: 2;
+      animation-delay: 0.5s;
+      @include lg {
+        display: flex;
+        align-items: end;
+        max-width: 100%;
+        justify-content: center;
+      }
+      @include md {
+        display: none;
+      }
+    }
+  }
+}
+
+.hero-layout1 {
+  .ele1,
+  .ele2 {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%) rotate(0);
+    animation: vs-rotations 80s infinite linear;
+    @include md {
+      display: none;
+    }
+  }
+  .ele2 {
+    right: 0;
+    animation-duration: 85s;
+  }
+}
+@keyframes vs-rotations {
+  0% {
+    transform: translateY(-50%) rotate(0deg);
+  }
+  100% {
+    transform: translateY(-50%) rotate(360deg);
+  }
+}
+.hero-layout2 {
+  .slick-dots {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    max-width: 1300px;
+    margin: 40px auto 105px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: left;
+    button {
+      width: 10px;
+      height: 7px;
+      border-radius: 5px;
+      background-color: #282525;
+      &::before {
+        display: none;
+      }
+    }
+    li {
+      margin-right: 8px;
+    }
+    .slick-active {
+      button {
+        width: 38px;
+      }
+    }
+  }
+}
+
+.hero-layout3 {
+  position: relative;
+  z-index: 1;
+  @include md {
+    margin-top: -10px;
+  }
+  .hero-carousel-arrow {
+    position: absolute;
+    top: auto;
+    z-index: 999;
+    min-width: 146px;
+    right: 8%;
+    bottom: 109px;
+    margin: 0;
+    min-height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--rating-color1);
+    @include lg {
+      bottom: 15px;
+    }
+    @include sm {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    button {
+      background-color: transparent;
+      padding: 0;
+      border: 0;
+      font-size: 16px;
+      font-weight: 700;
+      text-indent: 0;
+      color: var(--theme-color);
+      &::before {
+        display: none;
+      }
+      &:hover {
+        svg path {
+          stroke: var(--theme-color);
+        }
+      }
+    }
+  }
+  .hero-ele1 {
+    position: absolute;
+    left: 129px;
+    z-index: 2;
+    top: 165px;
+  }
+}
+.hero-pricing {
+  position: absolute;
+  z-index: 9;
+  left: 8%;
+  bottom: 109px;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--rating-color1);
+  @include lg {
+    bottom: 15px;
+  }
+  @include md {
+    display: none;
+  }
+  span {
+    color: var(--theme-color);
+    font-size: 26px;
+    font-weight: 500;
+  }
+}

@@ -1,0 +1,365 @@
+﻿<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>YASSO bags</title>
+  <meta name="author" content="vecuro">
+  <meta name="description" content="Luxrio - The Fashion & Bags E-Commerce HTML5 Template">
+  <meta name="keywords" content="Luxrio - The Fashion & Bags E-Commerce HTML5 Template">
+  <meta name="robots" content="INDEX,FOLLOW">
+  <!-- Mobile S pecific Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Favicon -->
+  <link rel="icon" type="image/jpeg" href="assets/img/yasso%20logo.jpg">
+  <link rel="apple-touch-icon" href="assets/img/yasso%20logo.jpg">
+  <!--==============================
+	  Google Fonts
+	============================== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=Italiana&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <!--==============================
+	    All CSS File
+	============================== -->
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <!-- Fontawesome Icon -->
+  <link rel="stylesheet" href="assets/css/fontawesome.min.css">
+  <!-- Magnific Popup -->
+  <link rel="stylesheet" href="assets/css/magnific-popup.min.css">
+  <!-- Slick Slider -->
+  <link rel="stylesheet" href="assets/css/slick.min.css">
+  <!-- Animation CSS -->
+  <link rel="stylesheet" href="assets/css/animate.min.css">
+  <!-- Theme Custom CSS -->
+  <link rel="stylesheet" href="assets/css/style.css?v=8">
+  <link rel="stylesheet" href="assets/css/audio-player.css">
+  <style>
+    /* Header: beige top, dark nav */
+    .vs-header.layout2 { background-color: #f5ede0 !important; padding: 0 !important; }
+    .vs-header.layout2 .sticky-wrapper { background-color: #2C1A00 !important; }
+    .vs-header.layout2 .header-search input { color: #5C4033 !important; }
+    .vs-header.layout2 .header-search input::-moz-placeholder { color: #5C4033 !important; }
+    .vs-header.layout2 .header-search input::placeholder { color: #5C4033 !important; }
+    .vs-header.layout2 .header-search button { color: #5C4033 !important; }
+    .vs-header.layout2 .header-search::after { background-color: #5C4033 !important; }
+    .header-logo img.logo, .header-logo img { max-height: 80px !important; }
+    .header-logo { margin-top: 20px; }
+  </style>
+</head>
+
+<body class="vs-body">
+  <!--[if lte IE 9]>
+    	<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]-->
+  <!--********************************
+   		Code Start From Here 
+	******************************** -->
+  <!--==============================
+		Preloader
+	==============================-->
+  <div class="preloader">
+    <button class="vs-btn preloaderCls">Cancel Preloader </button>
+    <div class="preloader-inner">
+      <img src="assets/img/yasso%20logo.jpg" alt="logo">
+      <span class="loader"></span>
+    </div>
+  </div>
+  <!--==============================
+		Mobile Menu
+	============================== -->
+  <div class="vs-menu-wrapper">
+    <div class="vs-menu-area text-center">
+      <div class="mobile-logo">
+        <a href="index.html"><img src="assets/img/yasso%20logo.jpg" alt="Yasso" class="logo"></a>
+        <button class="vs-menu-toggle"><i class="fal fa-times"></i></button>
+      </div>
+      <div class="vs-mobile-menu">
+        <ul>
+          <li>
+            <a href="index.html">Home</a>
+          </li>
+          <li>
+            <a href="shop-sidebar.html">Products</a>
+          </li>
+          <li>
+            <a href="about.html">About</a>
+          </li>
+          <li>
+            <a href="blog.html">Newsletter</a>
+          </li>
+          <li>
+            <a href="contact.html">Contact</a>
+          </li>
+        </ul>
+      </div>
+      <!-- Mobile: Language Switcher + Audio Player -->
+      <div class="mobile-extras">
+        <div class="mobile-lang-switcher">
+          <button class="lang-btn-en active" title="English">EN</button>
+          <span class="lang-sep">|</span>
+          <button class="lang-btn-ar" title="Arabic">AR</button>
+        </div>
+        <div class="mobile-audio-wrap" id="mobileAudioWrap" style="display:none">
+          <button class="mobile-audio-btn" id="mobileAudioToggleBtn" aria-label="Play or pause music">
+            <i class="fas fa-play" id="mobileAudioToggleIcon"></i>
+          </button>
+          <div class="mobile-wave-container" id="mobileWaveContainer"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- ==============================
+       Announcement Popup
+  ============================== -->
+  <div id="announcementOverlay">
+    <div id="announcementPopup">
+      <button id="announcementClose" aria-label="Close">&times;</button>
+      <!-- Content populated dynamically from database via announcement-popup.js -->
+    </div>
+  </div>
+    </div>
+  </div>
+  <!-- ==============================
+    	Main Section Wrapper
+  	============================== -->
+  <main class="main">
+    <!--==============================
+    Header Area
+==============================-->
+    <header class="vs-header layout2">
+      <div class="container custom-container">
+        <div class="header-top">
+          <div class="row align-items-end justify-content-between">
+            <div class="col-md-4 d-none d-md-block">
+              <div class="header-audio-player" id="headerAudioPlayer" style="display:none">
+                <button class="audio-toggle-btn" id="audioToggleBtn" aria-label="Play or pause music">
+                  <i class="fas fa-play" id="audioToggleIcon"></i>
+                </button>
+                <div class="wave-container" id="waveContainer"></div>
+                <audio id="siteAudio" preload="auto"></audio>
+              </div>
+            </div>
+            <div class="col-md-4 text-center">
+              <div class="header-logo">
+                <a href="index.html"><img src="assets/img/yasso%20logo.jpg" alt="Yasso" class="logo"></a>
+              </div>
+            </div>
+            <div class="col-md-4 text-end d-none d-md-block">
+              <button class="sideMenuToggler">
+                <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M0 10V0H10.5L15 5L20 0H29.5V10L25.5 15L29.5 19.5V30H20L15 25.5L10.5 30H0V19.5L5 15L0 10Z" fill="#5C4033" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Main Menu Area -->
+      <div class="sticky-wrapper">
+        <div class="sticky-active">
+          <div class="container custom-container">
+            <div class="row justify-content-between align-items-center">
+              <div class="col-xl-3 col-md-auto d-none d-lg-flex align-items-center">
+                <div class="lang-switcher">
+                  <button class="lang-btn-en active" title="English">EN</button>
+                  <span class="lang-sep">|</span>
+                  <button class="lang-btn-ar" title="Arabic">AR</button>
+                </div>
+              </div>
+              <div class="col-xl-auto col-md-auto col-auto">
+                <nav class="main-menu d-none d-lg-block">
+                  <ul>
+                    <li>
+                      <a href="index.html">Home</a>
+                    </li>
+                    <li class="menu-item-has-children">
+                      <a href="shop-sidebar.html">Products</a>
+                    </li>
+                    <li>
+                      <a href="about.html">About</a>
+                    </li>
+                    <li>
+                      <a href="blog.html">Newsletter</a>
+                    </li>
+                    <li>
+                      <a href="contact.html">Contact</a>
+                    </li>
+                  </ul>
+                </nav>
+                <button class="vs-menu-toggle d-inline-block d-lg-none"><i class="fal fa-bars"></i></button>
+              </div>
+              <div class="col-xl-3 col-md-auto col-auto">
+                <div class="header-wc">
+                  <a class="wc-link" href="cart.html">bag 0
+                    <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M5.33315 6.33334V3.12501C5.33315 1.75001 6.24982 0.833344 7.62482 0.833344H10.3748C11.7498 0.833344 12.6665 1.75001 12.6665 3.12501V6.33334M16.709 14.6108H5.33315M5.70002 4.95834H12.3C15.4167 4.95834 15.7284 6.41584 15.9392 8.19418L16.7642 15.0692C17.03 17.3242 16.3334 19.1667 13.125 19.1667H4.88419C1.66669 19.1667 0.970022 17.3242 1.24502 15.0692L2.07003 8.19418C2.2717 6.41584 2.58336 4.95834 5.70002 4.95834Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!--==============================
+    Header Area end
+==============================-->
+    <!--==============================
+          Breadcumb
+      ============================== -->
+    <div class="breadcumb-wrapper" data-bg-src="assets/img/bg/breadcumb-bg-4.jpg">
+      <img src="assets/img/shapes/dot-shape.svg" alt="dot" class="breadcumb-element">
+      <div class="container z-index-common">
+        <div class="breadcumb-content">
+          <h1 class="breadcumb-title">error page</h1>
+          <div class="breadcumb-menu-wrap">
+            <ul class="breadcumb-menu">
+              <li><a href="index.html">Home</a></li>
+              <li>404 page</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Error Area -->
+    <section class="z-index-common space-bottom">
+      <div class="extra-shape"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <div class="error-content">
+              <h2>404</h2>
+              <h3>Oops! That page can't be found.</h3>
+              <p>Lorem ipsum dolor sit amet, conse elit, sedid that eiusmod aboret dolore magna aliqua conseel usndi
+              </p>
+              <a href="shop.html" class="vs-btn" tabindex="0">
+                go back to homepage
+                <i class="fa-light fa-arrow-right-long"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Error Area End -->
+    <!--==============================
+        Footer Area
+    ==============================-->
+    <footer class="footer-layout2" data-bg-src="assets/img/footer/footer-image-1-1.png">
+      <div class="footer-widgets">
+        <div class="container">
+          <div class="row gy-4 justify-content-between">
+            <div class="col-lg-3">
+              <div class="footer-logo">
+                <a href="index.html"><img src="assets/img/yasso%20logo.jpg" alt="logo"></a>
+              </div>
+              <div class="footer-info style2">
+                <p>
+                  <span class="lang-show-en"><span>Address :</span> No. 37, Al-Zaher street<br>Moharam Bek - Alexandria</span>
+                  <span class="lang-show-ar"><span>العنوان :</span> رقم 37، شارع الزاهر<br>محرم بك - الإسكندرية</span>
+                </p>
+                <p>
+                  <span class="lang-show-en"><span>Phone :</span> <a href="tel:+201156685444" style="color:inherit">+201156685444</a></span>
+                  <span class="lang-show-ar"><span>الهاتف :</span> <a href="tel:+201156685444" style="color:inherit">+201156685444</a></span>
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-auto">
+              <div class="footer-widget">
+                <h3 class="footer-title">Shopping</h3>
+                <div class="footer-menu2">
+                  <a href="shop-sidebar.html">Shop</a>
+                  <a href="blog.html">Blog</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-auto">
+              <div class="footer-widget">
+                <h3 class="footer-title">About Store</h3>
+                <div class="footer-menu2">
+                  <a href="index.html">Home</a>
+                  <a href="about.html">About Us</a>
+                  <a href="contact.html">Contact Us</a>
+                  <a href="blog.html">Blog</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-auto">
+              <div class="footer-widget">
+                <h3 class="footer-title">Subscribe for <span>newsletter</span></h3>
+                <form class="footer-newsletter" action="#">
+                  <input type="email" placeholder="Enter your email">
+                  <button type="submit">
+                    <svg width="20" height="14" viewBox="0 0 20 14" fill="none">
+                      <path d="M12.43 0.930176L18.5 7.00018L12.43 13.0702M1.5 7.00018H18.33" stroke="#F5F1E6" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </button>
+                </form>
+                <h4 class="footer-title">follow</h4>
+                <div class="social-style">
+                  <a class="facebook" href="https://www.facebook.com/YASSO.BAGS1"><i class="fab fa-facebook-f"></i></a>
+                  <a class="instagram" href="https://www.instagram.com/yass0bags?igsh=NG9nazhlbTJyczZh&utm_source=qr"><i class="fab fa-instagram"></i></a>
+                  <a class="twitter" href="https://www.tiktok.com/@yasso.bags5?_r=1&_t=ZS-94bnN0yODEz"><i class="fab fa-tiktok"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="footer-copyright style2">
+        Copyright ? 2026 YASSO All Rights Reserved<br>
+        Designed by <a href="https://alt-mate.com/" target="_blank" rel="noopener noreferrer">Alt Mate</a>
+      </p>
+    </footer>
+    <!--==============================
+        Footer Area End
+    ==============================-->
+  </main>
+  <!-- ==============================
+    	Main Section Wrapper End
+  	============================== -->
+  <a href="#" class="scrollToTop scroll-btn"><i class="far fa-arrow-up"></i></a>
+  <!--********************************
+		Code End  Here 
+******************************** -->
+  <!--==============================
+        All Js File
+    ============================== -->
+  <!-- Jquery -->
+  <script src="assets/js/vendor/jquery-3.6.0.min.js"></script>
+  <!-- Jquery UI -->
+  <script src="assets/js/jquery-ui.min.js"></script>
+  <!-- Slick Slider -->
+  <script src="assets/js/slick.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="assets/js/bootstrap.min.js"></script>
+  <!-- WOW.js Animation -->
+  <script src="assets/js/wow.min.js"></script>
+  <!-- Magnific Popup -->
+  <script src="assets/js/jquery.magnific-popup.min.js"></script>
+  <!-- Image Loaded Jquery -->
+  <script src="assets/js/imagesloaded.pkgd.min.js"></script>
+  <!-- Gsap -->
+  <script src="assets/js/gsap.min.js"></script>
+  <!-- ScrollTrigger -->
+  <script src="assets/js/ScrollTrigger.min.js"></script>
+  <!-- ScrollToPlugin -->
+  <script src="assets/js/ScrollToPlugin.min.js"></script>
+  <!-- SplitText -->
+  <script src="assets/js/SplitText.min.js"></script>
+  <!-- Lenis -->
+  <script src="assets/js/bundled-lenis.min.js"></script>
+  <!-- Main Js File -->
+  <script src="assets/js/main.js"></script>
+  <!-- Announcement Popup -->
+  <!-- i18n bilingual engine -->
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/announcement-popup.js"></script>
+  <script src="assets/js/audio-player.js"></script>
+</body>
+
+</html>

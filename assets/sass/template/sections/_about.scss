@@ -1,0 +1,141 @@
+.call-box {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  &__list {
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+    a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      --circle-size: 57px;
+      width: var(--circle-size);
+      height: var(--circle-size);
+      min-width: var(--circle-size);
+      min-height: var(--circle-size);
+      background-color: var(--theme-color);
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 0 0 -15px;
+      &:hover {
+        color: var(--white-color);
+      }
+    }
+  }
+  &__title,
+  &__subtitle {
+    @include text-style1;
+    text-transform: uppercase;
+    margin-bottom: 0;
+    font-weight: 800;
+  }
+  &__subtitle {
+    color: var(--theme-color);
+    font-size: 18px;
+    letter-spacing: 0.8px;
+    &:hover {
+      color: var(--white-color);
+    }
+  }
+}
+
+.about-divider {
+  background: #eedcb3;
+  opacity: 0.15;
+  margin: 35px 0;
+  width: 90%;
+}
+
+.img-box4 {
+  position: relative;
+  z-index: 1;
+  &__img1 {
+    @include md {
+      width: 100%;
+    }
+  }
+  &__img2 {
+    position: absolute;
+    z-index: -1;
+    top: -29px;
+    right: -51px;
+  }
+  &__shape {
+    position: absolute;
+    bottom: 57px;
+    left: 20px;
+    min-height: 178px;
+    background-color: var(--theme-color);
+  }
+}
+
+.img-box5 {
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  .img1,
+  .img2 {
+    position: relative;
+    &::after {
+      content: "";
+      width: 19px;
+      height: 187px;
+      background-color: var(--theme-color);
+      position: absolute;
+      left: 0;
+      top: -16px;
+    }
+  }
+  .img2 {
+    &::after {
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: var(--white-color);
+    }
+  }
+  .img3 {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    min-width: 171px;
+    min-height: 263px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--theme-color);
+    border-radius: 92px;
+    right: 30px;
+    @include sm {
+      min-width: 90px;
+      min-height: 140px;
+      border-radius: 90px;
+      right: 0;
+    }
+  }
+  .img4 {
+    position: absolute;
+    z-index: -1;
+    top: -35px;
+    left: -77px;
+  }
+}
+
+.aboutpage-layout1 {
+  z-index: 1;
+  .abele1,
+  .abele2 {
+    position: absolute;
+    z-index: -1;
+  }
+  .abele1 {
+    top: 5%;
+    left: 5%;
+  }
+  .abele2 {
+    bottom: 10%;
+    right: 3%;
+  }
+}

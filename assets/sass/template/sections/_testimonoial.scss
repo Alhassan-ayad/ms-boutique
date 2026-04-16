@@ -1,0 +1,214 @@
+.testi-style {
+  text-align: center;
+  padding: 0 43px;
+  @include sm {
+    padding: 0 0;
+  }
+  .testi-thumb {
+    margin-bottom: 25px;
+    .img,
+    img {
+      border-radius: 50%;
+      border: 5px solid var(--theme-color);
+    }
+  }
+  .testi-text {
+    font-size: 18px;
+    line-height: 34px;
+    letter-spacing: 0.5px;
+    text-transform: capitalize;
+    margin: 0 0 30px 0;
+  }
+  .testi-user {
+    color: var(--title-color);
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 1.6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 17px;
+    &::before,
+    &::after {
+      content: "";
+      width: 18px;
+      height: 1px;
+      background-color: var(--title-color);
+      display: inline-block;
+    }
+  }
+  &.style2 {
+    text-align: left;
+    padding: 0px 41px 0 0;
+    @include md {
+      padding-right: 0;
+    }
+    @include sm {
+      text-align: center;
+    }
+    .testi-rate {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      margin-bottom: 20px;
+      @include sm {
+        justify-content: center;
+      }
+      i {
+        color: var(--theme-color);
+        font-size: 13px;
+      }
+    }
+    .testi-text {
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 34px;
+      letter-spacing: 0.03em;
+      text-transform: capitalize;
+      color: var(--smoke-color);
+      @include sm {
+        font-size: 16px;
+        line-height: 26px;
+      }
+    }
+    .testi-auth {
+      display: flex;
+      align-items: center;
+      gap: 19px;
+      @include sm {
+        flex-direction: column;
+      }
+    }
+    .testi-thumb {
+      margin-bottom: 0;
+    }
+    .testi-auth-info {
+      display: flex;
+      flex-direction: column;
+      color: var(--pagi-text-color);
+      font-weight: 600;
+    }
+    .testi-user {
+      color: var(--vs-secondary-color);
+      align-items: flex-end;
+      line-height: 1;
+      margin-bottom: 9px;
+      &::after {
+        background-color: var(--rating-color1);
+        transform: translateY(-2px);
+      }
+      &::before {
+        display: none;
+      }
+    }
+  }
+}
+
+.img-box3 {
+  position: absolute;
+  min-width: 830px;
+  height: 100%;
+  top: 0;
+  z-index: -1;
+  @include xl {
+    min-width: 40%;
+  }
+  @include md {
+    position: static;
+    height: 500px;
+    margin-bottom: 30px;
+    margin-top: -80px;
+  }
+}
+
+.testi-layout1 {
+  .ele1 {
+    position: absolute;
+    right: 54px;
+    bottom: 130px;
+    @include lg {
+      display: none;
+    }
+  }
+}
+
+.vs-carousel-arrow {
+  position: absolute;
+  min-height: 98px;
+  min-width: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  @include sm {
+    min-width: 270px;
+  }
+  button {
+    background-color: transparent;
+    padding: 0;
+    border: 0;
+    &:hover {
+      color: var(--theme-color);
+    }
+  }
+}
+
+.testi-layout2 {
+  padding: 20px 0;
+  z-index: 1;
+  @include md {
+    padding: 20px 0 80px;
+  }
+  .h3ele2,
+  .h3ele3 {
+    position: absolute;
+    bottom: 0;
+    z-index: -1;
+  }
+  .h3ele2 {
+    left: 0;
+  }
+  .h3ele3 {
+    right: 0;
+  }
+  .testi-left {
+    padding-left: 83px;
+    @include md {
+      padding-left: 0;
+      text-align: center;
+    }
+  }
+  .vs-carousel-arrow {
+    position: absolute;
+    min-height: 98px;
+    min-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    padding: 0 235px;
+    @include md {
+      padding: 0 0px;
+    }
+    button {
+      width: 56px;
+      height: 48px;
+      background-color: rgba($color: #101318, $alpha: 90%);
+      path {
+        @include smooth-transition;
+      }
+      &:hover {
+        background-color: var(--theme-color);
+        path {
+          fill: var(--white-color);
+          fill-opacity: 1;
+          @include smooth-transition;
+        }
+      }
+    }
+  }
+}

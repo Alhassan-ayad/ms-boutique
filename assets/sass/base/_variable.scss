@@ -1,0 +1,169 @@
+:root {
+  --theme-color: #ff3e01;
+  --title-color: #021210;
+  --body-color: #4a4949;
+  --smoke-color: #9c9b9b;
+  --vs-secondary-color: #eef2fb;
+  --black-color: #000000;
+  --bg-color1: #15161b;
+  --bg-color2: #0c0e12;
+  --bg-color3: #101318;
+  --bg-color4: #171b21;
+  --bg-color5: #020203;
+  --bg-color6: #181c22;
+  --bg-color7: #0b0e12;
+  --bg-color8: #151921;
+  --bg-color9: #0a0c0e;
+  --bg-color10: #161a20;
+  --bg-color11: #856f3c;
+  --bg-color12: #f8efdc;
+  --bg-color13: #171b22;
+  --text-color1: #e2e2e2;
+  --text-color2: #e7e7e7;
+  --text-color3: #364d4a;
+  --text-color4: #c6c6c6;
+  --text-color5: #23282d;
+  --text-color6: #dcc8b0;
+  --text-color7: #3c3b3b;
+  --text-color8: #dadada;
+  --rating-color1: #eedcb3;
+  --rating-color2: #f0e9d7;
+  --bread-text-color: #bdbbba;
+  --pagi-text-color: #b0acac;
+  --footer-text-color: #6f6f6f;
+  --white-color: #ffffff;
+  --yellow-color: #fec624;
+  --success-color: #28a745;
+  --error-color: #dc3545;
+  --vs-border-color: #e0e0e0;
+  --vs-border-color2: #15191f;
+  --vs-border-color3: #23272e;
+  --vs-border-color4: #1e232c;
+  --vs-border-color5: #2e343e;
+  --vs-border-color6: #1e1d1d;
+  --vs-border-color7: #212020;
+  --gold-light-color: #eee7d5;
+  --black-bg: #030b09;
+  --gray-color1: #d9d9d9;
+  --gray-color2: #a7a7a7;
+  --gray-color3: #7d7c7c;
+  --theme-color-rgb: 255, 62, 1;
+  --title-color-rgb: 2, 18, 16;
+  --body-color-rgb: 74, 73, 73;
+  --smoke-color-rgb: 156, 155, 155;
+  --vs-secondary-color-rgb: 238, 242, 251;
+  --black-color-rgb: 0, 0, 0;
+  --white-color-rgb: 255, 255, 255;
+  --yellow-color-rgb: 254, 198, 36;
+  --success-color-rgb: 40, 167, 69;
+  --error-color-rgb: 220, 53, 69;
+  --vs-border-color-rgb: 224, 224, 224;
+  --gold-light-color-rgb: 238, 231, 213;
+  --black-bg-rgb: 3, 11, 9;
+  --gray-color1-rgb: 217, 217, 217;
+  --title-font: "Cormorant", serif;
+  --body-font: "Montserrat", sans-serif;
+  --special-font: "Italiana", sans-serif;
+  --icon-font: "Font Awesome 6 Pro";
+  --main-container: 1300px;
+  --container-gutters: 30px;
+  --section-space: 120px;
+  --section-space-mobile: 80px;
+  --section-title-space: 80px;
+  --ripple-ani-duration: 5s;
+}
+
+// Color Variation
+$theme-color: var(--theme-color);
+$title-color: var(--title-color);
+$body-color: var(--body-color);
+$secondary-color: var(--smoke-color);
+$smoke-color: var(--smoke-color);
+$white-color: var(--white-color);
+$black-color: var(--black-color);
+$yellow-color: var(--yellow-color);
+$success-color: var(--success-color);
+$error-color: var(--error-color);
+$border-color: var(--vs-border-color);
+
+// Font Variation
+$icon-font: var(--icon-font);
+
+// Typography
+$title-font: var(--title-font);
+$body-font: var(--body-font);
+$body-font-size: 16px;
+$body-line-Height: 26px;
+$body-font-weight: 400;
+$p-line-Height: 1.63;
+
+// Device Variation
+$hd: 1921px; // Large Device Than 1920
+$xl: 1500px; // Extra large Device
+$ml: 1399px; // Medium Large Device
+$lg: 1199px; // Large Device (Laptop)
+$md: 991px; // Medium Device (Tablet)
+$sm: 767px; // Small Device
+$xs: 575px; // Extra Small Device
+
+// Spacing Count with 5x
+$space-count: 6;
+
+// Section Space  For large Device
+$space: var(--section-space);
+$space-extra: calc(var(--section-space) - 30px);
+
+// Section Space On small Device
+$space-mobile: var(--section-space-mobile);
+$space-mobile-extra: calc(var(--section-space-mobile) - 30px);
+
+// BG Color Mapping
+$bgcolorMap: ();
+$bgcolorMap: map-merge(
+  (
+    "theme": $theme-color,
+    "smoke": $smoke-color,
+    "white": $white-color,
+    "black": $black-color,
+    "title": $title-color,
+  ),
+  $bgcolorMap
+);
+
+// Overlay Color Mapping
+$overlaycolorMap: ();
+$overlaycolorMap: map-merge(
+  (
+    "theme": $theme-color,
+    "title": $title-color,
+    "white": $white-color,
+    "black": $black-color,
+  ),
+  $overlaycolorMap
+);
+
+// Text Color Mapping
+$textColorsMap: ();
+$textColorsMap: map-merge(
+  (
+    "theme": $theme-color,
+    "title": $title-color,
+    "body": $body-color,
+    "white": $white-color,
+    "yellow": $yellow-color,
+    "success": $success-color,
+    "error": $error-color,
+  ),
+  $textColorsMap
+);
+
+// Font Mapping
+$fontsMap: ();
+$fontsMap: map-merge(
+  (
+    "icon": $icon-font,
+    "title": $title-font,
+    "body": $body-font,
+  ),
+  $fontsMap
+);

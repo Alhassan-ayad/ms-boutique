@@ -1,0 +1,1185 @@
+<!doctype html>
+<html class="no-js" lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>YASSO bags</title>
+  <meta name="author" content="YASSO">
+  <meta name="description" content="YASSO Admin Dashboard">
+  <meta name="keywords" content="YASSO Admin Dashboard">
+  <meta name="robots" content="NOINDEX,NOFOLLOW">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/jpeg" href="assets/img/yasso%20logo.jpg">
+  <link rel="apple-touch-icon" href="assets/img/yasso%20logo.jpg">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=Italiana&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/fontawesome.min.css">
+  <link rel="stylesheet" href="assets/css/admin-dashboard.css">
+  <style>
+    /* Header: beige top, dark nav */
+    .vs-header.layout2 { background-color: #f5ede0 !important; padding: 0 !important; }
+    .vs-header.layout2 .sticky-wrapper { background-color: #2C1A00 !important; }
+    .vs-header.layout2 .header-search input { color: #5C4033 !important; }
+    .vs-header.layout2 .header-search input::-moz-placeholder { color: #5C4033 !important; }
+    .vs-header.layout2 .header-search input::placeholder { color: #5C4033 !important; }
+    .vs-header.layout2 .header-search button { color: #5C4033 !important; }
+    .vs-header.layout2 .header-search::after { background-color: #5C4033 !important; }
+    .header-logo img.logo, .header-logo img { max-height: 80px !important; }
+    .header-logo { margin-top: 20px; }
+  </style>
+</head>
+
+<body>
+  <!-- Login Modal -->
+  <div id="loginModal" class="auth-modal">
+    <div class="auth-container">
+      <div class="auth-card">
+        <h2>Admin Login</h2>
+        <form id="loginForm">
+          <div class="form-group">
+            <label>Username or Email</label>
+            <input type="text" id="loginUsername" required>
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" id="loginPassword" required>
+          </div>
+          <button type="submit" class="btn-primary">Login</button>
+          <div id="loginError" class="error-message"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dashboard Container -->
+  <div id="dashboardContainer" class="dashboard-hidden">
+    
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h2>YASSO</h2>
+        <p>Admin Dashboard</p>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item active" data-section="overview">
+          <i class="fas fa-chart-line"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="#" class="nav-item" data-section="messages">
+          <i class="fas fa-envelope"></i>
+          <span>Messages</span>
+          <span class="badge" id="unreadBadge">0</span>
+        </a>
+        <a href="#" class="nav-item" data-section="blog">
+          <i class="fas fa-blog"></i>
+          <span>Blog Posts</span>
+        </a>
+        <a href="#" class="nav-item" data-section="home-content">
+          <i class="fas fa-home"></i>
+          <span>Home Content</span>
+        </a>
+        <a href="#" class="nav-item" data-section="featured-products">
+          <i class="fas fa-star"></i>
+          <span>Featured Products</span>
+        </a>
+        <a href="#" class="nav-item" data-section="products">
+          <i class="fas fa-box"></i>
+          <span>Products</span>
+        </a>
+        <a href="#" class="nav-item" data-section="reviews">
+          <i class="fas fa-star"></i>
+          <span>Reviews</span>
+          <span class="badge" id="pendingReviewsBadge">0</span>
+        </a>
+        <a href="#" class="nav-item" data-section="orders">
+          <i class="fas fa-shopping-cart"></i>
+          <span>Orders</span>
+        </a>
+        <a href="#" class="nav-item" data-section="categories">
+          <i class="fas fa-tags"></i>
+          <span>Categories</span>
+        </a>
+        <a href="#" class="nav-item" data-section="announcements">
+          <i class="fas fa-bullhorn"></i>
+          <span>Announcement Popup</span>
+        </a>
+        <a href="#" class="nav-item" data-section="audio">
+          <i class="fas fa-music"></i>
+          <span>Audio Player</span>
+        </a>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <a href="#" id="logoutBtn" class="nav-item">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Logout</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      
+      <!-- Top Bar -->
+      <header class="top-bar">
+        <div class="top-bar-left">
+          <button id="sidebarToggle" class="btn-icon">
+            <i class="fas fa-bars"></i>
+          </button>
+          <h1 id="pageTitle">Dashboard Overview</h1>
+        </div>
+        <div class="top-bar-right">
+          <span id="adminUsername" class="admin-name">Admin</span>
+        </div>
+      </header>
+
+      <!-- Dashboard Content -->
+      <div class="content-wrapper">
+        
+        <!-- Overview Section -->
+        <section id="overviewSection" class="content-section active">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon">
+                <i class="fas fa-box"></i>
+              </div>
+              <div class="stat-info">
+                <h3 id="totalProducts">0</h3>
+                <p>Total Products</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">
+                <i class="fas fa-shopping-cart"></i>
+              </div>
+              <div class="stat-info">
+                <h3 id="totalOrders">0</h3>
+                <p>Total Orders</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">
+                <i class="fas fa-envelope"></i>
+              </div>
+              <div class="stat-info">
+                <h3 id="unreadMessages">0</h3>
+                <p>Unread Messages</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon">
+                <i class="fas fa-star"></i>
+              </div>
+              <div class="stat-info">
+                <h3 id="pendingReviews">0</h3>
+                <p>Pending Reviews</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="dashboard-grid">
+            <div class="dashboard-card">
+              <h3>Recent Orders</h3>
+              <div id="recentOrdersList" class="list-container"></div>
+            </div>
+            <div class="dashboard-card">
+              <h3>Low Stock Products</h3>
+              <div id="lowStockList" class="list-container"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Messages Section -->
+        <section id="messagesSection" class="content-section">
+          <div class="section-header">
+            <h2>Contact Messages</h2>
+            <div class="filter-group">
+              <button class="filter-btn active" data-filter="all">All</button>
+              <button class="filter-btn" data-filter="unread">Unread</button>
+              <button class="filter-btn" data-filter="read">Read</button>
+            </div>
+          </div>
+          
+          <div class="search-bar">
+            <input type="text" id="messageSearch" placeholder="Search messages...">
+            <button id="messageSearchBtn" class="btn-primary">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+          
+          <div id="messagesList" class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Message</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="messagesTableBody"></tbody>
+            </table>
+          </div>
+          
+          <div class="pagination" id="messagesPagination"></div>
+        </section>
+
+        <!-- Blog Posts Section -->
+        <section id="blogSection" class="content-section">
+          <div class="section-header">
+            <h2>Blog Posts Management</h2>
+            <button id="addBlogBtn" class="btn-primary">
+              <i class="fas fa-plus"></i> Add New Post
+            </button>
+          </div>
+          
+          <div class="filter-container">
+            <div class="filter-group">
+              <button class="filter-btn active" data-filter="all">All</button>
+              <button class="filter-btn" data-filter="published">Published</button>
+              <button class="filter-btn" data-filter="draft">Drafts</button>
+            </div>
+            <div class="search-bar">
+              <input type="text" id="blogSearch" placeholder="Search posts...">
+              <button id="blogSearchBtn" class="btn-primary">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </div>
+          
+          <div id="blogList" class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Title</th>
+                  <th>Category</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                  <th>Featured</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="blogTableBody"></tbody>
+            </table>
+          </div>
+          
+          <div class="pagination" id="blogPagination"></div>
+        </section>
+
+        <!-- Home Content Section -->
+        <section id="homeContentSection" class="content-section">
+          <div class="section-header">
+            <h2>Home Page Content Management</h2>
+            <button id="addHomeContentBtn" class="btn-primary">
+              <i class="fas fa-plus"></i> Add Content
+            </button>
+          </div>
+          
+          <div class="filter-container">
+            <div class="filter-group">
+              <label>Section:</label>
+              <select id="homeContentSectionFilter">
+                <option value="all">All Sections</option>
+                <option value="Hero">Hero</option>
+                <option value="Featured">Featured Products</option>
+                <option value="About">About</option>
+                <option value="Features">Features</option>
+                <option value="Gallery">Gallery</option>
+                <option value="Story">Story</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label>Type:</label>
+              <select id="homeContentTypeFilter">
+                <option value="all">All Types</option>
+                <option value="IMAGE">Image</option>
+                <option value="TEXT">Text</option>
+                <option value="HTML">HTML</option>
+                <option value="VIDEO">Video</option>
+                <option value="URL">URL</option>
+              </select>
+            </div>
+          </div>
+          
+          <div id="homeContentList" class="content-grid"></div>
+          
+          <div class="pagination" id="homeContentPagination"></div>
+        </section>
+
+        <!-- Featured Products Section -->
+        <section id="featuredProductsSection" class="content-section">
+          <div class="section-header">
+            <h2>Featured Products Management</h2>
+            <p class="section-description">Manage which products appear in the Featured section on the homepage</p>
+          </div>
+          
+          <div class="featured-products-container">
+            <!-- Current Featured Products -->
+            <div class="featured-current-section">
+              <h3>
+                <i class="fas fa-star"></i> Currently Featured Products
+              </h3>
+              <div id="currentFeaturedList" class="featured-products-grid">
+                <!-- Featured products will load here -->
+              </div>
+            </div>
+            
+            <!-- All Products Selection -->
+            <div class="featured-selection-section">
+              <h3>
+                <i class="fas fa-box"></i> Select Products to Feature
+              </h3>
+              
+              <div class="filter-container">
+                <div class="filter-group">
+                  <label>Search:</label>
+                  <input type="text" id="featuredProductSearch" placeholder="Search by product name...">
+                </div>
+                <div class="filter-group">
+                  <label>Category:</label>
+                  <select id="featuredCategoryFilter">
+                    <option value="all">All Categories</option>
+                    <!-- Categories will load here -->
+                  </select>
+                </div>
+                <div class="filter-group">
+                  <label>Status:</label>
+                  <select id="featuredStatusFilter">
+                    <option value="all">All</option>
+                    <option value="featured">Featured Only</option>
+                    <option value="not-featured">Not Featured</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div id="allProductsList" class="products-selection-grid">
+                <!-- All products will load here -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Products Section -->
+        <section id="productsSection" class="content-section">
+          <div class="section-header">
+            <h2>Product Management</h2>
+            <button id="addProductBtn" class="btn-primary">
+              <i class="fas fa-plus"></i> Add New Product
+            </button>
+          </div>
+          
+          <div class="filter-container">
+            <div class="filter-group">
+              <label>Color:</label>
+              <select id="productColorFilter">
+                <option value="all">All Colors</option>
+                <option value="Red">Red</option>
+                <option value="Blue">Blue</option>
+                <option value="Green">Green</option>
+                <option value="Black">Black</option>
+                <option value="White">White</option>
+                <option value="Brown">Brown</option>
+                <option value="Gray">Gray</option>
+                <option value="Beige">Beige</option>
+                <option value="Navy">Navy</option>
+                <option value="Cream">Cream</option>
+                <option value="Gold">Gold</option>
+                <option value="Silver">Silver</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label>Price Range:</label>
+              <input type="number" id="productMinPrice" placeholder="Min">
+              <input type="number" id="productMaxPrice" placeholder="Max">
+            </div>
+            <div class="filter-group">
+              <label>Stock:</label>
+              <select id="productStockFilter">
+                <option value="all">All Stock</option>
+                <option value="inStock">In Stock</option>
+                <option value="lowStock">Low Stock</option>
+                <option value="outOfStock">Out of Stock</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label>Status:</label>
+              <select id="productStatusFilter">
+                <option value="all">All</option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label>Sort By:</label>
+              <select id="productSortFilter">
+                <option value="name-asc">Name (A-Z)</option>
+                <option value="name-desc">Name (Z-A)</option>
+                <option value="price-asc">Price (Low to High)</option>
+                <option value="price-desc">Price (High to Low)</option>
+                <option value="rating-desc">Top Rated</option>
+                <option value="date-desc">Latest First</option>
+                <option value="date-asc">Oldest First</option>
+              </select>
+            </div>
+            <button id="applyProductFilter" class="btn-primary">Apply Filters</button>
+            <button id="resetProductFilter" class="btn-secondary">Reset</button>
+          </div>
+          
+          <div class="search-bar">
+            <input type="text" id="productSearch" placeholder="Search products...">
+            <button id="productSearchBtn" class="btn-primary">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+          
+          <div id="productsList" class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>Stock</th>
+                  <th>Color</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="productsTableBody"></tbody>
+            </table>
+          </div>
+          
+          <div class="pagination" id="productsPagination"></div>
+        </section>
+
+        <!-- Reviews Section -->
+        <section id="reviewsSection" class="content-section">
+          <div class="section-header">
+            <h2>Comments & Reviews Management</h2>
+          </div>
+          
+          <div class="filter-container">
+            <div class="filter-group">
+              <button class="filter-btn active" data-filter="all">All</button>
+              <button class="filter-btn" data-filter="pending">Pending</button>
+              <button class="filter-btn" data-filter="approved">Approved</button>
+              <button class="filter-btn" data-filter="invisible">Invisible</button>
+            </div>
+            <div class="filter-group">
+              <label>Rating:</label>
+              <select id="reviewRatingFilter">
+                <option value="all">All Ratings</option>
+                <option value="5">5 Stars</option>
+                <option value="4">4 Stars</option>
+                <option value="3">3 Stars</option>
+                <option value="2">2 Stars</option>
+                <option value="1">1 Star</option>
+              </select>
+            </div>
+            <div class="search-bar">
+              <input type="text" id="reviewSearch" placeholder="Search reviews...">
+              <button id="reviewSearchBtn" class="btn-primary">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </div>
+          
+          <div id="reviewsList" class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Product</th>
+                  <th>Customer</th>
+                  <th>Rating</th>
+                  <th>Comment</th>
+                  <th>Approval</th>
+                  <th>Visibility</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="reviewsTableBody"></tbody>
+            </table>
+          </div>
+          
+          <div class="pagination" id="reviewsPagination"></div>
+        </section>
+
+        <!-- Orders Section -->
+        <section id="ordersSection" class="content-section">
+          <div class="section-header">
+            <h2>Order Management</h2>
+          </div>
+          
+          <div class="filter-container">
+            <div class="filter-group">
+              <button class="filter-btn active" data-filter="all">All</button>
+              <button class="filter-btn" data-filter="PENDING">Pending</button>
+              <button class="filter-btn" data-filter="PROCESSING">Processing</button>
+              <button class="filter-btn" data-filter="SHIPPED">Shipped</button>
+              <button class="filter-btn" data-filter="DELIVERED">Delivered</button>
+              <button class="filter-btn" data-filter="CANCELLED">Cancelled</button>
+            </div>
+            <div class="search-bar">
+              <input type="text" id="orderSearch" placeholder="Search by customer...">
+              <button id="orderSearchBtn" class="btn-primary">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </div>
+          
+          <div id="ordersList" class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Date</th>
+                  <th>Customer</th>
+                  <th>Total</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="ordersTableBody"></tbody>
+            </table>
+          </div>
+          
+          <div class="pagination" id="ordersPagination"></div>
+        </section>
+
+        <!-- Promotional Popups Section -->
+        <section id="announcementsSection" class="content-section">
+          <div class="section-header">
+            <h2>Promotional Popups Management</h2>
+            <button id="addPopupBtn" class="btn-primary">
+              <i class="fas fa-plus"></i> Add New Popup
+            </button>
+          </div>
+          
+          <div class="filter-container">
+            <div class="filter-group">
+              <button class="filter-btn active" data-filter="all">All</button>
+              <button class="filter-btn" data-filter="active">Active</button>
+              <button class="filter-btn" data-filter="scheduled">Scheduled</button>
+              <button class="filter-btn" data-filter="expired">Expired</button>
+            </div>
+            <div class="filter-group">
+              <label>Type:</label>
+              <select id="popupTypeFilter">
+                <option value="all">All Types</option>
+                <option value="ENTRY">Entry Popup</option>
+                <option value="NEWSLETTER">Newsletter</option>
+                <option value="PROMOTIONAL">Promotional</option>
+              </select>
+            </div>
+          </div>
+          
+          <div id="popupsList" class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Type</th>
+                  <th>Status</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="popupsTableBody"></tbody>
+            </table>
+          </div>
+          
+          <div class="pagination" id="popupsPagination"></div>
+        </section>
+
+        <!-- Categories Section -->
+        <section id="categoriesSection" class="content-section">
+          <div class="section-header">
+            <h2>Category Management</h2>
+            <button id="addCategoryBtn" class="btn-primary">
+              <i class="fas fa-plus"></i> Add Category
+            </button>
+          </div>
+          
+          <div id="categoriesList" class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Products</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="categoriesTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Audio Player Section -->
+        <section id="audioSection" class="content-section">
+          <div class="section-header">
+            <h2>Website Audio Player</h2>
+          </div>
+
+          <div class="audio-admin-panel">
+
+            <!-- Current audio info (shown after upload) -->
+            <div class="audio-current-info" id="audioCurrentInfo" style="display:none">
+              <div class="audio-file-info">
+                <i class="fas fa-music fa-2x"></i>
+                <div>
+                  <strong id="audioFileName">No file</strong>
+                  <span id="audioFileSize" class="audio-size-badge"></span>
+                </div>
+              </div>
+              <audio id="adminAudioPreview" class="admin-audio-preview" controls></audio>
+
+              <div class="audio-controls-grid">
+                <label class="audio-toggle-label">
+                  <input type="checkbox" id="audioLoopToggle">
+                  <span class="audio-toggle-track"></span>
+                  <span class="audio-toggle-text">Loop audio</span>
+                </label>
+                <label class="audio-toggle-label">
+                  <input type="checkbox" id="audioAutoPlayToggle">
+                  <span class="audio-toggle-track"></span>
+                  <span class="audio-toggle-text">Auto-play on page load</span>
+                </label>
+                <label class="audio-toggle-label">
+                  <input type="checkbox" id="audioActiveToggle" checked>
+                  <span class="audio-toggle-track"></span>
+                  <span class="audio-toggle-text">Show player on website</span>
+                </label>
+              </div>
+
+              <div class="audio-action-btns">
+                <button id="saveAudioBtn" class="btn-primary">
+                  <i class="fas fa-cloud-upload-alt"></i> Save &amp; Publish
+                </button>
+                <button id="changeAudioBtn" class="btn-secondary">
+                  <i class="fas fa-exchange-alt"></i> Change File
+                </button>
+                <button id="removeAudioBtn" class="btn-danger">
+                  <i class="fas fa-trash"></i> Remove Audio
+                </button>
+              </div>
+            </div>
+
+            <!-- Drop zone (shown when no audio or when changing) -->
+            <div class="audio-drop-zone" id="audioDragDrop">
+              <div class="audio-drop-icon">
+                <i class="fas fa-music"></i>
+              </div>
+              <p class="audio-drop-title">Drag &amp; drop an audio file here</p>
+              <p class="audio-drop-or">or</p>
+              <label for="audioFileInput" class="btn-primary audio-browse-btn">
+                <i class="fas fa-folder-open"></i> Browse File
+              </label>
+              <input type="file" id="audioFileInput" accept="audio/*" style="display:none">
+              <p class="audio-formats">MP3 &bull; WAV &bull; OGG &bull; AAC &bull; FLAC</p>
+              <p class="audio-size-note">Recommended: under 10 MB</p>
+            </div>
+
+            <!-- Status message -->
+            <div id="audioStatusMsg" class="audio-status-msg" style="display:none"></div>
+
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Product Modal -->
+  <div id="productModal" class="modal">
+    <div class="modal-content modal-large">
+      <div class="modal-header">
+        <h2 id="productModalTitle">Add New Product</h2>
+        <button class="modal-close">&times;</button>
+      </div>
+      <form id="productForm">
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Product Name (English) *</label>
+              <input type="text" id="productName" required>
+            </div>
+            <div class="form-group">
+              <label>Product Name (Arabic)</label>
+              <input type="text" id="productNameAr" dir="rtl" placeholder="??? ??????">
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>SKU *</label>
+              <input type="text" id="productSku" required>
+            </div>
+            <div class="form-group">
+              <label>Category *</label>
+              <select id="productCategory" required>
+                <option value="">Select a category</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label>Description (English)</label>
+            <textarea id="productDescription" rows="4"></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label>Description (Arabic)</label>
+            <textarea id="productDescriptionAr" rows="4" dir="rtl" placeholder="??? ??????"></textarea>
+          </div>
+          
+          <!-- Color Variants Section -->
+          <div class="form-group">
+            <label>Color Variants *</label>
+            <div id="colorVariantsContainer">
+              <!-- Color variants will be added here dynamically -->
+            </div>
+            <button type="button" id="addColorVariantBtn" class="vs-btn style4">
+              <i class="fas fa-plus"></i> Add Color Variant
+            </button>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>Price *</label>
+              <input type="number" id="productPrice" step="0.01" required>
+            </div>
+            <div class="form-group">
+              <!-- Empty for spacing -->
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label>
+              <input type="checkbox" id="productActive" checked>
+              Active
+            </label>
+          </div>
+          
+          <div class="form-group">
+            <label>Product Images</label>
+            <div class="image-upload-area">
+              <input type="file" id="productImageUpload" multiple accept="image/*">
+              <label for="productImageUpload" class="upload-label">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Click to upload or drag and drop images</p>
+              </label>
+            </div>
+            <div id="imagePreviewContainer" class="image-preview-grid">
+              <!-- Images will be added here -->
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary modal-close">Cancel</button>
+          <button type="submit" class="btn-primary">Save Product</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Blog Modal -->
+  <div id="blogModal" class="modal">
+    <div class="modal-content modal-large">
+      <div class="modal-header">
+        <h2 id="blogModalTitle">Add New Blog Post</h2>
+        <button class="modal-close">&times;</button>
+      </div>
+      <form id="blogForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Title (English) *</label>
+            <input type="text" id="blogTitle" required>
+          </div>
+          
+          <div class="form-group">
+            <label>Title (Arabic)</label>
+            <input type="text" id="blogTitleAr" dir="rtl" placeholder="????? ??????">
+          </div>
+          
+          <div class="form-group">
+            <label>Slug *</label>
+            <input type="text" id="blogSlug" required>
+          </div>
+          
+          <div class="form-group">
+            <label>Excerpt</label>
+            <textarea id="blogExcerpt" rows="3"></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label>Content (English) *</label>
+            <textarea id="blogContent" rows="10" required></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label>Content (Arabic)</label>
+            <textarea id="blogContentAr" rows="10" dir="rtl" placeholder="????? ??????"></textarea>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>Category (English)</label>
+              <input type="text" id="blogCategory">
+            </div>
+            <div class="form-group">
+              <label>Category (Arabic)</label>
+              <input type="text" id="blogCategoryAr" dir="rtl" placeholder="???????">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label>Featured Image</label>
+            <div id="blogImageUploadZone" class="upload-zone">
+              <input type="file" accept="image/*" id="blogImageFile">
+              <div class="upload-zone-label">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <span class="upload-text">Drag & drop image here or click to browse</span>
+                <span class="upload-hint">JPG, PNG, GIF, WebP (Max 10MB)</span>
+              </div>
+            </div>
+            <div id="blogImagePreview" style="display:none;"></div>
+            <input type="text" id="blogImage" style="display:none;">
+            <small style="color: var(--text-muted); display: block; margin-top: 8px;">
+              Or enter image URL manually:
+              <input type="text" id="blogImageURL" placeholder="https://example.com/image.jpg" 
+                     style="display: block; width: 100%; margin-top: 5px; padding: 8px; 
+                            background: rgba(15, 61, 46, 0.3); border: 1px solid var(--border-color); 
+                            border-radius: 4px; color: var(--text-light);">
+            </small>
+          </div>
+          
+          <div class="form-group">
+            <label>Tags (comma-separated)</label>
+            <input type="text" id="blogTags" placeholder="tag1, tag2, tag3">
+          </div>
+          
+          <div class="form-group">
+            <label>
+              <input type="checkbox" id="blogPublished">
+              Published
+            </label>
+          </div>
+          
+          <div class="form-group">
+            <label>
+              <input type="checkbox" id="blogFeatured">
+              Featured on Homepage
+            </label>
+          </div>
+          
+          <div class="form-group">
+            <label>Display Order (for featured posts)</label>
+            <input type="number" id="blogFeaturedOrder" min="0" value="0" placeholder="0">
+          </div>
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary modal-close">Cancel</button>
+          <button type="submit" class="btn-primary">Save Post</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Home Content Modal -->
+  <div id="homeContentModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="homeContentModalTitle">Add Home Content</h2>
+        <button class="modal-close">&times;</button>
+      </div>
+      <form id="homeContentForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Page Name *</label>
+            <select id="contentPageName" required>
+              <option value="Home">Home</option>
+              <option value="About">About</option>
+              <option value="Contact">Contact</option>
+              <option value="Shop">Shop</option>
+            </select>
+            <small>The page this content belongs to</small>
+          </div>
+          
+          <div class="form-group">
+            <label>Section Name *</label>
+            <select id="contentSectionName" required>
+              <option value="Hero">Hero</option>
+              <option value="Featured">Featured Products</option>
+              <option value="About">About</option>
+              <option value="Features">Features</option>
+              <option value="Gallery">Gallery</option>
+              <option value="Story">Story</option>
+            </select>
+            <small>Select the section (language is handled via Arabic content field)</small>
+          </div>
+          
+          <div class="form-group">
+            <label>Content Type *</label>
+            <select id="contentType" required>
+              <option value="TEXT">Text</option>
+              <option value="HTML">HTML</option>
+              <option value="IMAGE">Image</option>
+              <option value="VIDEO">Video</option>
+              <option value="URL">URL</option>
+            </select>
+          </div>
+          
+          <!-- Image Upload Zone (shown only when type is IMAGE) -->
+          <div id="contentImageUploadContainer" class="form-group" style="display:none;">
+            <label>Upload Image</label>
+            <div id="contentImageUploadZone" class="upload-zone">
+              <input type="file" accept="image/*" id="contentImageFile">
+              <div class="upload-zone-label">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <span class="upload-text">Drag & drop image here or click to browse</span>
+                <span class="upload-hint">JPG, PNG, GIF, WebP (Max 10MB)</span>
+              </div>
+            </div>
+            <div id="contentImagePreview" style="display:none;"></div>
+          </div>
+          
+          <div class="form-group" id="contentValueContainer">
+            <label>Content Value (English) *</label>
+            <textarea id="contentValue" rows="5" required placeholder="Enter the English content (text, URL, HTML, etc.)"></textarea>
+            <small>For images/videos: enter the file path or URL</small>
+          </div>
+          
+          <div class="form-group">
+            <label>Content Value (Arabic)</label>
+            <textarea id="contentValueAr" rows="5" dir="rtl" placeholder="???? ??????? ????????"></textarea>
+            <small>Arabic version of the content (optional for URLs/images)</small>
+          </div>
+          
+          <div class="form-group">
+            <label>Display Order</label>
+            <input type="number" id="contentDisplayOrder" value="1" min="1">
+            <small>Order in which this content appears (1=first, 2=second, etc.)</small>
+          </div>
+          
+          <div class="form-group">
+            <label>
+              <input type="checkbox" id="contentActive" checked>
+              Active
+            </label>
+          </div>
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary modal-close">Cancel</button>
+          <button type="submit" class="btn-primary">Save Content</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Category Modal -->
+  <div id="categoryModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="categoryModalTitle">Add Category</h2>
+        <button class="modal-close">&times;</button>
+      </div>
+      <form id="categoryForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Name *</label>
+            <input type="text" id="categoryName" required>
+          </div>
+          
+          <div class="form-group">
+            <label>Description</label>
+            <textarea id="categoryDescription" rows="3"></textarea>
+          </div>
+          
+          <div class="form-group">
+            <label>Display Order</label>
+            <input type="number" id="categoryOrder" value="0">
+          </div>
+          
+          <div class="form-group">
+            <label>
+              <input type="checkbox" id="categoryActive" checked>
+              Active
+            </label>
+          </div>
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary modal-close">Cancel</button>
+          <button type="submit" class="btn-primary">Save Category</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Message Detail Modal -->
+  <div id="messageModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Message Details</h2>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body" id="messageDetailContent">
+        <!-- Content will be populated dynamically -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary modal-close">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Order Detail Modal -->
+  <div id="orderModal" class="modal">
+    <div class="modal-content modal-large">
+      <div class="modal-header">
+        <h2>Order Details</h2>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body" id="orderDetailContent">
+        <!-- Content will be populated dynamically -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary modal-close">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Popup Modal -->
+  <div id="popupModal" class="modal">
+    <div class="modal-content modal-large">
+      <div class="modal-header">
+        <h2 id="popupModalTitle">Add New Popup</h2>
+        <button class="modal-close">&times;</button>
+      </div>
+      <form id="popupForm">
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Title (English) *</label>
+              <input type="text" id="popupTitle" required>
+            </div>
+            <div class="form-group">
+              <label>Title (Arabic) *</label>
+              <input type="text" id="popupTitleAr" required dir="rtl">
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>Message (English)</label>
+              <textarea id="popupMessage" rows="4"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Message (Arabic)</label>
+              <textarea id="popupMessageAr" rows="4" dir="rtl"></textarea>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label>Image</label>
+            <div id="popupImageUploadZone" class="upload-zone">
+              <input type="file" accept="image/*" id="popupImageFile">
+              <div class="upload-zone-label">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <span class="upload-text">Drag & drop image here or click to browse</span>
+                <span class="upload-hint">JPG, PNG, GIF, WebP (Max 10MB)</span>
+              </div>
+            </div>
+            <div id="popupImagePreview" style="display:none;"></div>
+            <input type="text" id="popupImage" style="display:none;">
+            <small style="color: var(--text-muted); display: block; margin-top: 8px;">
+              Or enter image URL manually:
+              <input type="text" id="popupImageURL" placeholder="https://example.com/image.jpg" 
+                     style="display: block; width: 100%; margin-top: 5px; padding: 8px; 
+                            background: rgba(15, 61, 46, 0.3); border: 1px solid var(--border-color); 
+                            border-radius: 4px; color: var(--text-light);">
+            </small>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>Button Text (English)</label>
+              <input type="text" id="popupCtaText" placeholder="Shop Now">
+            </div>
+            <div class="form-group">
+              <label>Button Text (Arabic)</label>
+              <input type="text" id="popupCtaTextAr" placeholder="???? ????" dir="rtl">
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label>Button Link</label>
+            <input type="text" id="popupCtaLink" placeholder="shop-sidebar.html">
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>Type *</label>
+              <select id="popupType" required>
+                <option value="ENTRY">Entry Popup</option>
+                <option value="NEWSLETTER">Newsletter</option>
+                <option value="PROMOTIONAL">Promotional</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>
+                <input type="checkbox" id="popupActive" checked>
+                Active
+              </label>
+            </div>
+          </div>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label>Start Date</label>
+              <input type="datetime-local" id="popupStartDate">
+              <small>Leave empty for immediate start</small>
+            </div>
+            <div class="form-group">
+              <label>End Date</label>
+              <input type="datetime-local" id="popupEndDate">
+              <small>Leave empty for no expiration</small>
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary modal-close">Cancel</button>
+          <button type="submit" class="btn-primary">Save Popup</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/vendor/jquery-3.6.0.min.js"></script>
+  <script src="assets/js/bootstrap.min.js"></script>
+  <script src="assets/js/api-config.js"></script>
+  <script src="assets/js/admin-dashboard.js"></script>
+</body>
+
+</html>

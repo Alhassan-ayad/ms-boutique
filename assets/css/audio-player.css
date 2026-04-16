@@ -1,0 +1,373 @@
+/* ============================================================
+   Header Audio Player - User-facing waveform player
+   ============================================================ */
+
+.header-audio-player {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 40px;
+}
+
+/* ---- Toggle Button ---- */
+.audio-toggle-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #5C4033;
+  font-size: 18px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease, transform 0.2s ease;
+  flex-shrink: 0;
+  padding: 0;
+}
+
+.audio-toggle-btn:hover {
+  transform: scale(1.2);
+  color: #3a1100;
+}
+
+.audio-toggle-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(92, 64, 51, 0.35);
+}
+
+/* ---- Waveform Container ---- */
+.wave-container {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 36px;
+  overflow: hidden;
+  padding-bottom: 1px;
+}
+
+/* ---- Individual Bars ---- */
+.wave-bar {
+  display: inline-block;
+  width: 3px;
+  background-color: #5C4033;
+  border-radius: 2px;
+  transform-origin: bottom center;
+  flex-shrink: 0;
+  height: 4px;
+}
+
+/* Static waveform profile heights */
+.wave-bar:nth-child(1)  { height: 8px;  }
+.wave-bar:nth-child(2)  { height: 14px; }
+.wave-bar:nth-child(3)  { height: 22px; }
+.wave-bar:nth-child(4)  { height: 30px; }
+.wave-bar:nth-child(5)  { height: 18px; }
+.wave-bar:nth-child(6)  { height: 26px; }
+.wave-bar:nth-child(7)  { height: 34px; }
+.wave-bar:nth-child(8)  { height: 20px; }
+.wave-bar:nth-child(9)  { height: 12px; }
+.wave-bar:nth-child(10) { height: 28px; }
+.wave-bar:nth-child(11) { height: 32px; }
+.wave-bar:nth-child(12) { height: 24px; }
+.wave-bar:nth-child(13) { height: 16px; }
+.wave-bar:nth-child(14) { height: 30px; }
+.wave-bar:nth-child(15) { height: 22px; }
+.wave-bar:nth-child(16) { height: 10px; }
+.wave-bar:nth-child(17) { height: 20px; }
+.wave-bar:nth-child(18) { height: 34px; }
+.wave-bar:nth-child(19) { height: 26px; }
+.wave-bar:nth-child(20) { height: 14px; }
+.wave-bar:nth-child(21) { height: 30px; }
+.wave-bar:nth-child(22) { height: 18px; }
+.wave-bar:nth-child(23) { height: 28px; }
+.wave-bar:nth-child(24) { height: 10px; }
+.wave-bar:nth-child(25) { height: 24px; }
+.wave-bar:nth-child(26) { height: 32px; }
+.wave-bar:nth-child(27) { height: 16px; }
+.wave-bar:nth-child(28) { height: 22px; }
+.wave-bar:nth-child(29) { height: 8px;  }
+.wave-bar:nth-child(30) { height: 14px; }
+
+/* ---- Playing Keyframes ---- */
+@keyframes waveA { 0%,100% { transform: scaleY(1);    } 50% { transform: scaleY(0.15); } }
+@keyframes waveB { 0%,100% { transform: scaleY(0.3);  } 50% { transform: scaleY(1);    } }
+@keyframes waveC { 0%,100% { transform: scaleY(0.6);  } 50% { transform: scaleY(0.1);  } }
+@keyframes waveD { 0%,100% { transform: scaleY(0.2);  } 50% { transform: scaleY(0.9);  } }
+@keyframes waveE { 0%,100% { transform: scaleY(0.8);  } 50% { transform: scaleY(0.2);  } }
+
+/* ---- Playing Animations (each bar has unique speed + delay) ---- */
+.wave-container.playing .wave-bar:nth-child(1)  { animation: waveA 0.55s ease-in-out infinite; }
+.wave-container.playing .wave-bar:nth-child(2)  { animation: waveB 0.70s ease-in-out infinite; animation-delay: 0.05s; }
+.wave-container.playing .wave-bar:nth-child(3)  { animation: waveC 0.50s ease-in-out infinite; animation-delay: 0.10s; }
+.wave-container.playing .wave-bar:nth-child(4)  { animation: waveD 0.65s ease-in-out infinite; animation-delay: 0.15s; }
+.wave-container.playing .wave-bar:nth-child(5)  { animation: waveA 0.75s ease-in-out infinite; animation-delay: 0.20s; }
+.wave-container.playing .wave-bar:nth-child(6)  { animation: waveE 0.60s ease-in-out infinite; animation-delay: 0.07s; }
+.wave-container.playing .wave-bar:nth-child(7)  { animation: waveB 0.45s ease-in-out infinite; animation-delay: 0.12s; }
+.wave-container.playing .wave-bar:nth-child(8)  { animation: waveC 0.80s ease-in-out infinite; animation-delay: 0.18s; }
+.wave-container.playing .wave-bar:nth-child(9)  { animation: waveD 0.55s ease-in-out infinite; animation-delay: 0.03s; }
+.wave-container.playing .wave-bar:nth-child(10) { animation: waveA 0.70s ease-in-out infinite; animation-delay: 0.09s; }
+.wave-container.playing .wave-bar:nth-child(11) { animation: waveE 0.50s ease-in-out infinite; animation-delay: 0.15s; }
+.wave-container.playing .wave-bar:nth-child(12) { animation: waveB 0.68s ease-in-out infinite; animation-delay: 0.22s; }
+.wave-container.playing .wave-bar:nth-child(13) { animation: waveC 0.58s ease-in-out infinite; animation-delay: 0.06s; }
+.wave-container.playing .wave-bar:nth-child(14) { animation: waveD 0.42s ease-in-out infinite; animation-delay: 0.13s; }
+.wave-container.playing .wave-bar:nth-child(15) { animation: waveA 0.75s ease-in-out infinite; animation-delay: 0.19s; }
+.wave-container.playing .wave-bar:nth-child(16) { animation: waveE 0.62s ease-in-out infinite; animation-delay: 0.04s; }
+.wave-container.playing .wave-bar:nth-child(17) { animation: waveB 0.55s ease-in-out infinite; animation-delay: 0.11s; }
+.wave-container.playing .wave-bar:nth-child(18) { animation: waveC 0.48s ease-in-out infinite; animation-delay: 0.17s; }
+.wave-container.playing .wave-bar:nth-child(19) { animation: waveD 0.72s ease-in-out infinite; animation-delay: 0.08s; }
+.wave-container.playing .wave-bar:nth-child(20) { animation: waveA 0.60s ease-in-out infinite; animation-delay: 0.14s; }
+.wave-container.playing .wave-bar:nth-child(21) { animation: waveE 0.78s ease-in-out infinite; animation-delay: 0.21s; }
+.wave-container.playing .wave-bar:nth-child(22) { animation: waveB 0.52s ease-in-out infinite; animation-delay: 0.05s; }
+.wave-container.playing .wave-bar:nth-child(23) { animation: waveC 0.67s ease-in-out infinite; animation-delay: 0.16s; }
+.wave-container.playing .wave-bar:nth-child(24) { animation: waveD 0.44s ease-in-out infinite; animation-delay: 0.02s; }
+.wave-container.playing .wave-bar:nth-child(25) { animation: waveA 0.73s ease-in-out infinite; animation-delay: 0.10s; }
+.wave-container.playing .wave-bar:nth-child(26) { animation: waveE 0.56s ease-in-out infinite; animation-delay: 0.18s; }
+.wave-container.playing .wave-bar:nth-child(27) { animation: waveB 0.65s ease-in-out infinite; animation-delay: 0.07s; }
+.wave-container.playing .wave-bar:nth-child(28) { animation: waveC 0.50s ease-in-out infinite; animation-delay: 0.13s; }
+.wave-container.playing .wave-bar:nth-child(29) { animation: waveD 0.77s ease-in-out infinite; animation-delay: 0.20s; }
+.wave-container.playing .wave-bar:nth-child(30) { animation: waveA 0.48s ease-in-out infinite; animation-delay: 0.09s; }
+
+/* ---- RTL Support ---- */
+/* In RTL, flex-direction:row naturally flows right-to-left, packing content at the right edge.
+   No override needed — removing row-reverse ensures the player sits flush to the right. */
+[dir="rtl"] .header-audio-player {
+  justify-content: flex-start; /* flex-start in RTL = right edge */
+}
+
+/* ---- Responsive: hide header player on very small screens ---- */
+@media (max-width: 575.98px) {
+  .header-audio-player {
+    display: none !important;
+  }
+}
+
+/* ============================================================
+   Mobile Menu Extras  (language switcher + audio player)
+   ============================================================ */
+
+.mobile-extras {
+  padding: 20px 20px 28px;
+  border-top: 1px solid rgba(200, 174, 120, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  background: #fff;
+}
+
+/* ---- Mobile language switcher ---- */
+.mobile-lang-switcher {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mobile-lang-switcher .lang-btn-en,
+.mobile-lang-switcher .lang-btn-ar {
+  background: transparent;
+  border: 1.5px solid #5C4033;
+  color: #5C4033;
+  border-radius: 4px;
+  padding: 5px 12px;
+  font-size: 13px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+  letter-spacing: 0.5px;
+}
+
+.mobile-lang-switcher .lang-btn-en.active,
+.mobile-lang-switcher .lang-btn-ar.active {
+  background: #2C1A00;
+  color: #C9A24D;
+  border-color: #2C1A00;
+}
+
+.mobile-lang-switcher .lang-sep {
+  color: #5C4033;
+  font-size: 14px;
+  opacity: 0.5;
+}
+
+/* ---- Mobile audio player ---- */
+.mobile-audio-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mobile-audio-btn {
+  background: #2C1A00;
+  border: none;
+  color: #C9A24D;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+
+.mobile-audio-btn:hover,
+.mobile-audio-btn:focus {
+  background: #3d2500;
+  transform: scale(1.1);
+  outline: none;
+}
+
+.mobile-wave-container {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 30px;
+}
+
+.mobile-wave-container .wave-bar {
+  width: 3px;
+  background-color: #5C4033;
+  border-radius: 2px;
+  transform-origin: bottom center;
+}
+
+/* When playing: reuse the same keyframe animations */
+.mobile-wave-container.playing .wave-bar:nth-child(1)  { animation: waveA 0.55s ease-in-out infinite; }
+.mobile-wave-container.playing .wave-bar:nth-child(2)  { animation: waveB 0.70s ease-in-out infinite; animation-delay: 0.05s; }
+.mobile-wave-container.playing .wave-bar:nth-child(3)  { animation: waveC 0.50s ease-in-out infinite; animation-delay: 0.10s; }
+.mobile-wave-container.playing .wave-bar:nth-child(4)  { animation: waveD 0.65s ease-in-out infinite; animation-delay: 0.15s; }
+.mobile-wave-container.playing .wave-bar:nth-child(5)  { animation: waveA 0.75s ease-in-out infinite; animation-delay: 0.20s; }
+.mobile-wave-container.playing .wave-bar:nth-child(6)  { animation: waveE 0.60s ease-in-out infinite; animation-delay: 0.07s; }
+.mobile-wave-container.playing .wave-bar:nth-child(7)  { animation: waveB 0.45s ease-in-out infinite; animation-delay: 0.12s; }
+.mobile-wave-container.playing .wave-bar:nth-child(8)  { animation: waveC 0.80s ease-in-out infinite; animation-delay: 0.18s; }
+.mobile-wave-container.playing .wave-bar:nth-child(9)  { animation: waveD 0.55s ease-in-out infinite; animation-delay: 0.03s; }
+.mobile-wave-container.playing .wave-bar:nth-child(10) { animation: waveA 0.70s ease-in-out infinite; animation-delay: 0.09s; }
+.mobile-wave-container.playing .wave-bar:nth-child(11) { animation: waveE 0.50s ease-in-out infinite; animation-delay: 0.15s; }
+.mobile-wave-container.playing .wave-bar:nth-child(12) { animation: waveB 0.68s ease-in-out infinite; animation-delay: 0.22s; }
+.mobile-wave-container.playing .wave-bar:nth-child(13) { animation: waveC 0.58s ease-in-out infinite; animation-delay: 0.06s; }
+.mobile-wave-container.playing .wave-bar:nth-child(14) { animation: waveD 0.42s ease-in-out infinite; animation-delay: 0.13s; }
+.mobile-wave-container.playing .wave-bar:nth-child(15) { animation: waveA 0.75s ease-in-out infinite; animation-delay: 0.19s; }
+.mobile-wave-container.playing .wave-bar:nth-child(16) { animation: waveE 0.62s ease-in-out infinite; animation-delay: 0.04s; }
+.mobile-wave-container.playing .wave-bar:nth-child(17) { animation: waveB 0.55s ease-in-out infinite; animation-delay: 0.11s; }
+.mobile-wave-container.playing .wave-bar:nth-child(18) { animation: waveC 0.48s ease-in-out infinite; animation-delay: 0.17s; }
+.mobile-wave-container.playing .wave-bar:nth-child(19) { animation: waveD 0.72s ease-in-out infinite; animation-delay: 0.08s; }
+.mobile-wave-container.playing .wave-bar:nth-child(20) { animation: waveA 0.60s ease-in-out infinite; animation-delay: 0.14s; }
+
+/* ============================================================
+   Music Preference Popup (first-visit)
+   ============================================================ */
+
+.audio-pref-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 99999;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.audio-pref-overlay.visible {
+  opacity: 1;
+}
+
+.audio-pref-card {
+  background: #f5ede0;
+  border-radius: 20px;
+  padding: 40px 36px 32px;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  transform: translateY(20px);
+  transition: transform 0.35s ease;
+}
+
+.audio-pref-overlay.visible .audio-pref-card {
+  transform: translateY(0);
+}
+
+.audio-pref-icon-wrap {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: #2C1A00;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  color: #C9A24D;
+  margin: 0 auto 20px;
+}
+
+.audio-pref-title {
+  font-family: 'Cormorant', serif;
+  font-size: 26px;
+  font-weight: 600;
+  color: #2C1A00;
+  margin: 0 0 10px;
+  letter-spacing: 0.5px;
+}
+
+.audio-pref-desc {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  color: #5C4033;
+  margin: 0 0 28px;
+  line-height: 1.6;
+}
+
+.audio-pref-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.audio-pref-yes,
+.audio-pref-no {
+  border: none;
+  border-radius: 50px;
+  padding: 13px 28px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.audio-pref-yes {
+  background: #2C1A00;
+  color: #C9A24D;
+}
+
+.audio-pref-yes:hover {
+  background: #3d2500;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(44, 26, 0, 0.35);
+}
+
+.audio-pref-no {
+  background: transparent;
+  color: #5C4033;
+  border: 1.5px solid #5C4033;
+}
+
+.audio-pref-no:hover {
+  background: rgba(92, 64, 51, 0.08);
+  transform: translateY(-1px);
+}

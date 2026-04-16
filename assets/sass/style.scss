@@ -1,0 +1,244 @@
+/*
+Template Name: Luxrio
+Template URL: https://html.vecuro.com/luxrio
+Description: Luxrio - A Premium HTML5 Template for Fashion & Watch E-Commerce
+Author: Vecuro
+Author URL: https://themeforest.net/user/vecuro_themes
+Version: 1.0.0
+*/
+
+/*=================================
+    CSS Index Here
+==================================*/
+/*
+01. Theme Base
+    1.1. Mixin
+    1.2. Function
+    1.3. Variable
+    1.4. Typography
+    1.5. Extend
+    1.6. Wordpress Default
+
+02. Reset
+    2.1. Container
+    2.2. Grid
+    2.3. Input
+    2.4. Slick Slider
+    2.5. Mobile Menu
+
+03. Utilities
+    3.1. Preloader
+    3.2. Buttons
+    3.3. Titles
+    3.4. Common
+    3.5. Font
+    3.6. Background
+    3.7. Text Color
+    3.8. Overlay
+    3.9. Animation
+    3.10. Icon
+
+04. Template Style
+    4.1. Widget
+    4.2. Header
+    4.3. Footer
+    4.4. Breadcrumb
+    4.5. Pagination
+    4.6. Blog
+    4.7. Comments
+    4.8. Hero Area
+    4.9. Feature
+    4.10. About
+    4.11. Service
+    4.12. Counter
+    4.13. Team
+    4.14. Process
+    4.15. Accordion
+    4.16. Simple Sections
+    4.17. Testimonial
+    4.18. Popup Side Menu
+    4.19. Price Plan
+    4.20. Forms Style
+    4.21. Projects
+    4.22. Contact
+    4.23. Product
+    4.24. Categories
+    4.25. Offer
+    4.26. Instagram
+    4.27. Shop
+    4.28. WooCommerce
+    4.29. Gallery
+    4.30. Banner
+    4.31. Popup Search
+    4.32. Cart
+    
+05. Spacing
+*/
+/*=================================
+    CSS Index End
+==================================*/
+
+/*=================================
+   01. Theme Base
+==================================*/
+/*------------------- 1.1. Mixin -------------------*/
+@import "base/mixin";
+
+/*------------------- 1.2. Function -------------------*/
+@import "base/function";
+
+/*------------------- 1.3. Variable-------------------*/
+@import "base/variable";
+
+/*------------------- 1.5. Reset -------------------*/
+@import "base/reset";
+
+/*------------------- 1.6. Responsive -------------------*/
+@import "base/responsive";
+
+/*------------------- 1.7. Wordpress Default -------------------*/
+@import "base/wpdefault";
+
+/*=================================
+    02. Reset
+==================================*/
+/*------------------- 2.1. Container -------------------*/
+@import "reset/container";
+
+/*------------------- 2.2. Grid -------------------*/
+@import "reset/grid";
+
+/*------------------- 2.3. Input -------------------*/
+@import "reset/input";
+
+/*------------------- 2.4. Slick Slider -------------------*/
+@import "reset/slick-slider";
+
+/*------------------- 2.5. Mobile Menu -------------------*/
+@import "reset/vsmenu";
+
+/*=================================
+    03. Utilities
+==================================*/
+/*------------------- 3.1. Preloader -------------------*/
+@import "utilities/preloader";
+
+/*------------------- 3.2. Buttons -------------------*/
+@import "utilities/btns";
+
+/*------------------- 3.3. Titles -------------------*/
+@import "utilities/titles";
+
+/*------------------- 3.4. Common -------------------*/
+@import "utilities/common";
+
+/*------------------- 3.6. Font -------------------*/
+@import "utilities/font";
+
+/*------------------- 3.7. Background -------------------*/
+@import "utilities/background";
+
+/*------------------- 3.8. Text Color -------------------*/
+@import "utilities/text-color";
+
+/*------------------- 3.9. Overlay -------------------*/
+@import "utilities/overlay";
+
+/*------------------- 3.10. Animation -------------------*/
+@import "utilities/animation";
+
+/*------------------- 3.10. Animation -------------------*/
+@import "utilities/icon";
+
+/*=================================
+    04. Template Style
+==================================*/
+/*------------------- 4.1. Widget  -------------------*/
+@import "template/widgets/widget-default-list";
+@import "template/widgets/widget-sidebar";
+
+/*------------------- 4.2. Header  -------------------*/
+@import "template/headers/header";
+
+/*------------------- 4.3. Footer  -------------------*/
+@import "template/footers/footer";
+
+/*------------------- 4.4. Breadcumb  -------------------*/
+@import "template/breadcumb/breadcumb-v1";
+
+/*------------------- 4.5. Pagination  -------------------*/
+@import "template/sections/pagination-v1";
+
+/*------------------- 4.6. Blog  -------------------*/
+@import "template/sections/blog";
+
+/*------------------- 4.7. Comments  -------------------*/
+@import "template/sections/comments";
+
+/*------------------- 4.8. Hero Area  -------------------*/
+@import "template/sections/hero";
+
+/*------------------- 4.10. Feature  -------------------*/
+@import "template/sections/feature";
+
+/*------------------- 4.11. About  -------------------*/
+@import "template/sections/about";
+
+/*------------------- 4.13. Counter  -------------------*/
+@import "template/sections/counter";
+
+/*------------------- 4.15. Process  -------------------*/
+@import "template/sections/process";
+
+/*------------------- 4.16. Accordion  -------------------*/
+@import "template/sections/accordion";
+
+/*------------------- 4.17. Simple Sections  -------------------*/
+@import "template/sections/simple-sections";
+
+/*------------------- 4.18. Testimonial  -------------------*/
+@import "template/sections/testimonoial";
+
+/*------------------- 4.19. Popup Side Menu  -------------------*/
+@import "template/sections/sidemenu-v1";
+
+/*------------------- 4.21. Forms Style  -------------------*/
+@import "template/sections/forms";
+
+/*------------------- 4.23. Contact  -------------------*/
+@import "template/sections/contact";
+
+/*------------------- 4.25. CTA  -------------------*/
+@import "template/sections/product";
+
+/*------------------- 4.25. categories  -------------------*/
+@import "template/sections/cate";
+
+/*------------------- 4.26. offer  -------------------*/
+@import "template/sections/offer";
+
+/*------------------- 4.27. Instagram  -------------------*/
+@import "template/sections/insta";
+
+/*------------------- 4.28. shop  -------------------*/
+@import "template/sections/shop";
+
+/*------------------- 4.29. woocommerce  -------------------*/
+@import "template/sections/woocommerce";
+
+/*------------------- 4.30. gallery  -------------------*/
+@import "template/sections/gallery";
+
+/*------------------- 4.31. banner  -------------------*/
+@import "template/sections/banner";
+
+/*------------------- 4.32. popupsearch  -------------------*/
+@import "template/sections/popupsearch-v1";
+
+/*------------------- 4.33. cart  -------------------*/
+@import "template/sections/cart";
+
+/*=================================
+    05. Spacing
+==================================*/
+@import "spacing/spacing";

@@ -1,0 +1,641 @@
+﻿<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+	
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>YASSO bags</title>
+  <meta name="author" content="vecuro">
+  <meta name="description" content="Luxrio - The Fashion & Bags E-Commerce HTML5 Template">
+  <meta name="keywords" content="Luxrio - The Fashion & Bags E-Commerce HTML5 Template">
+  <meta name="robots" content="INDEX,FOLLOW">
+  <!-- Mobile Specific Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Favicon -->
+  <link rel="icon" type="image/jpeg" href="assets/img/yasso%20logo.jpg">
+  <link rel="apple-touch-icon" href="assets/img/yasso%20logo.jpg">
+  <!--==============================
+	  Google Fonts
+	============================== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=Italiana&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <!--==============================
+	    All CSS File
+	============================== -->
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <!-- Fontawesome Icon -->
+  <link rel="stylesheet" href="assets/css/fontawesome.min.css">
+  <!-- Magnific Popup -->
+  <link rel="stylesheet" href="assets/css/magnific-popup.min.css">
+  <!-- Slick Slider -->
+  <link rel="stylesheet" href="assets/css/slick.min.css">
+  <!-- Animation CSS -->
+  <link rel="stylesheet" href="assets/css/animate.min.css">
+  <!-- Theme Custom CSS -->
+  <link rel="stylesheet" href="assets/css/style.css?v=8">
+  <link rel="stylesheet" href="assets/css/audio-player.css">
+  <style>
+    /* ===== About Page Overrides ===== */
+    body.vs-body,
+    .aboutpage-layout1,
+    section.space-extra-bottom,
+    section.space-top,
+    section.space-top.space-extra-bottom {
+      background-color: #e5dac1 !important;
+    }
+
+    /* Section titles & subtitles */
+    .sec-title,
+    .sec-title.text-white {
+      color: #3D2314 !important;
+    }
+    .sec-subtitle {
+      color: #5C4033 !important;
+    }
+    .sec-text {
+      color: #3D2314 !important;
+    }
+
+    /* Breadcrumb */
+    .breadcumb-title {
+      color: #3D2314 !important;
+    }
+    .breadcumb-menu li,
+    .breadcumb-menu li a {
+      color: #5C4033 !important;
+    }
+
+    /* Call box */
+    .call-box__title {
+      color: #3D2314 !important;
+    }
+    .call-box__subtitle {
+      color: #5C4033 !important;
+    }
+
+    /* About divider */
+    .about-divider {
+      border-color: #5C4033 !important;
+    }
+
+    /* Icon box */
+    .icon-box__title {
+      color: #3D2314 !important;
+    }
+
+    /* Buttons */
+    .vs-btn.style4 {
+      background-color: #5C4033 !important;
+      color: #fff !important;
+      border-color: #5C4033 !important;
+    }
+    .vs-btn.style4:hover {
+      background-color: #3D2314 !important;
+      border-color: #3D2314 !important;
+    }
+
+    /* Extra shape and decorative elements */
+    .extra-shape {
+      opacity: 0.15;
+    }
+
+    /* Title shape image ? tint to dark brown */
+    img[src*="title-shape-1"] {
+      filter: brightness(0) saturate(100%) invert(23%) sepia(30%) saturate(700%) hue-rotate(330deg) brightness(0.85);
+    }
+
+    /* RTL: mirror img-box5 gold oval and white bar */
+    [dir="rtl"] .img-box5 .img3 {
+      right: auto !important;
+      left: 30px !important;
+    }
+    @media (max-width: 767px) {
+      [dir="rtl"] .img-box5 .img3 {
+        left: 0 !important;
+        right: auto !important;
+      }
+    }
+    [dir="rtl"] .img-box5 .img4 {
+      left: auto !important;
+      right: -77px !important;
+    }
+    [dir="rtl"] .img-box5 .img1::after,
+    [dir="rtl"] .img-box5 .img2::after {
+      left: auto !important;
+      right: 0 !important;
+    }
+
+    /* RTL: shift story logo to the left */
+    [dir="rtl"] .img-box4 {
+      text-align: left !important;
+    }
+    [dir="rtl"] .img-box4 .img-box4__img1 {
+      margin-left: 0 !important;
+      margin-right: auto !important;
+    }
+  </style>
+  <style>
+    /* Header: beige top, dark nav */
+    .vs-header.layout2 { background-color: #f5ede0 !important; padding: 0 !important; }
+    .vs-header.layout2 .sticky-wrapper { background-color: #2C1A00 !important; }
+    .vs-header.layout2 .header-search input { color: #5C4033 !important; }
+    .vs-header.layout2 .header-search input::-moz-placeholder { color: #5C4033 !important; }
+    .vs-header.layout2 .header-search input::placeholder { color: #5C4033 !important; }
+    .vs-header.layout2 .header-search button { color: #5C4033 !important; }
+    .vs-header.layout2 .header-search::after { background-color: #5C4033 !important; }
+    .header-logo img.logo, .header-logo img { max-height: 80px !important; }
+    .header-logo { margin-top: 20px; }
+  </style>
+</head>
+
+<body class="vs-body">
+  <!--[if lte IE 9]>
+    	<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]-->
+  <!--********************************
+   		Code Start From Here 
+	******************************** -->
+  <!--==============================
+		Preloader
+	==============================-->
+  <div class="preloader">
+    <button class="vs-btn preloaderCls">Cancel Preloader </button>
+    <div class="preloader-inner">
+      <img src="assets/img/yasso%20logo.jpg" alt="logo">
+      <span class="loader"></span>
+    </div>
+  </div>
+  <!--==============================
+		Mobile Menu
+	============================== -->
+  <div class="vs-menu-wrapper">
+    <div class="vs-menu-area text-center">
+      <div class="mobile-logo">
+        <a href="index.html"><img src="assets/img/yasso%20logo.jpg" alt="Yasso" class="logo"></a>
+        <button class="vs-menu-toggle"><i class="fal fa-times"></i></button>
+      </div>
+      <div class="vs-mobile-menu">
+        <ul>
+          <li>
+            <a href="index.html">Home</a>
+          </li>
+          <li>
+            <a href="shop-sidebar.html">Products</a>
+          </li>
+          <li>
+            <a href="about.html">About</a>
+          </li>
+          <li>
+            <a href="blog.html">Newsletter</a>
+          </li>
+          <li>
+            <a href="contact.html">Contact</a>
+          </li>
+        </ul>
+      </div>
+      <!-- Mobile: Language Switcher + Audio Player -->
+      <div class="mobile-extras">
+        <div class="mobile-lang-switcher">
+          <button class="lang-btn-en active" title="English">EN</button>
+          <span class="lang-sep">|</span>
+          <button class="lang-btn-ar" title="Arabic">AR</button>
+        </div>
+        <div class="mobile-audio-wrap" id="mobileAudioWrap" style="display:none">
+          <button class="mobile-audio-btn" id="mobileAudioToggleBtn" aria-label="Play or pause music">
+            <i class="fas fa-play" id="mobileAudioToggleIcon"></i>
+          </button>
+          <div class="mobile-wave-container" id="mobileWaveContainer"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <!-- ==============================
+       Announcement Popup
+  ============================== -->
+  <div id="announcementOverlay">
+    <div id="announcementPopup">
+      <button id="announcementClose" aria-label="Close">&times;</button>
+      <!-- Content populated dynamically from database via announcement-popup.js -->
+    </div>
+  </div>
+    </div>
+  </div>
+  <!-- ==============================
+    	Main Section Wrapper
+  	============================== -->
+  <main class="main">
+    <!--==============================
+    Header Area
+==============================-->
+    <header class="vs-header layout2">
+      <div class="container custom-container">
+        <div class="header-top">
+          <div class="row align-items-end justify-content-between">
+            <div class="col-md-4 d-none d-md-block">
+              <div class="header-audio-player" id="headerAudioPlayer" style="display:none">
+                <button class="audio-toggle-btn" id="audioToggleBtn" aria-label="Play or pause music">
+                  <i class="fas fa-play" id="audioToggleIcon"></i>
+                </button>
+                <div class="wave-container" id="waveContainer"></div>
+                <audio id="siteAudio" preload="auto"></audio>
+              </div>
+            </div>
+            <div class="col-md-4 text-center">
+              <div class="header-logo">
+                <a href="index.html"><img src="assets/img/yasso%20logo.jpg" alt="Yasso" class="logo"></a>
+              </div>
+            </div>
+            <div class="col-md-4 text-end d-none d-md-block">
+              <button class="sideMenuToggler">
+                <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M0 10V0H10.5L15 5L20 0H29.5V10L25.5 15L29.5 19.5V30H20L15 25.5L10.5 30H0V19.5L5 15L0 10Z" fill="#5C4033" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Main Menu Area -->
+      <div class="sticky-wrapper">
+        <div class="sticky-active">
+          <div class="container custom-container">
+            <div class="row justify-content-between align-items-center">
+              <div class="col-xl-3 col-md-auto d-none d-lg-flex align-items-center">
+                <div class="lang-switcher">
+                  <button class="lang-btn-en active" title="English">EN</button>
+                  <span class="lang-sep">|</span>
+                  <button class="lang-btn-ar" title="Arabic">AR</button>
+                </div>
+              </div>
+              <div class="col-xl-auto col-md-auto col-auto">
+                <nav class="main-menu d-none d-lg-block">
+                  <ul>
+                    <li>
+                      <a href="index.html">Home</a>
+                    </li>
+                    <li class="menu-item-has-children">
+                      <a href="shop-sidebar.html">Products</a>
+                    </li>
+                    <li>
+                      <a href="about.html">About</a>
+                    </li>
+                    <li>
+                      <a href="blog.html">Newsletter</a>
+                    </li>
+                    <li>
+                      <a href="contact.html">Contact</a>
+                    </li>
+                  </ul>
+                </nav>
+                <button class="vs-menu-toggle d-inline-block d-lg-none"><i class="fal fa-bars"></i></button>
+              </div>
+              <div class="col-xl-3 col-md-auto col-auto">
+                <div class="header-wc">
+                  <a class="wc-link" href="cart.html">bag <span class="cart-count">0</span>
+                    <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M5.33315 6.33334V3.12501C5.33315 1.75001 6.24982 0.833344 7.62482 0.833344H10.3748C11.7498 0.833344 12.6665 1.75001 12.6665 3.12501V6.33334M16.709 14.6108H5.33315M5.70002 4.95834H12.3C15.4167 4.95834 15.7284 6.41584 15.9392 8.19418L16.7642 15.0692C17.03 17.3242 16.3334 19.1667 13.125 19.1667H4.88419C1.66669 19.1667 0.970022 17.3242 1.24502 15.0692L2.07003 8.19418C2.2717 6.41584 2.58336 4.95834 5.70002 4.95834Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!--==============================
+    Header Area end
+==============================-->
+    <!--==============================
+          Breadcumb
+      ============================== -->
+    <div class="breadcumb-wrapper" data-bg-src="assets/img/bg/breadcumb-bg-2.jpg" data-scroll>
+      <img src="assets/img/shapes/dot-shape.svg" alt="dot" class="breadcumb-element">
+      <div class="container z-index-common">
+        <div class="breadcumb-content">
+          <h1 class="breadcumb-title">About Us</h1>
+          <div class="breadcumb-menu-wrap">
+            <ul class="breadcumb-menu">
+              <li><a href="index.html">Home</a></li>
+              <li>About Us</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- About Us -->
+    <section class="space-extra-bottom space-top z-index-common aboutpage-layout1">
+      <div class="extra-shape"></div>
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6 mb-30 wow animate__fadeInUp" data-wow-delay="0.2s">
+            <div class="title-area mb-4">
+              <span class="sec-subtitle">about us</span>
+              <h2 class="sec-title text-white">OUR STORY</h2>
+              <img src="assets/img/shapes/title-shape-1.svg" alt="title shape">
+<p class="sec-text pt-20"><span class="lang-show-en">Born fourteen years ago from a true love story, YASSO was created where craftsmanship met devotion � a brand defined by passion and timeless elegance. More than a handbag, each piece is thoughtfully designed to complement your lifestyle and accompany you beautifully for years. With refined silhouettes, intelligent interiors, premium leather, and meticulous craftsmanship, every detail reflects our commitment to exceptional quality and sophisticated style.</span><span class="lang-show-ar">وُلدت قصة ياسو قبل أربعة عشر عاماً من قصة حب حقيقية، حيث التقى الإتقان بالعاطفة — علامة تجارية يُحدّد ملامحها الشغف والأناقة الخالدة. إلى جانب كونها حقيبة يد، فإن كل قطعة مصمَّمة بعناية لتلائم أسلوب حياتك وترافقك بجمال لسنوات. بخطوط راقية وتصميم داخلي ذكي وجلد فاخر وحرفية دقيقة، تعكس كل تفاصيلنا التزامنا بالجودة الاستثنائية والأسلوب الرفيع.</span></p>            </div>
+            <!--
+            <div class="row gy-4">
+              <div class="col-lg-auto col-md-6">
+                <div class="icon-box">
+                  <img class="icon-box__media" src="assets/img/icons/vs-about-icon-1.svg" alt="vs-about-icon-1">
+                  <h4 class="icon-box__title">Online Booking</h4>
+                </div>
+              </div>
+              <div class="col-lg-auto col-md-6">
+                <div class="icon-box">
+                  <img class="icon-box__media" src="assets/img/icons/vs-about-icon-2.svg" alt="vs-about-icon-1">
+                  <h4 class="icon-box__title">Amazing Deals</h4>
+                </div>
+              </div>
+            </div> -->
+            <hr class="about-divider">
+            <div class="row gy-4">
+              <div class="col-lg-auto col-md-6">
+                <a href="shop-sidebar.html" class="vs-btn style4" tabindex="0">contact us</a>
+              </div>
+              <div class="col-lg-auto col-md-6">
+                <div class="call-box">
+                  <div class="call-box__list">
+                    
+                    <a href="#">
+                      <i class="fa-solid fa-headphones"></i>
+                    </a>
+                  </div>
+                  <div class="call-box__content">
+                    <h4 class="call-box__title">call for us</h4>
+                    <a class="call-box__subtitle" href="tel:+201156685444">+201156685444</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 mb-30 wow animate__fadeInUp" data-wow-delay="0.3s">
+            <div class="img-box4" style="text-align: right;">
+              <img src="assets/img/yasso logo.jpg" alt="YASSO Logo" class="img-box4__img1" style="margin-left: auto; display: block;">
+              <span class="img-box4__shape"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- About Us End -->
+    <!--==============================
+        Testimonial Section
+    ==============================-
+    <section class="testi-layout1 space z-index-common" data-bg-src="assets/img/testimonials/testi-bg-1-1.png">
+      <div class="img-box3" data-bg-src="assets/img/testimonials/testi-1-1.jpg"></div>
+      <img src="assets/img/testimonials/testi-shape-1-1.svg" alt="testi shape" class="ele1 wow animate__fadeInUp" data-wow-delay="0.2s">
+      <div class="container">
+        <div class="row justify-content-end">
+          <div class="col-lg-7">
+            <div class="title-area text-center">
+              <span class="sec-subtitle">CLIENT TESTIMONIALS</span>
+              <h2 class="sec-title">Our Happy Clients</h2>
+              <img src="assets/img/shapes/title-shape-2.svg" alt="title shape">
+            </div>
+            <div class="testi-inner z-index-common">
+              <div class="vs-carousel-arrow">
+                <button data-slick-prev=".testi-carousel">
+                  <svg width="20" height="14" viewBox="0 0 20 14" fill="none">
+                    <path d="M7.57 0.930054L1.5 7.00005L7.57 13.0701" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M18.4999 7H1.66992" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg>
+                </button>
+                <button data-slick-next=".testi-carousel">
+                  <svg width="20" height="14" viewBox="0 0 20 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12.4299 0.930054L18.4999 7.00005L12.4299 13.0701" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+                    <path d="M1.5 7H18.33" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"></path>
+                  </svg>
+                </button>
+              </div>
+              <div class="testi-carousel vs-carousel" data-fade="true">
+                <div class="testi-style">
+                  <div class="testi-thumb">
+                    <img class="img" src="assets/img/testimonials/testi-thumb-1-1.jpg" alt="testi thumb">
+                  </div>
+                  <p class="testi-text">?Lorem ipsum dolor sit amet, conse elit, sedid do eiusmod tempor incidit
+                    laboret
+                    dolore magna aliqua. Quis ipsum usndi laboris ipsum dolor sitamet conseelit, sedid mollit?</p>
+                  <span class="testi-user">alaxander lee</span>
+                </div>
+                <div class="testi-style">
+                  <div class="testi-thumb">
+                    <img class="img" src="assets/img/testimonials/testi-thumb-1-2.jpg" alt="testi thumb">
+                  </div>
+                  <p class="testi-text">?Lorem ipsum dolor sit amet, conse elit, sedid do eiusmod tempor incidit
+                    laboret
+                    dolore magna aliqua. Quis ipsum usndi laboris ipsum dolor sitamet conseelit, sedid mollit?</p>
+                  <span class="testi-user">dalaxander dee</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    ==============================
+        Testimonial Section End
+    ==============================-->
+    <!-- Feature Area 
+    <section class="space-top">
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-3 col-lg-3 col-md-6 mb-30 wow animate__fadeInUp" data-wow-delay="0.2s">
+            <div class="feature-style">
+              <img class="feature-style__icon mb-3" src="assets/img/icons/vs-feature-icon-1-1.svg" alt="vs-feature-icon-1-1">
+              <h3 class="feature-style__title">Free Shipping</h3>
+              <p class="feature-style__text">Fact that a reader will distracted</p>
+            </div>
+          </div>
+          <div class="col-xl-3 col-lg-3 col-md-6 mb-30 wow animate__fadeInUp" data-wow-delay="0.3s">
+            <div class="feature-style">
+              <img class="feature-style__icon mb-3" src="assets/img/icons/vs-feature-icon-1-2.svg" alt="vs-feature-icon-1-1">
+              <h3 class="feature-style__title">online Support</h3>
+              <p class="feature-style__text">within 30 days for an exchange</p>
+            </div>
+          </div>
+          <div class="col-xl-3 col-lg-3 col-md-6 mb-30 wow animate__fadeInUp" data-wow-delay="0.4s">
+            <div class="feature-style">
+              <img class="feature-style__icon mb-3" src="assets/img/icons/vs-feature-icon-1-3.svg" alt="vs-feature-icon-1-1">
+              <h3 class="feature-style__title">Money Back</h3>
+              <p class="feature-style__text">Fact that a reader will distracted</p>
+            </div>
+          </div>
+          <div class="col-xl-3 col-lg-3 col-md-6 mb-30 wow animate__fadeInUp" data-wow-delay="0.6s">
+            <div class="feature-style">
+              <img class="feature-style__icon mb-3" src="assets/img/icons/vs-feature-icon-1-4.svg" alt="vs-feature-icon-1-1">
+              <h3 class="feature-style__title">Return Product</h3>
+              <p class="feature-style__text">Fact that a reader will distracted</p>
+            </div>
+          </div>
+        </div>
+        <hr class="sec-divider mb-0">
+      </div>
+    </section>
+    -->
+    <!-- Feature Area End -->
+     
+    <section class="space-top space-extra-bottom">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-6 mb-30">
+            <div class="img-box5">
+              <div class="img1 wow animate__fadeInUp" data-wow-delay="0.2s">
+                <img src="assets/img/about/about-1-3.jpg" alt="about-1-3">
+              </div>
+              <div class="img2 wow animate__fadeInUp" data-wow-delay="0.3s">
+                <img src="assets/img/about/about-1-4.jpg" alt="about-1-4">
+              </div>
+              
+              <div class="img4 wow animate__fadeInUp" data-wow-delay="0.5s">
+                <img src="assets/img/about/about-1-5.svg" alt="about-1-5">
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 mb-30">
+            <div class="title-area text-center">
+              <img class="mb-20" src="assets/img/about/about-1-7.svg" alt="title shape">
+              <span class="sec-subtitle">Our Promise</span>
+              <h2 class="sec-title text-white">Where Elegance Lives</h2>
+              <img src="assets/img/shapes/title-shape-1.svg" alt="title shape">
+              <p class="sec-text pt-20 mb-30 fw-medium">
+                <span class="lang-show-en">Luxury should be accessible without compromise.
+By offering direct-from-factory pricing, we provide exceptional value while maintaining the highest standards of craftsmanship.
+
+At YASSO, elegance is not an option. it is our mission.
+Your sophistication is our purpose.</span>
+                <span class="lang-show-ar">يجب أن تكون الفخامة في متناول الجميع دون تنازلات.
+من خلال تقديم أسعار مباشرة من المصنع، نوفر قيمة استثنائية مع الحفاظ على أعلى معايير الحرفية.
+
+في ياسو، الأناقة ليست خياراً. إنها مهمتنا.
+رقيّك هو غايتنا.</span>
+              </p>
+              <a href="shop-sidebar.html" class="vs-btn style4" tabindex="0">contact us</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--==============================
+        Footer Area
+    ==============================-->
+    <footer class="footer-layout2" data-bg-src="assets/img/footer/footer-image-1-1.png">
+      <div class="footer-widgets">
+        <div class="container">
+          <div class="row gy-4 justify-content-between">
+            <div class="col-lg-3">
+              <div class="footer-logo">
+                <a href="index.html"><img src="assets/img/yasso%20logo.jpg" alt="logo"></a>
+              </div>
+              <div class="footer-info style2">
+                <p>
+                  <span class="lang-show-en"><span>Address :</span> No. 37, Al-Zaher street<br>Moharam Bek - Alexandria</span>
+                  <span class="lang-show-ar"><span>العنوان :</span> رقم 37، شارع الزاهر<br>محرم بك - الإسكندرية</span>
+                </p>
+                <p>
+                  <span class="lang-show-en"><span>Phone :</span> <a href="tel:+201156685444" style="color:inherit">+201156685444</a></span>
+                  <span class="lang-show-ar"><span>الهاتف :</span> <a href="tel:+201156685444" style="color:inherit">+201156685444</a></span>
+                </p>
+              </div>
+            </div>
+            <div class="col-lg-auto">
+              <div class="footer-widget">
+                <h3 class="footer-title">Shopping</h3>
+                <div class="footer-menu2">
+                  <a href="shop-sidebar.html">Shop</a>
+                  <a href="blog.html">Blog</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-auto">
+              <div class="footer-widget">
+                <h3 class="footer-title">About Store</h3>
+                <div class="footer-menu2">
+                  <a href="index.html">Home</a>
+                  <a href="about.html">About Us</a>
+                  <a href="contact.html">Contact Us</a>
+                  <a href="blog.html">Blog</a>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-auto">
+              <div class="footer-widget">
+                <h3 class="footer-title">Subscribe for <span>newsletter</span></h3>
+                <form class="footer-newsletter" action="#">
+                  <input type="email" placeholder="Enter your email">
+                  <button type="submit">
+                    <svg width="20" height="14" viewBox="0 0 20 14" fill="none">
+                      <path d="M12.43 0.930176L18.5 7.00018L12.43 13.0702M1.5 7.00018H18.33" stroke="#F5F1E6" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  </button>
+                </form>
+                <h4 class="footer-title">follow</h4>
+                <div class="social-style">
+                  <a class="facebook" href="https://www.facebook.com/YASSO.BAGS1"><i class="fab fa-facebook-f"></i></a>
+                  <a class="instagram" href="https://www.instagram.com/yass0bags?igsh=NG9nazhlbTJyczZh&utm_source=qr"><i class="fab fa-instagram"></i></a>
+                  <a class="twitter" href="https://www.tiktok.com/@yasso.bags5?_r=1&_t=ZS-94bnN0yODEz"><i class="fab fa-tiktok"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="footer-copyright style2">
+        Copyright ? 2026 YASSO All Rights Reserved<br>
+        Designed by <a href="https://alt-mate.com/" target="_blank" rel="noopener noreferrer">Alt Mate</a>
+      </p>
+    </footer>
+    <!--==============================
+        Footer Area End
+    ==============================-->
+  </main>
+  <!-- ==============================
+    	Main Section Wrapper End
+  	============================== -->
+  <a href="#" class="scrollToTop scroll-btn"><i class="far fa-arrow-up"></i></a>
+  <!--********************************
+		Code End  Here 
+******************************** -->
+  <!--==============================
+        All Js File
+    ============================== -->
+  <!-- Jquery -->
+  <script src="assets/js/vendor/jquery-3.6.0.min.js"></script>
+  <!-- Jquery UI -->
+  <script src="assets/js/jquery-ui.min.js"></script>
+  <!-- Slick Slider -->
+  <script src="assets/js/slick.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="assets/js/bootstrap.min.js"></script>
+  <!-- WOW.js Animation -->
+  <script src="assets/js/wow.min.js"></script>
+  <!-- Magnific Popup -->
+  <script src="assets/js/jquery.magnific-popup.min.js"></script>
+  <!-- Image Loaded Jquery -->
+  <script src="assets/js/imagesloaded.pkgd.min.js"></script>
+  <!-- Gsap -->
+  <script src="assets/js/gsap.min.js"></script>
+  <!-- ScrollTrigger -->
+  <script src="assets/js/ScrollTrigger.min.js"></script>
+  <!-- ScrollToPlugin -->
+  <script src="assets/js/ScrollToPlugin.min.js"></script>
+  <!-- SplitText -->
+  <script src="assets/js/SplitText.min.js"></script>
+  <!-- Lenis -->
+  <script src="assets/js/bundled-lenis.min.js"></script>
+  <!-- Main Js File -->
+  <script src="assets/js/main.js"></script>
+  <!-- Announcement Popup -->
+  <!-- i18n bilingual engine -->
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/announcement-popup.js"></script>
+  <!-- Global Cart Counter -->
+  <script src="assets/js/global-cart-counter.js"></script>
+  <script src="assets/js/audio-player.js"></script>
+</body>
+
+</html>
