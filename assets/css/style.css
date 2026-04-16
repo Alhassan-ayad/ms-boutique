@@ -1571,7 +1571,7 @@ textarea.is-invalid {
   width: auto;
 }
 .footer-logo img {
-  max-height: 55px;
+  max-height: 78px;
   width: auto;
 }
 .vs-menu-wrapper .vs-menu-toggle {
@@ -3803,7 +3803,7 @@ a.text-theme:hover,
 }
 .vs-header.layout2 {
   padding: 50px 0 0 0;
-  background-color: #2C1A00;
+  background-color: #885c3e;
   transition: all 0.3s ease-in-out;
   /* Small devices */
 }
@@ -3909,7 +3909,7 @@ a.text-theme:hover,
   top: -100%;
   right: 0;
   left: 0;
-  background-color: #2C1A00;
+  background-color: #885c3e;
   transition: all ease 1s;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.07);
   padding: 10px 0;
@@ -4781,10 +4781,10 @@ a.text-theme:hover,
   margin: 0 0 25px 0;
 }
 h3.footer-title {
-  color: #D3A334;
+  color: #c7a766;
 }
 .footer-title span {
-  color: #D3A334;
+  color: #c7a766;
 }
 
 h4.footer-title {
@@ -4808,7 +4808,7 @@ h4.footer-title {
 .footer-newsletter {
   display: flex;
   align-items: center;
-  border-bottom: 1px solid var(--vs-border-color3);
+  border-bottom: 1px solid #c7a766;
   margin-bottom: 20px;
 }
 .footer-newsletter input,
@@ -4818,25 +4818,25 @@ h4.footer-title {
   padding: 0 0;
   font-size: 13px;
   letter-spacing: 0.4px;
-  color: var(--gray-color3);
+  color: var(--white-color);
   font-weight: 600;
 }
 .footer-newsletter button svg path {
   transition: all 0.3s ease-in-out;
 }
 .footer-newsletter button:hover svg path {
-  stroke: var(--theme-color);
+  stroke: #c7a766;
 }
 .footer-newsletter input::-moz-placeholder {
   font-size: 13px;
   letter-spacing: 0.4px;
-  color: var(--gray-color3);
+  color: var(--white-color);
   font-weight: 600;
 }
 .footer-newsletter input::placeholder {
   font-size: 13px;
   letter-spacing: 0.4px;
-  color: var(--gray-color3);
+  color: var(--white-color);
   font-weight: 600;
 }
 
@@ -4898,7 +4898,7 @@ h4.footer-title {
   padding: 40px 15px;
 }
 .footer-copyright a {
-  color: var(--rating-color1);
+  color: #c7a766;
 }
 .footer-copyright a:hover {
   color: var(--title-color);
@@ -8126,7 +8126,7 @@ blockquote.vs-quote .quote-author {
 .newsletter-form {
   position: relative;
   display: flex;
-  border: 2.5px solid var(--bg-color1);
+  border: 2.5px solid #c7a766;
   margin-bottom: 75px;
   /* Small devices */
 }
@@ -8138,20 +8138,20 @@ blockquote.vs-quote .quote-author {
 }
 .newsletter-form .form-control {
   height: 57px;
-  background-color: var(--bg-color1);
+  background-color: #c7a766;
   border: 0;
   font-size: 14px;
   font-weight: 700;
   text-transform: capitalize;
   letter-spacing: 0.4px;
-  color: var(--smoke-color);
+  color: var(--white-color);
 }
 .newsletter-form .form-control::-moz-placeholder {
-  color: var(--smoke-color);
+  color: var(--white-color);
   font-size: 14px;
 }
 .newsletter-form .form-control::placeholder {
-  color: var(--smoke-color);
+  color: var(--white-color);
   font-size: 14px;
 }
 .newsletter-form .vs-btn {
@@ -8163,11 +8163,11 @@ blockquote.vs-quote .quote-author {
   /* Small devices */
 }
 .newsletter-form .vs-btn::before, .newsletter-form .vs-btn::after {
-  background-color: var(--theme-color);
+  background-color: #c7a766;
 }
 @media (max-width: 767px) {
   .newsletter-form .vs-btn {
-    border: 2.5px solid var(--bg-color1);
+    border: 2.5px solid #c7a766;
     width: 100%;
   }
 }
@@ -12702,8 +12702,8 @@ span.select2-selection.select2-selection--single:focus {
 .lang-btn-en,
 .lang-btn-ar {
   background: transparent;
-  border: 1px solid #D3A334;
-  color: #D3A334;
+  border: 1px solid #c7a766;
+  color: #c7a766;
   font-size: 12px;
   font-weight: 600;
   padding: 3px 10px;
@@ -12722,17 +12722,17 @@ span.select2-selection.select2-selection--single:focus {
 
 .lang-btn-en:hover,
 .lang-btn-ar:hover {
-  background: #D3A33422;
+  background: #c7a76622;
 }
 
 .lang-btn-en.active,
 .lang-btn-ar.active {
-  background: #D3A334;
+  background: #c7a766;
   color: #fff;
 }
 
 .lang-sep {
-  color: #D3A33488;
+  color: #c7a76688;
   font-size: 11px;
   line-height: 1;
 }
@@ -13078,7 +13078,7 @@ body.lang-ar .vs-header .header-top .col-md-4.text-end {
 .vs-header .wc-link:hover,
 .vs-header .lang-btn-en:hover,
 .vs-header .lang-btn-ar:hover {
-  color: #C9A84C !important;
+  color: #c7a766 !important;
   background: transparent !important;
   background-color: transparent !important;
   text-decoration: none !important;
