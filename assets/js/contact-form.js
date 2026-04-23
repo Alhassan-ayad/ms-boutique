@@ -15,18 +15,60 @@ const apiRequest = window.YASSO_CONFIG?.apiRequest?.bind(window.YASSO_CONFIG);
  */
 async function submitContactForm(formData) {
   try {
-    const data = {
-      name: formData.get('name'),
-      email: formData.get('email'),
-      subject: formData.get('subject') || 'Contact Inquiry',
-      message: formData.get('message')
+    const now = new Date();
+    const nowIso = now.toISOString();
+    const nowLocalDateTime = nowIso.slice(0, 19);
+
+    const buildPayload = (useAlternateKeys = false) => {
+      const payload = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        subject: formData.get('subject') || 'Contact Inquiry',
+        message: formData.get('message'),
+        // Compatibility payload: backend currently enforces submitted_date NOT NULL.
+        // Send both ISO and LocalDateTime-friendly values.
+        submittedDate: nowLocalDateTime,
+        submitted_date: nowLocalDateTime,
+        submittedAt: nowLocalDateTime,
+        submissionDate: nowLocalDateTime,
+        createdDate: nowLocalDateTime,
+        createdAt: nowIso
+      };
+
+      if (useAlternateKeys) {
+        payload.submittedDate = nowIso;
+        payload.submitted_date = nowIso;
+      }
+
+      const phone = formData.get('phone');
+      if (phone) {
+        payload.phone = phone;
+      }
+
+      return payload;
     };
 
+    const data = buildPayload();
+
     if (apiRequest) {
-      return await apiRequest(`${API_BASE_URL}/contact-messages`, {
-        method: 'POST',
-        data
-      });
+      try {
+        return await apiRequest(`${API_BASE_URL}/contact-messages`, {
+          method: 'POST',
+          data
+        });
+      } catch (firstError) {
+        const msg = String(firstError?.message || '').toLowerCase();
+        const shouldRetry = msg.includes('submitted_date') || msg.includes('could not execute statement') || msg.includes('null value in column');
+
+        if (!shouldRetry) {
+          throw firstError;
+        }
+
+        return await apiRequest(`${API_BASE_URL}/contact-messages`, {
+          method: 'POST',
+          data: buildPayload(true)
+        });
+      }
     }
 
     const response = await fetch(`${API_BASE_URL}/contact-messages`, {
@@ -40,9 +82,19 @@ async function submitContactForm(formData) {
     });
 
     if (!response.ok) {
-      let errorText;
+      let errorText = '';
       try {
-        errorText = await response.text();
+        const contentType = response.headers.get('content-type') || '';
+        if (contentType.includes('application/json')) {
+          const errorData = await response.json();
+          if (window.YASSO_CONFIG?.extractApiErrorMessage) {
+            errorText = window.YASSO_CONFIG.extractApiErrorMessage(errorData, 'Failed to submit contact message');
+          } else {
+            errorText = errorData.message || errorData.error || 'Failed to submit contact message';
+          }
+        } else {
+          errorText = await response.text();
+        }
       } catch (e) {
         errorText = `HTTP ${response.status}: ${response.statusText}`;
       }
@@ -54,6 +106,28 @@ async function submitContactForm(formData) {
   } catch (error) {
     throw error;
   }
+}
+
+/**
+ * Normalize raw backend errors into user-friendly messages.
+ * @param {string} message - Raw error message
+ * @returns {string}
+ */
+function normalizeContactErrorMessage(message) {
+  const raw = String(message || '').trim();
+  if (!raw) return 'An error occurred. Please try again later.';
+
+  const lower = raw.toLowerCase();
+
+  if (lower.includes('submitted_date') || lower.includes('contact_messages') || lower.includes('could not execute statement')) {
+    return 'The server could not process your message right now. Please try again in a moment.';
+  }
+
+  if (lower.includes('validation failed')) {
+    return 'Please check your inputs and try again.';
+  }
+
+  return raw;
 }
 
 /**
@@ -253,7 +327,7 @@ function initContactForm() {
       
     } catch (error) {
       // Show error message
-      const errorMessage = error.message || 'An error occurred. Please try again later.';
+      const errorMessage = normalizeContactErrorMessage(error.message);
       showFormMessage(
         messagesElement,
         'Failed to send message: ' + errorMessage,

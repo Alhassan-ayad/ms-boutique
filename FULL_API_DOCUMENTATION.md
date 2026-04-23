@@ -720,7 +720,85 @@ Source values used in code comments:
 
 ---
 
-## 9. Integration Notes and Edge Cases
+## 9. Contact Message APIs
+
+Base path: /api/contact-messages
+
+### Endpoints
+
+- GET /{id}
+- GET /
+- GET /unread
+- GET /read
+- GET /recent
+- GET /email/{email}
+- GET /search?keyword=
+- GET /date-range?startDate=<ISO>&endDate=<ISO>
+- GET /with-response
+- POST /
+- PATCH /{id}/mark-read
+- PATCH /{id}/mark-unread
+- PATCH /{id}/response
+- DELETE /{id}
+- GET /count/unread
+
+### Create Payload (ContactMessageRequestDTO)
+
+```json
+{
+  "name": "Mohamed Ali",
+  "email": "mohamed@example.com",
+  "phone": "+201001234567",
+  "subject": "Order inquiry",
+  "message": "Hello, I want to ask about delivery time to Cairo."
+}
+```
+
+### Field Rules
+
+- name: required, max 100
+- email: required, valid email, max 100
+- phone: optional, max 20
+- subject: required, max 255
+- message: required, max 5000
+
+### Response (ContactMessageResponseDTO)
+
+```json
+{
+  "id": 410,
+  "name": "Mohamed Ali",
+  "email": "mohamed@example.com",
+  "phone": "+201001234567",
+  "subject": "Order inquiry",
+  "message": "Hello, I want to ask about delivery time to Cairo.",
+  "submittedDate": "2026-04-23T18:00:00",
+  "isRead": false,
+  "adminResponse": null
+}
+```
+
+### Admin Response Payload
+
+Endpoint:
+- PATCH /api/contact-messages/{id}/response
+
+Body:
+
+```json
+{
+  "response": "Thank you for contacting us. Delivery takes 2-4 business days."
+}
+```
+
+### Notes
+
+- Most list endpoints return `Page<ContactMessageResponseDTO>` and support `page`, `size`, `sort`.
+- Date range endpoint expects ISO date-time values.
+
+---
+
+## 10. Integration Notes and Edge Cases
 
 - Newsletter routing mismatch exists in security config:
   - Controller uses /api/newsletter (singular)

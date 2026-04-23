@@ -4,8 +4,8 @@
 const API_BASE_URL = window.API_CONFIG?.BASE_URL || '/api';
 const LOW_STOCK_THRESHOLD = 5;
 
-// Temporary testing toggle: set to false after testing.
-const LOGIN_BYPASS_ENABLED = true;
+// Require real JWT login for admin access.
+const LOGIN_BYPASS_ENABLED = false;
 
 
 /**
@@ -102,10 +102,13 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeAllDragDropZones();
 });
 
-// Show login modal
+// Redirect unauthenticated users to the login page.
 function showLoginModal() {
-    document.getElementById('loginModal').style.display = 'flex';
-    document.getElementById('dashboardContainer').classList.add('dashboard-hidden');
+    if (window.location.pathname.toLowerCase().endsWith('admin-login.html')) {
+        return;
+    }
+
+    window.location.href = 'admin-login.html';
 }
 
 // Hide login modal
@@ -262,7 +265,9 @@ async function apiRequest(endpoint, options = {}) {
         if (!LOGIN_BYPASS_ENABLED) {
             // Token expired, redirect to login
             authToken = null;
+            currentUser = null;
             localStorage.removeItem('adminToken');
+            localStorage.removeItem('adminUsername');
             showLoginModal();
         }
         throw new Error('Unauthorized');
