@@ -4,6 +4,10 @@
 const API_BASE_URL = window.API_CONFIG?.BASE_URL || '/api';
 const LOW_STOCK_THRESHOLD = 5;
 
+// Temporary testing toggle: set to false after testing.
+const LOGIN_BYPASS_ENABLED = true;
+
+
 /**
  * Normalize image URL from backend to full HTTP URL
  * Handles various backend response formats and fixes malformed paths
@@ -86,7 +90,9 @@ let currentEditingProduct = null;
 
 // Check authentication on load
 document.addEventListener('DOMContentLoaded', () => {
-    if (authToken) {
+    if (LOGIN_BYPASS_ENABLED) {
+        initializeBypassSession();
+    } else if (authToken) {
         validateToken();
     } else {
         showLoginModal();
@@ -106,6 +112,14 @@ function showLoginModal() {
 function hideLoginModal() {
     document.getElementById('loginModal').style.display = 'none';
     document.getElementById('dashboardContainer').classList.remove('dashboard-hidden');
+}
+
+function initializeBypassSession() {
+    authToken = authToken || 'bypass-testing-token';
+    currentUser = currentUser || 'Testing Admin';
+    document.getElementById('adminUsername').textContent = currentUser;
+    hideLoginModal();
+    initializeDashboard();
 }
 
 // Validate token
@@ -197,11 +211,22 @@ document.getElementById('logoutBtn').addEventListener('click', async (e) => {
     currentUser = null;
     localStorage.removeItem('adminToken');
     localStorage.removeItem('adminUsername');
+
+    if (LOGIN_BYPASS_ENABLED) {
+        initializeBypassSession();
+        return;
+    }
+
     showLoginModal();
 });
 
 // Handle unauthorized access (401 errors)
 function handleUnauthorized() {
+    if (LOGIN_BYPASS_ENABLED) {
+        console.warn('Unauthorized response ignored because login bypass is enabled.');
+        return;
+    }
+
     console.warn('Unauthorized access detected - clearing session');
     authToken = null;
     currentUser = null;
@@ -234,10 +259,12 @@ async function apiRequest(endpoint, options = {}) {
     });
     
     if (response.status === 401) {
-        // Token expired, redirect to login
-        authToken = null;
-        localStorage.removeItem('adminToken');
-        showLoginModal();
+        if (!LOGIN_BYPASS_ENABLED) {
+            // Token expired, redirect to login
+            authToken = null;
+            localStorage.removeItem('adminToken');
+            showLoginModal();
+        }
         throw new Error('Unauthorized');
     }
     
@@ -673,8 +700,7 @@ function loadSection(section) {
             'reviews': 'Reviews & Comments',
             'orders': 'Order Management',
             'categories': 'Category Management',
-            'announcements': 'Announcement Popup',
-            'audio': 'Audio Player'
+            'announcements': 'Announcement Popup'
         };
         document.getElementById('pageTitle').textContent = titles[section] || 'Dashboard';
         
@@ -711,9 +737,6 @@ function loadSection(section) {
                 break;
             case 'announcements':
                 loadPopupsSection();
-                break;
-            case 'audio':
-                loadAudioSection();
                 break;
         }
     } else {
@@ -3353,10 +3376,7 @@ function showLoadingState(section) {
         loadingOverlay = document.createElement('div');
         loadingOverlay.className = 'loading-overlay';
         loadingOverlay.innerHTML = `
-            <div class="loading-spinner">
-                <div class="spinner"></div>
-                <p>Loading data...</p>
-            </div>
+            <div class="loading-spinner" role="status" aria-label="Loading"></div>
         `;
         sectionElement.style.position = 'relative';
         sectionElement.appendChild(loadingOverlay);
@@ -3530,7 +3550,7 @@ async function loadCategoriesForProductForm() {
 
 async function loadCurrentFeaturedProducts() {
     const container = document.getElementById('currentFeaturedList');
-    container.innerHTML = '<div class="loading">Loading featured products...</div>';
+    container.innerHTML = '<div class="loading" role="status" aria-label="Loading"></div>';
     
     try {
         const token = localStorage.getItem('adminToken');
@@ -3597,7 +3617,7 @@ async function loadCurrentFeaturedProducts() {
 
 async function loadAllProductsForFeaturing() {
     const container = document.getElementById('allProductsList');
-    container.innerHTML = '<div class="loading">Loading products...</div>';
+    container.innerHTML = '<div class="loading" role="status" aria-label="Loading"></div>';
     
     try {
         const token = localStorage.getItem('adminToken');
@@ -3842,199 +3862,3 @@ function filterFeaturedProducts() {
     renderProductsSelection(filtered);
 }
 
-// ==================== Audio Player Management ====================
-
-const AUDIO_DB_NAME   = 'yassoAudioDB';
-const AUDIO_DB_STORE  = 'audio';
-const AUDIO_DB_KEY    = 'siteAudio';
-
-// --- IndexedDB helpers ---
-
-function openAudioDB() {
-    return new Promise((resolve, reject) => {
-        const req = indexedDB.open(AUDIO_DB_NAME, 1);
-        req.onupgradeneeded = e => e.target.result.createObjectStore(AUDIO_DB_STORE);
-        req.onsuccess  = e => resolve(e.target.result);
-        req.onerror    = e => reject(e.target.error);
-    });
-}
-
-function saveAudioToDB(blob, name) {
-    return openAudioDB().then(db => new Promise((resolve, reject) => {
-        const tx = db.transaction(AUDIO_DB_STORE, 'readwrite');
-        tx.objectStore(AUDIO_DB_STORE).put({ blob, name }, AUDIO_DB_KEY);
-        tx.oncomplete = resolve;
-        tx.onerror    = e => reject(e.target.error);
-    }));
-}
-
-function getAudioFromDB() {
-    return openAudioDB().then(db => new Promise(resolve => {
-        const req = db.transaction(AUDIO_DB_STORE, 'readonly')
-                      .objectStore(AUDIO_DB_STORE)
-                      .get(AUDIO_DB_KEY);
-        req.onsuccess = e => resolve(e.target.result || null);
-        req.onerror   = () => resolve(null);
-    })).catch(() => null);
-}
-
-function deleteAudioFromDB() {
-    return openAudioDB().then(db => new Promise((resolve, reject) => {
-        const tx = db.transaction(AUDIO_DB_STORE, 'readwrite');
-        tx.objectStore(AUDIO_DB_STORE).delete(AUDIO_DB_KEY);
-        tx.oncomplete = resolve;
-        tx.onerror    = e => reject(e.target.error);
-    }));
-}
-
-// --- Pending (just-dropped) file before save ---
-let _pendingAudioFile = null;
-let _audioBlobUrl     = null;
-let _audioSectionInited = false;
-
-// --- Load the audio section ---
-async function loadAudioSection() {
-    // Init event listeners once
-    if (!_audioSectionInited) {
-        _audioSectionInited = true;
-        initAudioSectionListeners();
-    }
-
-    const data = await getAudioFromDB();
-
-    // Restore toggle states
-    document.getElementById('audioLoopToggle').checked     = localStorage.getItem('yassoAudio_loop')     === 'true';
-    document.getElementById('audioAutoPlayToggle').checked = localStorage.getItem('yassoAudio_autoplay') === 'true';
-    document.getElementById('audioActiveToggle').checked   = localStorage.getItem('yassoAudio_active')   !== 'false';
-
-    if (data && data.blob) {
-        _showAudioFile(data.blob, data.name);
-    } else {
-        _pendingAudioFile = null;
-        document.getElementById('audioCurrentInfo').style.display = 'none';
-        document.getElementById('audioDragDrop').style.display    = 'flex';
-    }
-}
-
-// --- Show a loaded / dropped file ---
-function _showAudioFile(blob, name) {
-    if (_audioBlobUrl) URL.revokeObjectURL(_audioBlobUrl);
-    _audioBlobUrl = URL.createObjectURL(blob);
-
-    const preview = document.getElementById('adminAudioPreview');
-    preview.src   = _audioBlobUrl;
-    preview.loop  = document.getElementById('audioLoopToggle').checked;
-
-    document.getElementById('audioFileName').textContent = name || 'Audio File';
-
-    const sizeKB  = Math.round(blob.size / 1024);
-    const sizeStr = sizeKB > 1024 ? `${(sizeKB / 1024).toFixed(1)} MB` : `${sizeKB} KB`;
-    document.getElementById('audioFileSize').textContent = sizeStr;
-
-    document.getElementById('audioDragDrop').style.display    = 'none';
-    document.getElementById('audioCurrentInfo').style.display = 'flex';
-}
-
-// --- Show status message ---
-function _showAudioStatus(msg, type) {
-    const el = document.getElementById('audioStatusMsg');
-    el.textContent  = msg;
-    el.className    = `audio-status-msg ${type}`;
-    el.style.display = 'block';
-    setTimeout(() => { el.style.display = 'none'; }, 4000);
-}
-
-// --- Init event listeners ---
-function initAudioSectionListeners() {
-    const dropZone  = document.getElementById('audioDragDrop');
-    const fileInput = document.getElementById('audioFileInput');
-
-    // Drag & Drop
-    dropZone.addEventListener('dragover', e => {
-        e.preventDefault();
-        dropZone.classList.add('drag-over');
-    });
-    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
-    dropZone.addEventListener('drop', e => {
-        e.preventDefault();
-        dropZone.classList.remove('drag-over');
-        const file = e.dataTransfer.files[0];
-        if (file && file.type.startsWith('audio/')) {
-            _handleAudioFilePick(file);
-        } else {
-            _showAudioStatus('Please drop a valid audio file (MP3, WAV, OGG, etc.).', 'error');
-        }
-    });
-
-    // Click browse on the whole drop zone (except the file input label)
-    dropZone.addEventListener('click', e => {
-        if (e.target !== fileInput && !e.target.closest('.audio-browse-btn')) {
-            fileInput.click();
-        }
-    });
-
-    fileInput.addEventListener('change', e => {
-        if (e.target.files[0]) _handleAudioFilePick(e.target.files[0]);
-        e.target.value = ''; // reset so same file can be re-picked
-    });
-
-    // Save & Publish
-    document.getElementById('saveAudioBtn').addEventListener('click', _saveAudioSettings);
-
-    // Change File � show drop zone again
-    document.getElementById('changeAudioBtn').addEventListener('click', () => {
-        _pendingAudioFile = null;
-        document.getElementById('audioCurrentInfo').style.display = 'none';
-        document.getElementById('audioDragDrop').style.display    = 'flex';
-    });
-
-    // Remove Audio
-    document.getElementById('removeAudioBtn').addEventListener('click', async () => {
-        if (!confirm('Remove the audio from the website? Visitors will no longer hear it.')) return;
-        try {
-            await deleteAudioFromDB();
-            localStorage.removeItem('yassoAudio_loop');
-            localStorage.removeItem('yassoAudio_autoplay');
-            localStorage.removeItem('yassoAudio_active');
-            _pendingAudioFile = null;
-            if (_audioBlobUrl) { URL.revokeObjectURL(_audioBlobUrl); _audioBlobUrl = null; }
-            document.getElementById('adminAudioPreview').src = '';
-            document.getElementById('audioCurrentInfo').style.display = 'none';
-            document.getElementById('audioDragDrop').style.display    = 'flex';
-            _showAudioStatus('Audio removed. The player will no longer appear on the website.', 'success');
-        } catch (err) {
-            _showAudioStatus('Error removing audio: ' + err.message, 'error');
-        }
-    });
-
-    // Loop toggle � update live preview
-    document.getElementById('audioLoopToggle').addEventListener('change', e => {
-        const preview = document.getElementById('adminAudioPreview');
-        if (preview) preview.loop = e.target.checked;
-    });
-}
-
-// --- Handle a picked/dropped file ---
-function _handleAudioFilePick(file) {
-    _pendingAudioFile = file;
-    _showAudioFile(file, file.name);
-    _showAudioStatus(`"${file.name}" loaded. Configure settings below and click Save & Publish.`, 'info');
-}
-
-// --- Save settings (and optionally the file) to storage ---
-async function _saveAudioSettings() {
-    try {
-        if (_pendingAudioFile) {
-            await saveAudioToDB(_pendingAudioFile, _pendingAudioFile.name);
-            _pendingAudioFile = null;
-        }
-
-        localStorage.setItem('yassoAudio_loop',     document.getElementById('audioLoopToggle').checked);
-        localStorage.setItem('yassoAudio_autoplay', document.getElementById('audioAutoPlayToggle').checked);
-        localStorage.setItem('yassoAudio_active',   document.getElementById('audioActiveToggle').checked);
-
-        _showAudioStatus('Audio saved and published to the website!', 'success');
-    } catch (err) {
-        _showAudioStatus('Error saving: ' + err.message, 'error');
-    }
-}

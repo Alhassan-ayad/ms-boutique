@@ -4,10 +4,10 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>MS Boutiqie</title>
-  <meta name="author" content="MS Boutiqie">
-  <meta name="description" content="MS Boutiqie Admin Dashboard">
-  <meta name="keywords" content="MS Boutiqie Admin Dashboard">
+  <title>MS Boutique</title>
+  <meta name="author" content="MS Boutique">
+  <meta name="description" content="MS Boutique Admin Dashboard">
+  <meta name="keywords" content="MS Boutique Admin Dashboard">
   <meta name="robots" content="NOINDEX,NOFOLLOW">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   
@@ -67,7 +67,7 @@
     <!-- Sidebar -->
     <aside class="sidebar">
       <div class="sidebar-header">
-        <h2>MS Boutiqie</h2>
+        <h2>MS Boutique</h2>
         <p>Admin Dashboard</p>
       </div>
       
@@ -113,10 +113,6 @@
         <a href="#" class="nav-item" data-section="announcements">
           <i class="fas fa-bullhorn"></i>
           <span>Announcement Popup</span>
-        </a>
-        <a href="#" class="nav-item" data-section="audio">
-          <i class="fas fa-music"></i>
-          <span>Audio Player</span>
         </a>
       </nav>
       
@@ -629,77 +625,6 @@
               </thead>
               <tbody id="categoriesTableBody"></tbody>
             </table>
-          </div>
-        </section>
-
-        <!-- Audio Player Section -->
-        <section id="audioSection" class="content-section">
-          <div class="section-header">
-            <h2>Website Audio Player</h2>
-          </div>
-
-          <div class="audio-admin-panel">
-
-            <!-- Current audio info (shown after upload) -->
-            <div class="audio-current-info" id="audioCurrentInfo" style="display:none">
-              <div class="audio-file-info">
-                <i class="fas fa-music fa-2x"></i>
-                <div>
-                  <strong id="audioFileName">No file</strong>
-                  <span id="audioFileSize" class="audio-size-badge"></span>
-                </div>
-              </div>
-              <audio id="adminAudioPreview" class="admin-audio-preview" controls></audio>
-
-              <div class="audio-controls-grid">
-                <label class="audio-toggle-label">
-                  <input type="checkbox" id="audioLoopToggle">
-                  <span class="audio-toggle-track"></span>
-                  <span class="audio-toggle-text">Loop audio</span>
-                </label>
-                <label class="audio-toggle-label">
-                  <input type="checkbox" id="audioAutoPlayToggle">
-                  <span class="audio-toggle-track"></span>
-                  <span class="audio-toggle-text">Auto-play on page load</span>
-                </label>
-                <label class="audio-toggle-label">
-                  <input type="checkbox" id="audioActiveToggle" checked>
-                  <span class="audio-toggle-track"></span>
-                  <span class="audio-toggle-text">Show player on website</span>
-                </label>
-              </div>
-
-              <div class="audio-action-btns">
-                <button id="saveAudioBtn" class="btn-primary">
-                  <i class="fas fa-cloud-upload-alt"></i> Save &amp; Publish
-                </button>
-                <button id="changeAudioBtn" class="btn-secondary">
-                  <i class="fas fa-exchange-alt"></i> Change File
-                </button>
-                <button id="removeAudioBtn" class="btn-danger">
-                  <i class="fas fa-trash"></i> Remove Audio
-                </button>
-              </div>
-            </div>
-
-            <!-- Drop zone (shown when no audio or when changing) -->
-            <div class="audio-drop-zone" id="audioDragDrop">
-              <div class="audio-drop-icon">
-                <i class="fas fa-music"></i>
-              </div>
-              <p class="audio-drop-title">Drag &amp; drop an audio file here</p>
-              <p class="audio-drop-or">or</p>
-              <label for="audioFileInput" class="btn-primary audio-browse-btn">
-                <i class="fas fa-folder-open"></i> Browse File
-              </label>
-              <input type="file" id="audioFileInput" accept="audio/*" style="display:none">
-              <p class="audio-formats">MP3 &bull; WAV &bull; OGG &bull; AAC &bull; FLAC</p>
-              <p class="audio-size-note">Recommended: under 10 MB</p>
-            </div>
-
-            <!-- Status message -->
-            <div id="audioStatusMsg" class="audio-status-msg" style="display:none"></div>
-
           </div>
         </section>
 
