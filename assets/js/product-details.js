@@ -8,6 +8,7 @@
 
 // API Configuration
 const API_BASE_URL = window.YASSO_CONFIG?.API_BASE_URL || '/api';
+const apiRequest = window.YASSO_CONFIG?.apiRequest?.bind(window.YASSO_CONFIG);
 
 // Placeholder image URL for products without images
 const PLACEHOLDER_IMAGE = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="400"%3E%3Crect fill="%23e0e0e0" width="400" height="400"/%3E%3Ctext fill="%23999" x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="24"%3ENo Image%3C/text%3E%3C/svg%3E';
@@ -31,6 +32,13 @@ function getProductIdFromUrl() {
  */
 async function loadProductDetails(productId) {
   try {
+    if (apiRequest) {
+      const product = await apiRequest(`${API_BASE_URL}/products/${productId}`);
+      console.log('Loaded product from API:', product);
+      currentProduct = product;
+      return product;
+    }
+
     const response = await fetch(`${API_BASE_URL}/products/${productId}`);
     
     if (!response.ok) {

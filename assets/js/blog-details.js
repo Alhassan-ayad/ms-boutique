@@ -5,6 +5,7 @@
  */
 
 const API_BASE_URL = window.YASSO_CONFIG?.API_BASE_URL || '/api';
+const apiRequest = window.YASSO_CONFIG?.apiRequest?.bind(window.YASSO_CONFIG);
 
 /**
  * Normalize blog image URLs coming from backend uploads.
@@ -78,18 +79,13 @@ function getUrlParameter(name) {
 async function fetchBlogPostBySlug(slug) {
   try {
     const url = `${API_BASE_URL}/blog-posts/slug/${slug}`;
-    
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-      },
-    });
-    
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+
+    if (apiRequest) {
+      return await apiRequest(url);
     }
-    
+
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     return await response.json();
   } catch (error) {
     throw error;

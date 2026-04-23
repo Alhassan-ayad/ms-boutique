@@ -89,8 +89,10 @@ window.YASSO_CONFIG = {
     
     // Blog
     BLOG_POSTS: '/blog-posts',
+    BLOG_PUBLISHED: '/blog-posts/published',
     BLOG_POST_BY_SLUG: '/blog-posts/slug',
     BLOG_RECENT: '/blog-posts/recent',
+    BLOG_FEATURED: '/blog-posts/featured',
     
     // Policies
     POLICIES_ALL: '/policies/all-active',
@@ -101,7 +103,18 @@ window.YASSO_CONFIG = {
     CONTENT_BY_SECTION: '/website-content/section',
     
     // Promotional Popups
-    POPUPS_CURRENT: '/promotional-popups/current'
+    POPUPS_CURRENT: '/promotional-popups/current',
+
+    // Auth
+    AUTH_LOGIN: '/auth/login',
+    AUTH_REFRESH: '/auth/refresh',
+    AUTH_VALIDATE: '/auth/validate'
+  },
+
+  // Auth storage keys
+  AUTH_STORAGE: {
+    ACCESS_TOKEN_KEY: 'yasso_access_token',
+    REFRESH_TOKEN_KEY: 'yasso_refresh_token'
   },
   
   // Currency settings
@@ -137,6 +150,109 @@ window.YASSO_CONFIG = {
  */
 window.YASSO_CONFIG.getApiUrl = function(endpoint) {
   return this.API_BASE_URL + endpoint;
+};
+
+/**
+ * Build endpoint URL with query params.
+ * @param {string} endpoint - API endpoint path
+ * @param {Object} params - Query params object
+ * @returns {string}
+ */
+window.YASSO_CONFIG.buildUrl = function(endpoint, params = {}) {
+  const base = this.getApiUrl(endpoint);
+  const url = new URL(base, window.location.origin);
+
+  Object.entries(params).forEach(([key, value]) => {
+    if (value === null || value === undefined || value === '') return;
+
+    if (Array.isArray(value)) {
+      value.forEach(item => {
+        if (item !== null && item !== undefined && item !== '') {
+          url.searchParams.append(key, item);
+        }
+      });
+      return;
+    }
+
+    url.searchParams.append(key, value);
+  });
+
+  return url.toString();
+};
+
+window.YASSO_CONFIG.getAccessToken = function() {
+  return localStorage.getItem(this.AUTH_STORAGE.ACCESS_TOKEN_KEY);
+};
+
+window.YASSO_CONFIG.getRefreshToken = function() {
+  return localStorage.getItem(this.AUTH_STORAGE.REFRESH_TOKEN_KEY);
+};
+
+window.YASSO_CONFIG.setTokens = function(accessToken, refreshToken) {
+  if (accessToken) {
+    localStorage.setItem(this.AUTH_STORAGE.ACCESS_TOKEN_KEY, accessToken);
+  }
+  if (refreshToken) {
+    localStorage.setItem(this.AUTH_STORAGE.REFRESH_TOKEN_KEY, refreshToken);
+  }
+};
+
+window.YASSO_CONFIG.clearTokens = function() {
+  localStorage.removeItem(this.AUTH_STORAGE.ACCESS_TOKEN_KEY);
+  localStorage.removeItem(this.AUTH_STORAGE.REFRESH_TOKEN_KEY);
+};
+
+window.YASSO_CONFIG.extractApiErrorMessage = function(errorPayload, fallbackMessage) {
+  if (!errorPayload) return fallbackMessage;
+
+  if (typeof errorPayload === 'string') {
+    return errorPayload || fallbackMessage;
+  }
+
+  if (errorPayload.message) {
+    return errorPayload.message;
+  }
+
+  if (errorPayload.error && typeof errorPayload.error === 'string') {
+    return errorPayload.error;
+  }
+
+  if (errorPayload.errors && typeof errorPayload.errors === 'object') {
+    const firstEntry = Object.entries(errorPayload.errors)[0];
+    if (firstEntry && firstEntry[1]) {
+      return `${firstEntry[0]}: ${firstEntry[1]}`;
+    }
+  }
+
+  return fallbackMessage;
+};
+
+window.YASSO_CONFIG.refreshAccessToken = async function() {
+  const refreshToken = this.getRefreshToken();
+  if (!refreshToken) return null;
+
+  const refreshUrl = this.getApiUrl(this.ENDPOINTS.AUTH_REFRESH);
+  const response = await fetch(refreshUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify({ refreshToken })
+  });
+
+  if (!response.ok) {
+    this.clearTokens();
+    return null;
+  }
+
+  const payload = await response.json();
+  if (payload?.token) {
+    this.setTokens(payload.token, payload.refreshToken || refreshToken);
+    return payload.token;
+  }
+
+  return null;
 };
 
 /**
@@ -218,27 +334,90 @@ window.YASSO_CONFIG.clearCache = function() {
  * @returns {Promise<any>} - Response data
  */
 window.YASSO_CONFIG.apiRequest = async function(url, options = {}) {
+  const isFormData = options.body instanceof FormData || options.data instanceof FormData;
+  const method = (options.method || 'GET').toUpperCase();
+  const shouldRetryOn401 = options.retryOn401 !== false;
+
+  const headers = {
+    'Accept': 'application/json',
+    ...(options.headers || {})
+  };
+
+  if (!isFormData && !('Content-Type' in headers) && !('content-type' in headers) && method !== 'GET' && method !== 'HEAD') {
+    headers['Content-Type'] = 'application/json';
+  }
+
+  let requestBody = options.body;
+  if (requestBody === undefined && options.data !== undefined) {
+    requestBody = isFormData ? options.data : JSON.stringify(options.data);
+  }
+
+  if (options.requireAuth) {
+    const token = this.getAccessToken();
+    if (token) {
+      headers.Authorization = `Bearer ${token}`;
+    }
+  }
+
   try {
     const response = await fetch(url, {
       ...options,
-      headers: {
-        'Content-Type': 'application/json',
-        ...options.headers
-      }
+      method,
+      headers,
+      body: requestBody
     });
+
+    if (response.status === 401 && shouldRetryOn401 && options.requireAuth) {
+      const refreshedToken = await this.refreshAccessToken();
+      if (refreshedToken) {
+        return this.apiRequest(url, {
+          ...options,
+          retryOn401: false,
+          headers: {
+            ...(options.headers || {}),
+            Authorization: `Bearer ${refreshedToken}`
+          }
+        });
+      }
+    }
     
     if (!response.ok) {
+      let errorPayload = null;
+      try {
+        const contentType = response.headers.get('content-type') || '';
+        errorPayload = contentType.includes('application/json')
+          ? await response.json()
+          : await response.text();
+      } catch (parseError) {}
+
       if (response.status === 404) {
-        throw new Error(this.ERROR_MESSAGES.NOT_FOUND);
+        throw new Error(this.extractApiErrorMessage(errorPayload, this.ERROR_MESSAGES.NOT_FOUND));
       } else if (response.status >= 500) {
-        throw new Error(this.ERROR_MESSAGES.SERVER_ERROR);
+        throw new Error(this.extractApiErrorMessage(errorPayload, this.ERROR_MESSAGES.SERVER_ERROR));
       } else if (response.status >= 400) {
-        throw new Error(this.ERROR_MESSAGES.VALIDATION_ERROR);
+        throw new Error(this.extractApiErrorMessage(errorPayload, this.ERROR_MESSAGES.VALIDATION_ERROR));
       }
       throw new Error(this.ERROR_MESSAGES.GENERIC_ERROR);
     }
-    
-    return await response.json();
+
+    if (response.status === 204 || method === 'HEAD') {
+      return null;
+    }
+
+    const parseMode = options.parseAs || 'auto';
+    if (parseMode === 'raw') {
+      return response;
+    }
+    if (parseMode === 'text') {
+      return await response.text();
+    }
+
+    const contentType = response.headers.get('content-type') || '';
+    if (parseMode === 'json' || contentType.includes('application/json')) {
+      return await response.json();
+    }
+
+    return await response.text();
   } catch (error) {
     if (error.message === 'Failed to fetch') {
       throw new Error(this.ERROR_MESSAGES.NETWORK_ERROR);

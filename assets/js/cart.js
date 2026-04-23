@@ -9,6 +9,7 @@
 // Configuration
 // ===========================
 const API_BASE_URL = window.YASSO_CONFIG?.API_BASE_URL || '/api';
+const apiRequest = window.YASSO_CONFIG?.apiRequest?.bind(window.YASSO_CONFIG);
 const CART_STORAGE_KEY = 'yasso_cart';
 const CURRENCY = window.YASSO_CONFIG?.CURRENCY?.SYMBOL || 'EGP';
 
@@ -68,13 +69,20 @@ async function fetchProductDetails() {
   
   for (const productId of productIds) {
     try {
-      const response = await fetch(`${API_BASE_URL}/products/${productId}`);
-      if (response.ok) {
-        const product = await response.json();
+      if (apiRequest) {
+        const product = await apiRequest(`${API_BASE_URL}/products/${productId}`);
         productsCache[productId] = product;
-      } else {
-        console.error(`Failed to fetch product ${productId}`);
+        continue;
       }
+
+      const response = await fetch(`${API_BASE_URL}/products/${productId}`);
+      if (!response.ok) {
+        console.error(`Failed to fetch product ${productId}`);
+        continue;
+      }
+
+      const product = await response.json();
+      productsCache[productId] = product;
     } catch (error) {
       console.error(`Error fetching product ${productId}:`, error);
     }

@@ -9,6 +9,7 @@
 // Configuration
 // ===========================
 const REVIEWS_API_BASE_URL = window.YASSO_CONFIG?.API_BASE_URL || '/api';
+const apiRequest = window.YASSO_CONFIG?.apiRequest?.bind(window.YASSO_CONFIG);
 let currentProductId = null;
 let selectedRating = 0;
 
@@ -183,7 +184,25 @@ async function submitReview(reviewData) {
   try {
     console.log('Submitting review:', reviewData);
     showLoading('Submitting your review...');
-    
+
+    if (apiRequest) {
+      const result = await apiRequest(`${REVIEWS_API_BASE_URL}/product-reviews`, {
+        method: 'POST',
+        data: reviewData
+      });
+
+      hideLoading();
+      console.log('Review submitted successfully:', result);
+
+      const message = reviewData.reviewText
+        ? 'Thank you for your review! It will be visible after admin approval.'
+        : 'Thank you for your rating! It will be visible after admin approval.';
+
+      showNotification(message, 'success');
+      clearReviewForm();
+      return;
+    }
+
     const response = await fetch(`${REVIEWS_API_BASE_URL}/product-reviews`, {
       method: 'POST',
       headers: {
@@ -191,9 +210,9 @@ async function submitReview(reviewData) {
       },
       body: JSON.stringify(reviewData)
     });
-    
+
     console.log('Review submission response status:', response.status);
-    
+
     hideLoading();
     
     if (response.ok) {
@@ -258,22 +277,31 @@ function clearReviewForm() {
  */
 async function loadProductReviews(productId) {
   try {
-    // Use /visible endpoint which returns approved and visible reviews as a plain array
-    const response = await fetch(`${REVIEWS_API_BASE_URL}/product-reviews/product/${productId}/visible`);
-    
-    if (response.ok) {
-      const reviews = await response.json();
-      
-      // Ensure reviews is an array
+    if (apiRequest) {
+      const reviews = await apiRequest(`${REVIEWS_API_BASE_URL}/product-reviews/product/${productId}/visible`);
       if (Array.isArray(reviews)) {
         displayReviews(reviews);
         updateReviewCount(reviews.length);
       } else {
-        console.error('Expected array but got:', reviews);
         displayNoReviews();
       }
-    } else {
+      return;
+    }
+
+    const response = await fetch(`${REVIEWS_API_BASE_URL}/product-reviews/product/${productId}/visible`);
+
+    if (!response.ok) {
       console.error('Failed to load reviews');
+      displayNoReviews();
+      return;
+    }
+
+    const reviews = await response.json();
+    if (Array.isArray(reviews)) {
+      displayReviews(reviews);
+      updateReviewCount(reviews.length);
+    } else {
+      console.error('Expected array but got:', reviews);
       displayNoReviews();
     }
   } catch (error) {

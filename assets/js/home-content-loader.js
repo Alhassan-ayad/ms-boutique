@@ -9,6 +9,7 @@ console.log('🚀 Home Content Loader script loaded!');
 
 // API Configuration
 const API_BASE_URL = window.API_CONFIG?.BASE_URL || '/api';
+const apiRequest = window.YASSO_CONFIG?.apiRequest?.bind(window.YASSO_CONFIG);
 const BACKEND_URL = API_BASE_URL.replace('/api', ''); // Remove /api for image paths
 console.log('📡 API Base URL:', API_BASE_URL);
 console.log('🖼️ Backend URL for images:', BACKEND_URL);
@@ -184,6 +185,16 @@ async function fetchSectionContent(sectionName) {
   try {
     const url = `${API_BASE_URL}/website-content/section/${sectionName}/all`;
     console.log('🌐 Fetching:', url);
+
+    if (apiRequest) {
+      const content = await apiRequest(url);
+      const filtered = content
+        .filter(item => item.isActive)
+        .sort((a, b) => (a.displayOrder || 0) - (b.displayOrder || 0));
+
+      console.log('✅ Filtered & sorted:', filtered);
+      return filtered;
+    }
     
     const response = await fetch(url);
     
@@ -436,16 +447,19 @@ async function renderFeaturedSection(featuredContent) {
 async function loadFeaturedProducts() {
   try {
     console.log('📦 Fetching featured products...');
-    
-    // Fetch featured products from API
-    const response = await fetch(`${API_BASE_URL}/products/featured`);
-    
-    if (!response.ok) {
-      console.error('❌ Failed to fetch featured products:', response.status);
-      return;
+
+    let products;
+    if (apiRequest) {
+      products = await apiRequest(`${API_BASE_URL}/products/featured`);
+    } else {
+      const response = await fetch(`${API_BASE_URL}/products/featured`);
+      if (!response.ok) {
+        console.error('❌ Failed to fetch featured products:', response.status);
+        return;
+      }
+      products = await response.json();
     }
-    
-    const products = await response.json();
+
     console.log('✅ Fetched', products.length, 'featured products:', products);
     
     if (!products || products.length === 0) {

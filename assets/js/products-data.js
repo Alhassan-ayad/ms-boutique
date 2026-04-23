@@ -15,6 +15,7 @@
 // API Configuration
 // ===========================
 const API_BASE_URL = window.API_CONFIG?.BASE_URL || window.YASSO_CONFIG?.API_BASE_URL || '/api';
+const apiRequest = window.YASSO_CONFIG?.apiRequest?.bind(window.YASSO_CONFIG);
 const DEFAULT_PAGE_SIZE = 12;
 
 // Helper function to normalize image URLs - handles malformed backend responses
@@ -115,13 +116,7 @@ async function fetchProducts(page = 0, filters = {}) {
       url += `&sort=${filters.sortBy},${sortDir}`;
     }
     
-    const response = await fetch(url);
-    
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    
-    const data = await response.json();
+    const data = apiRequest ? await apiRequest(url) : await (await fetch(url)).json();
     // Cache the data for offline mode (non-fatal if storage quota is full)
     try {
       localStorage.setItem('yasso_products_cache', JSON.stringify(data.content));
@@ -174,13 +169,7 @@ async function fetchFilteredProducts(page = 0, filters = {}) {
       url += `&sort=${filters.sortBy},${sortDir}`;
     }
     
-    const response = await fetch(url);
-    
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    
-    const data = await response.json();
+    const data = apiRequest ? await apiRequest(url) : await (await fetch(url)).json();
     return data;
   } catch (error) {
     console.error('Error fetching filtered products:', error);
@@ -202,13 +191,7 @@ async function fetchFilteredProducts(page = 0, filters = {}) {
 async function fetchProductsByCategory(categoryId, page = 0) {
   try {
     const url = `${API_BASE_URL}/products/category/${categoryId}?page=${page}&size=${DEFAULT_PAGE_SIZE}`;
-    const response = await fetch(url);
-    
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    
-    const data = await response.json();
+    const data = apiRequest ? await apiRequest(url) : await (await fetch(url)).json();
     return data;
   } catch (error) {
     console.error('Error fetching products by category:', error);
@@ -230,13 +213,7 @@ async function fetchProductsByCategory(categoryId, page = 0) {
 async function searchProducts(keyword, page = 0) {
   try {
     const url = `${API_BASE_URL}/products/search?keyword=${encodeURIComponent(keyword)}&page=${page}&size=${DEFAULT_PAGE_SIZE}`;
-    const response = await fetch(url);
-    
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    
-    const data = await response.json();
+    const data = apiRequest ? await apiRequest(url) : await (await fetch(url)).json();
     return data;
   } catch (error) {
     console.error('Error searching products:', error);

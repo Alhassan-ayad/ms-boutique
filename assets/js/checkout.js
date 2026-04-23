@@ -12,6 +12,7 @@
 // Configuration
 // ===========================
 const API_BASE_URL = window.YASSO_CONFIG?.API_BASE_URL || '/api';
+const apiRequest = window.YASSO_CONFIG?.apiRequest?.bind(window.YASSO_CONFIG);
 const CART_STORAGE_KEY = 'yasso_cart';
 const CURRENCY = window.YASSO_CONFIG?.CURRENCY?.SYMBOL || 'EGP';
 
@@ -74,13 +75,20 @@ async function fetchProductDetails() {
   
   for (const productId of productIds) {
     try {
-      const response = await fetch(`${API_BASE_URL}/products/${productId}`);
-      if (response.ok) {
-        const product = await response.json();
+      if (apiRequest) {
+        const product = await apiRequest(`${API_BASE_URL}/products/${productId}`);
         productsCache[productId] = product;
-      } else {
-        console.error(`Failed to fetch product ${productId}`);
+        continue;
       }
+
+      const response = await fetch(`${API_BASE_URL}/products/${productId}`);
+      if (!response.ok) {
+        console.error(`Failed to fetch product ${productId}`);
+        continue;
+      }
+
+      const product = await response.json();
+      productsCache[productId] = product;
     } catch (error) {
       console.error(`Error fetching product ${productId}:`, error);
     }
@@ -236,7 +244,23 @@ async function handlePlaceOrder(e) {
   
   try {
     showLoading();
-    
+
+    if (apiRequest) {
+      const order = await apiRequest(`${API_BASE_URL}/orders`, {
+        method: 'POST',
+        data: orderData
+      });
+
+      console.log('Order placed successfully:', order);
+
+      localStorage.removeItem(CART_STORAGE_KEY);
+      window.dispatchEvent(new Event('cartUpdated'));
+
+      hideLoading();
+      showOrderSuccess(order);
+      return;
+    }
+
     const response = await fetch(`${API_BASE_URL}/orders`, {
       method: 'POST',
       headers: {
@@ -244,16 +268,15 @@ async function handlePlaceOrder(e) {
       },
       body: JSON.stringify(orderData)
     });
-    
+
     console.log('Response status:', response.status);
-    
+
     if (!response.ok) {
       let errorMessage = 'Failed to place order';
       try {
         const errorData = await response.json();
         console.error('Error response:', errorData);
-        
-        // Log detailed validation errors
+
         if (errorData.errors) {
           console.error('Validation errors:', errorData.errors);
           const errorMessages = Object.entries(errorData.errors)
@@ -261,7 +284,7 @@ async function handlePlaceOrder(e) {
             .join('\n');
           console.error('Detailed errors:\n', errorMessages);
         }
-        
+
         errorMessage = errorData.message || errorData.error || errorMessage;
       } catch (e) {
         const errorText = await response.text();
@@ -270,7 +293,7 @@ async function handlePlaceOrder(e) {
       }
       throw new Error(errorMessage);
     }
-    
+
     const order = await response.json();
     console.log('Order placed successfully:', order);
     

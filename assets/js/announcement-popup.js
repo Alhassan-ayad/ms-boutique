@@ -14,6 +14,7 @@
   'use strict';
 
   var API_BASE_URL = window.YASSO_CONFIG?.API_BASE_URL || '/api';
+  var apiRequest = window.YASSO_CONFIG?.apiRequest?.bind(window.YASSO_CONFIG);
   var BACKEND_URL = API_BASE_URL.replace('/api', '');
   var SESSION_KEY = 'yasso_popup_session';
   var currentPopup = null;
@@ -81,6 +82,10 @@
   /* ── Fetch popup from backend ────────────────────────────────── */
   async function fetchPopup() {
     try {
+      if (apiRequest) {
+        return await apiRequest(`${API_BASE_URL}/promotional-popups/current/type/ENTRY`);
+      }
+
       const response = await fetch(`${API_BASE_URL}/promotional-popups/current/type/ENTRY`);
       if (response.ok) {
         const data = await response.json();

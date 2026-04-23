@@ -6,6 +6,7 @@
  */
 
 const PRODUCT_FILTERS_API_BASE = window.API_CONFIG?.BASE_URL || '/api';
+const apiRequest = window.YASSO_CONFIG?.apiRequest?.bind(window.YASSO_CONFIG);
 
 // Filter state
 let availableColors = [];
@@ -37,12 +38,9 @@ async function initializeProductFilters() {
 async function loadAvailableColors() {
   try {
     // Fetch all active products
-    const response = await fetch(`${PRODUCT_FILTERS_API_BASE}/products/active?page=0&size=2000`);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    
-    const data = await response.json();
+    const data = apiRequest
+      ? await apiRequest(`${PRODUCT_FILTERS_API_BASE}/products/active?page=0&size=2000`)
+      : await (await fetch(`${PRODUCT_FILTERS_API_BASE}/products/active?page=0&size=2000`)).json();
     const products = data.content || [];
     
     // Extract unique colors from direct color and color variants
@@ -80,12 +78,9 @@ async function loadAvailableColors() {
 async function loadPriceRange() {
   try {
     // Fetch all active products to calculate min/max
-    const response = await fetch(`${PRODUCT_FILTERS_API_BASE}/products/active?page=0&size=1000`);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    
-    const data = await response.json();
+    const data = apiRequest
+      ? await apiRequest(`${PRODUCT_FILTERS_API_BASE}/products/active?page=0&size=1000`)
+      : await (await fetch(`${PRODUCT_FILTERS_API_BASE}/products/active?page=0&size=1000`)).json();
     const products = data.content || [];
     
     if (products.length > 0) {
@@ -166,10 +161,9 @@ function updateColorFilters() {
 async function updateProductColorCounts() {
   try {
     // Fetch all active products
-    const response = await fetch(`${PRODUCT_FILTERS_API_BASE}/products/active?page=0&size=2000`);
-    if (!response.ok) return;
-    
-    const data = await response.json();
+    const data = apiRequest
+      ? await apiRequest(`${PRODUCT_FILTERS_API_BASE}/products/active?page=0&size=2000`)
+      : await (await fetch(`${PRODUCT_FILTERS_API_BASE}/products/active?page=0&size=2000`)).json();
     const products = data.content || [];
     
     // Count products per color
@@ -401,12 +395,9 @@ async function applyFilters() {
     params.append('sort', `${sortBy},${sortDir}`);
     
     const fullUrl = `${url}?${params.toString()}`;
-    const response = await fetch(fullUrl);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    
-    const data = await response.json();
+    const data = apiRequest
+      ? await apiRequest(fullUrl)
+      : await (await fetch(fullUrl)).json();
     const products = data.content || data;
     
     // Call renderProducts if it exists (from products-data.js)

@@ -6,6 +6,7 @@
  */
 
 const API_BASE_URL = window.YASSO_CONFIG?.API_BASE_URL || '/api';
+const apiRequest = window.YASSO_CONFIG?.apiRequest?.bind(window.YASSO_CONFIG);
 
 /**
  * Submit contact form to backend API
@@ -20,7 +21,14 @@ async function submitContactForm(formData) {
       subject: formData.get('subject') || 'Contact Inquiry',
       message: formData.get('message')
     };
-    
+
+    if (apiRequest) {
+      return await apiRequest(`${API_BASE_URL}/contact-messages`, {
+        method: 'POST',
+        data
+      });
+    }
+
     const response = await fetch(`${API_BASE_URL}/contact-messages`, {
       method: 'POST',
       headers: {
@@ -30,7 +38,7 @@ async function submitContactForm(formData) {
       body: JSON.stringify(data),
       mode: 'cors',
     });
-    
+
     if (!response.ok) {
       let errorText;
       try {
@@ -40,9 +48,8 @@ async function submitContactForm(formData) {
       }
       throw new Error(errorText || `HTTP error! status: ${response.status}`);
     }
-    
-    const result = await response.json();
-    return result;
+
+    return await response.json();
     
   } catch (error) {
     throw error;

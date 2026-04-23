@@ -7,6 +7,7 @@
 
 const API_BASE_URL = window.YASSO_CONFIG?.API_BASE_URL || '/api';
 const BLOG_ENDPOINTS = window.YASSO_CONFIG?.ENDPOINTS || {};
+const apiRequest = window.YASSO_CONFIG?.apiRequest?.bind(window.YASSO_CONFIG);
 
 // Helper function to normalize image URLs - handles malformed backend responses
 function normalizeImageUrl(url) {
@@ -100,20 +101,15 @@ const PAGE_SIZE = 9;
  */
 async function fetchBlogPosts(page = 0, size = PAGE_SIZE, sort = 'publishedDate,desc') {
   try {
-    const endpoint = BLOG_ENDPOINTS.BLOG_POSTS || '/blog-posts';
+    const endpoint = BLOG_ENDPOINTS.BLOG_PUBLISHED || '/blog-posts/published';
     const url = `${API_BASE_URL}${endpoint}?page=${page}&size=${size}&sort=${sort}`;
-    
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-      },
-    });
-    
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+
+    if (apiRequest) {
+      return await apiRequest(url);
     }
-    
+
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     return await response.json();
   } catch (error) {
     throw error;
@@ -129,18 +125,13 @@ async function fetchBlogPostBySlug(slug) {
   try {
     const endpoint = BLOG_ENDPOINTS.BLOG_POST_BY_SLUG || '/blog-posts/slug';
     const url = `${API_BASE_URL}${endpoint}/${slug}`;
-    
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-      },
-    });
-    
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+
+    if (apiRequest) {
+      return await apiRequest(url);
     }
-    
+
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     return await response.json();
   } catch (error) {
     throw error;
@@ -156,18 +147,13 @@ async function fetchRecentBlogPosts(limit = 5) {
   try {
     const endpoint = BLOG_ENDPOINTS.BLOG_RECENT || '/blog-posts/recent';
     const url = `${API_BASE_URL}${endpoint}?limit=${limit}`;
-    
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-      },
-    });
-    
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+
+    if (apiRequest) {
+      return await apiRequest(url);
     }
-    
+
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     return await response.json();
   } catch (error) {
     throw error;
@@ -184,18 +170,13 @@ async function fetchRecentBlogPosts(limit = 5) {
 async function searchBlogPosts(keyword, page = 0, size = PAGE_SIZE) {
   try {
     const url = `${API_BASE_URL}/blog-posts/search?keyword=${encodeURIComponent(keyword)}&page=${page}&size=${size}&sort=publishedDate,desc`;
-    
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Accept': 'application/json',
-      },
-    });
-    
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+
+    if (apiRequest) {
+      return await apiRequest(url);
     }
-    
+
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     return await response.json();
   } catch (error) {
     throw error;
