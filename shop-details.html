@@ -207,6 +207,10 @@
     .vs-comment-form .vs-btn {
       background-color: #5C4033 !important;
       color: #ffffff !important;
+      position: relative;
+      z-index: 2;
+      pointer-events: auto;
+      cursor: pointer;
     }
     .vs-comment-form .vs-btn:hover {
       background-color: #3D2314 !important;
@@ -579,7 +583,7 @@
                         </div>
                       </div>
                       <div class="col-12 form-group mb-0">
-                        <button class="vs-btn">submit</button>
+                        <button class="vs-btn" type="button">submit</button>
                       </div>
                     </div>
                   </div>

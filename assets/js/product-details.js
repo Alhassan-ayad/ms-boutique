@@ -36,6 +36,8 @@ async function loadProductDetails(productId) {
       const product = await apiRequest(`${API_BASE_URL}/products/${productId}`);
       console.log('Loaded product from API:', product);
       currentProduct = product;
+      window.currentProduct = product;
+      window.currentProductId = product?.id || productId;
       return product;
     }
 
@@ -50,6 +52,8 @@ async function loadProductDetails(productId) {
     const product = await response.json();
     console.log('Loaded product from API:', product);
     currentProduct = product;
+    window.currentProduct = product;
+    window.currentProductId = product?.id || productId;
     return product;
   } catch (error) {
     console.error('Error loading product:', error);

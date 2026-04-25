@@ -18,9 +18,10 @@ let selectedRating = 0;
 // ===========================
 document.addEventListener('DOMContentLoaded', () => {
   currentProductId = getProductIdFromUrl();
-  
+
+  initializeReviewForm();
+
   if (currentProductId) {
-    initializeReviewForm();
     loadProductReviews(currentProductId);
   }
 });
@@ -30,8 +31,19 @@ document.addEventListener('DOMContentLoaded', () => {
  */
 function getProductIdFromUrl() {
   const urlParams = new URLSearchParams(window.location.search);
-  const id = urlParams.get('id');
-  return id ? parseInt(id, 10) : null;
+  const id = urlParams.get('id') || urlParams.get('productId');
+  if (id) {
+    return parseInt(id, 10);
+  }
+
+  const submitButton = document.querySelector('.review-form .vs-btn');
+  const buttonId = submitButton?.dataset?.productId;
+  if (buttonId) {
+    return parseInt(buttonId, 10);
+  }
+
+  const pageProductId = window.currentProductId || window.currentProduct?.id;
+  return pageProductId ? parseInt(pageProductId, 10) : null;
 }
 
 /**
@@ -109,11 +121,20 @@ function setupReviewSubmit() {
   });
   
   if (submitBtn) {
+    submitBtn.type = 'button';
     submitBtn.addEventListener('click', async (e) => {
       e.preventDefault();
+
+      const productId = getProductIdFromUrl();
+      currentProductId = productId;
       
       console.log('Review submit clicked - Current rating:', selectedRating);
-      console.log('Review submit clicked - Product ID:', currentProductId);
+      console.log('Review submit clicked - Product ID:', productId);
+
+      if (!productId) {
+        showNotification('Product details are not loaded yet. Open a product page first.', 'warning');
+        return;
+      }
       
       // Validate inputs
       if (!validateReviewForm(reviewTextarea, nameInput, emailInput)) {
@@ -122,7 +143,7 @@ function setupReviewSubmit() {
       
       // Prepare review data
       const reviewData = {
-        productId: currentProductId,
+        productId: productId,
         rating: selectedRating,
         customerName: nameInput.value.trim(),
         customerEmail: emailInput.value.trim(),
@@ -138,32 +159,57 @@ function setupReviewSubmit() {
       // Submit review
       await submitReview(reviewData);
     });
-  } else {
-    console.error('Review submit button not found!');
-  }
-}
 
-/**
- * Validate review form
- */
-function validateReviewForm(reviewTextarea, nameInput, emailInput) {
-  if (selectedRating === 0) {
-    showNotification('Please select a rating', 'warning');
-    return false;
-  }
-  
-  // Note: reviewText is optional - customers can submit rating-only reviews
-  
+    document.addEventListener('click', async (e) => {
+      const clickedButton = e.target.closest?.('.review-form .vs-btn');
+      if (!clickedButton || clickedButton === submitBtn) {
+            const response = await apiRequest(`${REVIEWS_API_BASE_URL}/product-reviews`, {
+      }
+              data: reviewData,
+              parseAs: 'raw'
+      e.preventDefault();
+      clickedButton.click();
+            console.log('Review submission response status:', response.status);
+
+            hideLoading();
+
+            if (response.ok) {
+              let result = null;
+              try {
+                const contentType = response.headers.get('content-type') || '';
+                result = contentType.includes('application/json') ? await response.json() : await response.text();
+              } catch (parseError) {
+                console.warn('Review submitted but response body could not be parsed:', parseError);
+              }
+
+              console.log('Review submitted successfully:', result);
+
+              // Show message based on whether it's rating-only or full review
+              const message = reviewData.reviewText 
+                ? 'Thank you for your review! It will be visible after admin approval.'
+                : 'Thank you for your rating! It will be visible after admin approval.';
+
+              showNotification(message, 'success');
+
+              // Clear form
+              clearReviewForm();
+
+              // Note: Don't reload reviews immediately as the new review won't be visible until approved
+              return;
+            }
+
   if (!nameInput.value.trim()) {
     showNotification('Please enter your name', 'warning');
-    nameInput.focus();
+              const contentType = response.headers.get('content-type') || '';
+              const errorData = contentType.includes('application/json') ? await response.json() : await response.text();
     return false;
-  }
+              errorMessage = typeof errorData === 'string'
+                ? errorData || errorMessage
+                : errorData.message || errorData.error || errorMessage;
   
-  if (!emailInput.value.trim()) {
-    showNotification('Please enter your email', 'warning');
-    emailInput.focus();
+              console.error('Review submission error parsing failed:', e);
     return false;
+
   }
   
   // Validate email format
@@ -277,8 +323,14 @@ function clearReviewForm() {
  */
 async function loadProductReviews(productId) {
   try {
+    const resolvedProductId = productId || getProductIdFromUrl();
+    if (!resolvedProductId) {
+      displayNoReviews();
+      return;
+    }
+
     if (apiRequest) {
-      const reviews = await apiRequest(`${REVIEWS_API_BASE_URL}/product-reviews/product/${productId}/visible`);
+      const reviews = await apiRequest(`${REVIEWS_API_BASE_URL}/product-reviews/product/${resolvedProductId}/visible`);
       if (Array.isArray(reviews)) {
         displayReviews(reviews);
         updateReviewCount(reviews.length);
@@ -288,7 +340,7 @@ async function loadProductReviews(productId) {
       return;
     }
 
-    const response = await fetch(`${REVIEWS_API_BASE_URL}/product-reviews/product/${productId}/visible`);
+    const response = await fetch(`${REVIEWS_API_BASE_URL}/product-reviews/product/${resolvedProductId}/visible`);
 
     if (!response.ok) {
       console.error('Failed to load reviews');

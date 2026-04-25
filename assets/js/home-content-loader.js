@@ -69,6 +69,75 @@ function normalizeImageUrl(url) {
   return url;
 }
 
+function normalizeProductsResponse(payload) {
+  if (Array.isArray(payload)) {
+    return payload;
+  }
+
+  if (payload && Array.isArray(payload.content)) {
+    return payload.content;
+  }
+
+  if (payload && Array.isArray(payload.data)) {
+    return payload.data;
+  }
+
+  if (payload && Array.isArray(payload.items)) {
+    return payload.items;
+  }
+
+  return [];
+}
+
+function getProductImageUrl(product) {
+  if (!product) return 'assets/img/products/product-1-1.jpg';
+
+  const candidates = [
+    product.primaryImageUrl,
+    product.featuredImage,
+    product.featuredImageUrl,
+    product.imageUrl,
+    product.image,
+    product.thumbnail
+  ];
+
+  if (Array.isArray(product.images)) {
+    product.images.forEach((image) => {
+      if (typeof image === 'string') {
+        candidates.push(image);
+        return;
+      }
+
+      candidates.push(image?.imageUrl, image?.url, image?.src);
+    });
+  }
+
+  if (Array.isArray(product.colorVariants)) {
+    product.colorVariants.forEach((variant) => {
+      if (typeof variant === 'string') {
+        candidates.push(variant);
+        return;
+      }
+
+      candidates.push(
+        variant?.imageUrl,
+        variant?.primaryImageUrl,
+        variant?.featuredImage,
+        variant?.featuredImageUrl
+      );
+    });
+  }
+
+  for (const candidate of candidates) {
+    const normalized = normalizeImageUrl(candidate);
+    if (normalized) {
+      return normalized;
+    }
+  }
+
+  return 'assets/img/products/product-1-1.jpg';
+}
+
 // Get current language from YassoI18n or localStorage
 function getCurrentLanguage() {
   if (window.YassoI18n && typeof window.YassoI18n.currentLang === 'function') {
@@ -116,12 +185,12 @@ async function loadHomeContent() {
     
     // Fetch all sections concurrently
     const [heroContent, featuredContent, aboutContent, featuresContent, storyContent, blogContent] = await Promise.all([
-      fetchSectionContent('Hero'),
-      fetchSectionContent('Featured'),
-      fetchSectionContent('About'),
-      fetchSectionContent('Features'),
-      fetchSectionContent('Story'),
-      fetchSectionContent('Blog')
+      fetchSectionContentWithFallbacks(['Hero', 'hero']),
+      fetchSectionContentWithFallbacks(['Featured', 'featured']),
+      fetchSectionContentWithFallbacks(['About', 'about']),
+      fetchSectionContentWithFallbacks(['Features', 'features']),
+      fetchSectionContentWithFallbacks(['Story', 'story']),
+      fetchSectionContentWithFallbacks(['Blog', 'blog'])
     ]);
     
     console.log('✅ Content loaded:', {
@@ -141,12 +210,11 @@ async function loadHomeContent() {
       console.warn('⚠️ No hero content to render');
     }
     
-    if (featuredContent && featuredContent.length > 0) {
-      console.log('🎨 Rendering featured section...');
-      renderFeaturedSection(featuredContent);
-    } else {
-      console.warn('⚠️ No featured content to render');
+    console.log('🎨 Rendering featured section...');
+    if (!featuredContent || featuredContent.length === 0) {
+      console.warn('⚠️ No featured CMS content found; loading featured products with default section headings');
     }
+    renderFeaturedSection(featuredContent || []);
     
     if (aboutContent && aboutContent.length > 0) {
       console.log('🎨 Rendering about section...');
@@ -223,6 +291,23 @@ async function fetchSectionContent(sectionName) {
     console.error(`❌ Error fetching section ${sectionName}:`, error);
     return [];
   }
+}
+
+async function fetchSectionContentWithFallbacks(sectionNames) {
+  const tried = [];
+
+  for (const sectionName of sectionNames) {
+    tried.push(sectionName);
+    const content = await fetchSectionContent(sectionName);
+    if (content && content.length > 0) {
+      if (tried.length > 1) {
+        console.log(`✅ Loaded content from fallback section name: ${sectionName}`);
+      }
+      return content;
+    }
+  }
+
+  return [];
 }
 
 /**
@@ -397,12 +482,11 @@ function renderAboutSection(aboutContent) {
  */
 async function renderFeaturedSection(featuredContent) {
   if (!featuredContent || featuredContent.length === 0) {
-    console.log('No featured content to render');
-    return;
+    console.log('ℹ️ No featured content to render from CMS; using static section header and loading featured products');
+  } else {
+    console.log('🎨 Rendering featured section with', featuredContent.length, 'items');
+    console.log('📦 Featured content:', featuredContent);
   }
-  
-  console.log('🎨 Rendering featured section with', featuredContent.length, 'items');
-  console.log('📦 Featured content:', featuredContent);
   
   // Find featured section elements
   const featuredSubtitle = document.querySelector('[data-content="featured-subtitle"]') || 
@@ -421,7 +505,9 @@ async function renderFeaturedSection(featuredContent) {
     contentByOrder[item.displayOrder] = item;
   });
   
-  console.log('📋 Featured content mapped by order:', contentByOrder);
+  if (featuredContent && featuredContent.length > 0) {
+    console.log('📋 Featured content mapped by order:', contentByOrder);
+  }
   
   // Order 1: Subtitle
   if (contentByOrder[1] && featuredSubtitle) {
@@ -459,6 +545,8 @@ async function loadFeaturedProducts() {
       }
       products = await response.json();
     }
+
+    products = normalizeProductsResponse(products);
 
     console.log('✅ Fetched', products.length, 'featured products:', products);
     
@@ -503,14 +591,7 @@ function createFeaturedProductCard(product, index, total) {
 
   // Get product name (with language support)
   const productName = currentLanguage === 'ar' && product.nameAr ? product.nameAr : product.name;
-
-  // Get product image
-  let productImage = 'assets/img/products/product-1-1.jpg';
-  if (product.images && product.images.length > 0) {
-    productImage = normalizeImageUrl(product.images[0].imageUrl);
-  } else if (product.colorVariants && product.colorVariants.length > 0 && product.colorVariants[0].imageUrl) {
-    productImage = normalizeImageUrl(product.colorVariants[0].imageUrl);
-  }
+  const productImage = getProductImageUrl(product);
 
   // Show NEW badge if product is marked as new arrival
   const isNew = product.isNew || product.newArrival || false;
@@ -528,7 +609,7 @@ function createFeaturedProductCard(product, index, total) {
       </div>
       <div class="fp-card__body">
         <h3 class="fp-card__name"><a href="${detailUrl}">${productName}</a></h3>
-        <p class="fp-card__price">EGP ${product.price.toFixed(2)}</p>
+        <p class="fp-card__price">EGP ${(Number(product.price) || 0).toFixed(2)}</p>
       </div>
     </div>
   `;
