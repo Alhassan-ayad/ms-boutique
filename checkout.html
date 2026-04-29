@@ -500,6 +500,26 @@
         </form>
         <div class="mt-lg-3 mb-30">
           <div class="woocommerce-checkout-payment">
+            <div class="checkout-payment-methods payment_box" style="display:block; margin-bottom: 18px;">
+              <h4 style="margin-bottom: 12px;">Payment Method</h4>
+              <ul class="wc_payment_methods" style="list-style:none; padding-left:0; margin:0;">
+                <li style="margin-bottom: 10px;">
+                  <input type="radio" id="payment-method-cash" name="payment-method" value="CASH_ON_DELIVERY" checked>
+                  <label for="payment-method-cash" style="margin-left: 8px; font-weight: 600;">Cash on delivery</label>
+                  <div class="payment_box" style="display:block; margin-top: 8px;">
+                    Pay when your order is delivered.
+                  </div>
+                </li>
+                <li>
+                  <input type="radio" id="payment-method-paymob" name="payment-method" value="PAYMOB">
+                  <label for="payment-method-paymob" style="margin-left: 8px; font-weight: 600;">Pay with Paymob</label>
+                  <div class="payment_box" style="display:none; margin-top: 8px;">
+                    Secure card payment via Paymob.
+                    <div id="paymob-payment-mount" style="margin-top: 14px;"></div>
+                  </div>
+                </li>
+              </ul>
+            </div>
             <div class="form-row place-order"><button type="button" id="placeOrderBtn" class="vs-btn">Place order</button></div>
           </div>
         </div>
@@ -618,6 +638,7 @@
   <!-- Global Cart Counter -->
   <script src="assets/js/global-cart-counter.js"></script>
   <!-- Checkout Handler -->
+  <script src="assets/js/paymob-payment.js"></script>
   <script src="assets/js/checkout.js"></script>
   <script src="assets/js/audio-player.js"></script>
 </body>

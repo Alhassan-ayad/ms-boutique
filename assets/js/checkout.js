@@ -232,11 +232,13 @@ async function handlePlaceOrder(e) {
   
   // Prepare order items
   const orderItems = prepareOrderItems();
+  const paymentMethod = getSelectedPaymentMethod();
   
   // Create order object
   const orderData = {
     ...customerData,
-    orderItems: orderItems
+    orderItems: orderItems,
+    paymentMethod
   };
   
   console.log('Submitting order:', orderData);
@@ -244,6 +246,26 @@ async function handlePlaceOrder(e) {
   
   try {
     showLoading();
+
+    if (paymentMethod === 'PAYMOB') {
+      if (!window.PaymobPayment || typeof window.PaymobPayment.startPayment !== 'function') {
+        throw new Error('Paymob payment is not available right now.');
+      }
+
+      await window.PaymobPayment.startPayment({
+        orderData,
+        onSuccess: (order) => {
+          completeOrder(order);
+        },
+        onError: (message) => {
+          hideLoading();
+          showNotification(message || 'Paymob payment failed. Please try again.', 'error');
+        }
+      });
+
+      hideLoading();
+      return;
+    }
 
     if (apiRequest) {
       const order = await apiRequest(`${API_BASE_URL}/orders`, {
@@ -253,11 +275,7 @@ async function handlePlaceOrder(e) {
 
       console.log('Order placed successfully:', order);
 
-      localStorage.removeItem(CART_STORAGE_KEY);
-      window.dispatchEvent(new Event('cartUpdated'));
-
-      hideLoading();
-      showOrderSuccess(order);
+      completeOrder(order);
       return;
     }
 
@@ -296,22 +314,26 @@ async function handlePlaceOrder(e) {
 
     const order = await response.json();
     console.log('Order placed successfully:', order);
-    
-    // Clear cart
-    localStorage.removeItem(CART_STORAGE_KEY);
-    
-    // Update cart count
-    window.dispatchEvent(new Event('cartUpdated'));
-    
-    // Show success message
-    hideLoading();
-    showOrderSuccess(order);
+
+    completeOrder(order);
     
   } catch (error) {
     console.error('Error placing order:', error);
     hideLoading();
     showNotification(error.message || 'Failed to place order. Please try again.', 'error');
   }
+}
+
+function getSelectedPaymentMethod() {
+  const selected = document.querySelector('input[name="payment-method"]:checked');
+  return selected ? selected.value : 'CASH_ON_DELIVERY';
+}
+
+function completeOrder(order) {
+  localStorage.removeItem(CART_STORAGE_KEY);
+  window.dispatchEvent(new Event('cartUpdated'));
+  hideLoading();
+  showOrderSuccess(order);
 }
 
 // ===========================
