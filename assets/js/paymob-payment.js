@@ -7,6 +7,11 @@
   const API_BASE_URL = window.YASSO_CONFIG?.API_BASE_URL || '/api';
   const apiRequest = window.YASSO_CONFIG?.apiRequest?.bind(window.YASSO_CONFIG);
   const POLL_INTERVAL_MS = 2000;
+  const SANDBOX_MODE = (() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const sandboxValue = (searchParams.get('sandbox') || '').toLowerCase();
+    return ['1', 'true', 'yes', 'sandbox'].includes(sandboxValue);
+  })();
 
   async function startPayment({ orderData, onSuccess, onError }) {
     try {
@@ -52,8 +57,12 @@
       return;
     }
 
+    const message = SANDBOX_MODE
+      ? 'Paymob sandbox payment session created. Complete the payment below using your sandbox test card.'
+      : 'Paymob payment session created. Complete the payment below.';
+
     mountPoint.innerHTML = `
-      <div style="margin-bottom: 12px; font-weight: 600;">Paymob payment session created. Complete the payment below.</div>
+      <div style="margin-bottom: 12px; font-weight: 600;">${message}</div>
       <iframe
         src="${session.iframeUrl}"
         title="Paymob payment iframe"

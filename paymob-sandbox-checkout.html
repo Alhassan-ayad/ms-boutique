@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paymob Sandbox Checkout - MS Boutiqie</title>
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/fontawesome.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    :root {
+      --sand: #f4efe4;
+      --ink: #1f2937;
+      --accent: #d3a334;
+      --accent-dark: #b88a25;
+      --card: rgba(255, 255, 255, 0.78);
+    }
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(211,163,52,0.18), transparent 30%),
+        linear-gradient(180deg, #f8f5ef 0%, #efe8db 55%, #f7f3ea 100%);
+      color: var(--ink);
+    }
+    .sandbox-shell {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 60px 0;
+    }
+    .sandbox-panel {
+      background: var(--card);
+      border: 1px solid rgba(31,41,55,0.08);
+      border-radius: 28px;
+      box-shadow: 0 24px 60px rgba(31,41,55,0.12);
+      backdrop-filter: blur(16px);
+      overflow: hidden;
+    }
+    .sandbox-hero {
+      padding: 42px 42px 30px;
+      background: linear-gradient(135deg, #1f2937 0%, #111827 65%, #d3a334 155%);
+      color: #fff;
+    }
+    .sandbox-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .08em;
+    }
+    .sandbox-content {
+      padding: 34px 42px 42px;
+    }
+    .step-card {
+      background: rgba(255,255,255,0.82);
+      border: 1px solid rgba(31,41,55,0.08);
+      border-radius: 18px;
+      padding: 22px;
+      height: 100%;
+    }
+    .step-card h4 {
+      margin-bottom: 14px;
+    }
+    .step-list {
+      margin: 0;
+      padding-left: 18px;
+      display: grid;
+      gap: 10px;
+      color: #374151;
+    }
+    .action-buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 26px;
+    }
+    .muted-note {
+      color: #6b7280;
+      font-size: 14px;
+    }
+    @media (max-width: 767px) {
+      .sandbox-hero, .sandbox-content {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="sandbox-shell">
+    <div class="container">
+      <div class="sandbox-panel">
+        <section class="sandbox-hero">
+          <span class="sandbox-pill">Paymob Sandbox</span>
+          <h1 style="margin-top: 16px; margin-bottom: 12px; color: #fff;">Testing steps and checkout entry point</h1>
+          <p style="max-width: 860px; margin-bottom: 0; color: rgba(255,255,255,0.88);">
+            Use this page to verify both order paths before launch. The sandbox checkout uses test Paymob credentials, while cash on delivery stays on the direct order flow.
+          </p>
+        </section>
+
+        <section class="sandbox-content">
+          <div class="row g-4">
+            <div class="col-lg-7">
+              <div class="step-card">
+                <h4>Sandbox checkout flow</h4>
+                <ol class="step-list">
+                  <li>Set your backend environment variables to Paymob sandbox values.</li>
+                  <li>Add one or more products to the cart.</li>
+                  <li>Open checkout with sandbox mode enabled.</li>
+                  <li>Select <strong>Pay with Paymob Sandbox</strong> and place the order.</li>
+                  <li>Complete the iframe with the test card details from your Paymob sandbox account.</li>
+                  <li>Confirm the payment callback marks the session paid and the order appears in the backend.</li>
+                </ol>
+              </div>
+            </div>
+            <div class="col-lg-5">
+              <div class="step-card h-100">
+                <h4>Cash on delivery check</h4>
+                <ol class="step-list">
+                  <li>Open the regular checkout page.</li>
+                  <li>Select <strong>Cash on delivery</strong>.</li>
+                  <li>Place the order without opening Paymob.</li>
+                  <li>Verify the order is created immediately and the cart clears after success.</li>
+                </ol>
+                <div class="action-buttons">
+                  <a href="checkout.html?sandbox=1" class="vs-btn">Open Sandbox Checkout</a>
+                  <a href="checkout.html" class="vs-btn style2">Open Regular Checkout</a>
+                </div>
+                <p class="muted-note" style="margin-top: 16px; margin-bottom: 0;">
+                  Keep sandbox and live credentials separate. The sandbox path is intended for local verification and UAT only.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

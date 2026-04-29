@@ -15,6 +15,19 @@ const API_BASE_URL = window.YASSO_CONFIG?.API_BASE_URL || '/api';
 const apiRequest = window.YASSO_CONFIG?.apiRequest?.bind(window.YASSO_CONFIG);
 const CART_STORAGE_KEY = 'yasso_cart';
 const CURRENCY = window.YASSO_CONFIG?.CURRENCY?.SYMBOL || 'EGP';
+const SANDBOX_MODE = (() => {
+  const searchParams = new URLSearchParams(window.location.search);
+  const sandboxValue = (searchParams.get('sandbox') || '').toLowerCase();
+  return ['1', 'true', 'yes', 'sandbox'].includes(sandboxValue);
+})();
+
+const SANDBOX_STEPS = [
+  'Set PAYMOB_API_KEY, PAYMOB_SECRET, PAYMOB_INTEGRATION_ID, and PAYMOB_IFRAME_ID to sandbox values.',
+  'Add products to the cart and open checkout with the sandbox guide or ?sandbox=1.',
+  'Choose Paymob Sandbox and place the order to create a payment session.',
+  'Complete the iframe using the test card details from your Paymob sandbox account.',
+  'Confirm the order appears in the backend and the cart is cleared after success.',
+];
 
 // ===========================
 // State Management
@@ -28,9 +41,47 @@ let orderTotal = 0;
 // ===========================
 document.addEventListener('DOMContentLoaded', () => {
   console.log('Checkout page initialized');
+  if (SANDBOX_MODE) {
+    renderSandboxNotice();
+  }
   loadCheckoutPage();
   setupEventListeners();
 });
+
+function renderSandboxNotice() {
+  const checkoutWrapper = document.querySelector('.vs-checkout-wrapper .container');
+  if (!checkoutWrapper) {
+    return;
+  }
+
+  const notice = document.createElement('section');
+  notice.className = 'sandbox-checkout-notice';
+  notice.innerHTML = `
+    <div style="margin-bottom: 32px; padding: 28px; border-radius: 18px; background: linear-gradient(135deg, #1f2937 0%, #111827 55%, #D3A334 160%); color: #fff; box-shadow: 0 18px 40px rgba(17,24,39,0.28);">
+      <div class="row gy-4 align-items-center">
+        <div class="col-lg-8">
+          <span style="display:inline-flex; align-items:center; gap:8px; padding:6px 12px; border-radius:999px; background: rgba(255,255,255,0.14); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; font-weight: 700;">Sandbox Checkout</span>
+          <h2 style="margin-top: 14px; margin-bottom: 12px; color: #fff;">Paymob testing steps</h2>
+          <p style="margin-bottom: 18px; color: rgba(255,255,255,0.88); max-width: 760px;">
+            Use this mode to verify the Paymob branch before going live. Cash on delivery stays on the direct order path, while Paymob opens the sandbox iframe and confirms payment through the callback flow.
+          </p>
+          <ol style="margin: 0; padding-left: 18px; color: rgba(255,255,255,0.96); display: grid; gap: 8px;">
+            ${SANDBOX_STEPS.map(step => `<li>${step}</li>`).join('')}
+          </ol>
+        </div>
+        <div class="col-lg-4">
+          <div style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 22px; backdrop-filter: blur(8px);">
+            <h4 style="color: #fff; margin-bottom: 14px;">Quick Links</h4>
+            <a href="paymob-sandbox-checkout.html" class="vs-btn" style="display:block; text-align:center; margin-bottom: 12px;">Open Sandbox Guide</a>
+            <a href="checkout.html" class="vs-btn style2" style="display:block; text-align:center;">Exit Sandbox Mode</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  checkoutWrapper.prepend(notice);
+}
 
 // ===========================
 // Load Checkout Page
@@ -210,6 +261,13 @@ function setupEventListeners() {
   const placeOrderBtn = document.getElementById('placeOrderBtn');
   if (placeOrderBtn) {
     placeOrderBtn.addEventListener('click', handlePlaceOrder);
+  }
+
+  if (SANDBOX_MODE) {
+    const paymobLabel = document.querySelector('label[for="payment-method-paymob"]');
+    if (paymobLabel) {
+      paymobLabel.textContent = 'Pay with Paymob Sandbox';
+    }
   }
   
   // Update header cart count
