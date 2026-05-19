@@ -9,7 +9,7 @@
 // Configuration
 // ===========================
 const REVIEWS_API_BASE_URL = window.YASSO_CONFIG?.API_BASE_URL || '/api';
-const apiRequest = window.YASSO_CONFIG?.apiRequest?.bind(window.YASSO_CONFIG);
+const reviewApiRequest = window.YASSO_CONFIG?.apiRequest?.bind(window.YASSO_CONFIG);
 let currentProductId = null;
 let selectedRating = 0;
 
@@ -159,67 +159,37 @@ function setupReviewSubmit() {
       // Submit review
       await submitReview(reviewData);
     });
+  }
+}
 
-    document.addEventListener('click', async (e) => {
-      const clickedButton = e.target.closest?.('.review-form .vs-btn');
-      if (!clickedButton || clickedButton === submitBtn) {
-            const response = await apiRequest(`${REVIEWS_API_BASE_URL}/product-reviews`, {
-      }
-              data: reviewData,
-              parseAs: 'raw'
-      e.preventDefault();
-      clickedButton.click();
-            console.log('Review submission response status:', response.status);
-
-            hideLoading();
-
-            if (response.ok) {
-              let result = null;
-              try {
-                const contentType = response.headers.get('content-type') || '';
-                result = contentType.includes('application/json') ? await response.json() : await response.text();
-              } catch (parseError) {
-                console.warn('Review submitted but response body could not be parsed:', parseError);
-              }
-
-              console.log('Review submitted successfully:', result);
-
-              // Show message based on whether it's rating-only or full review
-              const message = reviewData.reviewText 
-                ? 'Thank you for your review! It will be visible after admin approval.'
-                : 'Thank you for your rating! It will be visible after admin approval.';
-
-              showNotification(message, 'success');
-
-              // Clear form
-              clearReviewForm();
-
-              // Note: Don't reload reviews immediately as the new review won't be visible until approved
-              return;
-            }
+/**
+ * Validate review form inputs
+ */
+function validateReviewForm(reviewTextarea, nameInput, emailInput) {
+  if (!nameInput || !emailInput) {
+    showNotification('Review form is not ready yet.', 'warning');
+    return false;
+  }
 
   if (!nameInput.value.trim()) {
     showNotification('Please enter your name', 'warning');
-              const contentType = response.headers.get('content-type') || '';
-              const errorData = contentType.includes('application/json') ? await response.json() : await response.text();
+    nameInput.focus();
     return false;
-              errorMessage = typeof errorData === 'string'
-                ? errorData || errorMessage
-                : errorData.message || errorData.error || errorMessage;
-  
-              console.error('Review submission error parsing failed:', e);
-    return false;
-
   }
-  
-  // Validate email format
+
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(emailInput.value.trim())) {
     showNotification('Please enter a valid email address', 'warning');
     emailInput.focus();
     return false;
   }
-  
+
+  if (reviewTextarea && reviewTextarea.value.length > 2000) {
+    showNotification('Review text is too long.', 'warning');
+    reviewTextarea.focus();
+    return false;
+  }
+
   return true;
 }
 
@@ -231,8 +201,8 @@ async function submitReview(reviewData) {
     console.log('Submitting review:', reviewData);
     showLoading('Submitting your review...');
 
-    if (apiRequest) {
-      const result = await apiRequest(`${REVIEWS_API_BASE_URL}/product-reviews`, {
+    if (reviewApiRequest) {
+      const result = await reviewApiRequest(`${REVIEWS_API_BASE_URL}/product-reviews`, {
         method: 'POST',
         data: reviewData
       });
@@ -329,8 +299,8 @@ async function loadProductReviews(productId) {
       return;
     }
 
-    if (apiRequest) {
-      const reviews = await apiRequest(`${REVIEWS_API_BASE_URL}/product-reviews/product/${resolvedProductId}/visible`);
+    if (reviewApiRequest) {
+      const reviews = await reviewApiRequest(`${REVIEWS_API_BASE_URL}/product-reviews/product/${resolvedProductId}/visible`);
       if (Array.isArray(reviews)) {
         displayReviews(reviews);
         updateReviewCount(reviews.length);

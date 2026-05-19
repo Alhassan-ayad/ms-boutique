@@ -36,6 +36,31 @@ let cartItems = [];
 let productsCache = {};
 let orderTotal = 0;
 
+function getStoredProductsCache() {
+  try {
+    const cached = localStorage.getItem('yasso_products_cache');
+    if (!cached) {
+      return [];
+    }
+
+    const parsed = JSON.parse(cached);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (error) {
+    console.warn('Unable to read stored products cache:', error);
+    return [];
+  }
+}
+
+function cacheProduct(product) {
+  if (product && product.id != null) {
+    productsCache[product.id] = product;
+  }
+}
+
+function getCachedProduct(productId) {
+  return productsCache[productId] || getStoredProductsCache().find(product => String(product.id) === String(productId)) || null;
+}
+
 // ===========================
 // Initialize Checkout Page
 // ===========================
@@ -100,6 +125,9 @@ async function loadCheckoutPage() {
       displayEmptyCart();
       return;
     }
+
+    // Prime the cache from the last loaded product list before fetching by ID.
+    getStoredProductsCache().forEach(cacheProduct);
     
     // Fetch product details for all cart items
     await fetchProductDetails();
@@ -128,20 +156,36 @@ async function fetchProductDetails() {
     try {
       if (apiRequest) {
         const product = await apiRequest(`${API_BASE_URL}/products/${productId}`);
-        productsCache[productId] = product;
+        if (product) {
+          cacheProduct(product);
+          continue;
+        }
+
+        const fallbackProduct = getCachedProduct(productId);
+        if (fallbackProduct) {
+          cacheProduct(fallbackProduct);
+        }
         continue;
       }
 
       const response = await fetch(`${API_BASE_URL}/products/${productId}`);
       if (!response.ok) {
-        console.error(`Failed to fetch product ${productId}`);
+        console.warn(`Failed to fetch product ${productId}`);
+        const fallbackProduct = getCachedProduct(productId);
+        if (fallbackProduct) {
+          cacheProduct(fallbackProduct);
+        }
         continue;
       }
 
       const product = await response.json();
-      productsCache[productId] = product;
+      cacheProduct(product);
     } catch (error) {
       console.error(`Error fetching product ${productId}:`, error);
+      const fallbackProduct = getCachedProduct(productId);
+      if (fallbackProduct) {
+        cacheProduct(fallbackProduct);
+      }
     }
   }
 }
@@ -467,22 +511,24 @@ function collectCustomerData() {
 // ===========================
 function prepareOrderItems() {
   return cartItems.map(item => {
-    const product = productsCache[item.productId];
+    const product = getCachedProduct(item.productId);
     
     if (!product) {
       console.error(`Product ${item.productId} not found in cache`);
-      throw new Error(`Product information is missing. Please try again.`);
+      throw new Error(`Product information for item ${item.productId} is missing. Please refresh the page and try again.`);
     }
     
-    if (!product.price) {
+    const price = product.price ?? item.price;
+
+    if (price == null || Number(price) <= 0) {
       console.error(`Product ${item.productId} has no price`, product);
-      throw new Error(`Product price is missing. Please try again.`);
+      throw new Error(`Product price for item ${item.productId} is missing. Please refresh the page and try again.`);
     }
     
     const orderItem = {
       productId: item.productId,
       quantity: item.quantity,
-      price: product.price
+      price
     };
     
     // Add selected color if available
