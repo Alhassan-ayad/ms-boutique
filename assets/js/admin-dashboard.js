@@ -2785,7 +2785,7 @@ function displayReviews(reviews) {
             <td>${formatDate(review.createdDate)}</td>
             <td>${escapeHtml(review.productName || 'Product #' + review.productId)}</td>
             <td>${escapeHtml(review.customerName)}</td>
-            <td style="color: #C9A24D; font-size: 16px;">${'?'.repeat(review.rating)}${'?'.repeat(5 - review.rating)}</td>
+            <td style="color: #C9A24D; font-size: 16px;">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</td>
             <td class="review-comment">${displayText}</td>
             <td><span class="badge badge-${review.isApproved ? 'success' : 'warning'}">${review.isApproved ? 'Approved' : 'Pending'}</span></td>
             <td><span class="badge badge-${review.isVisible ? 'active' : 'inactive'}">${review.isVisible ? 'Visible' : 'Hidden'}</span></td>

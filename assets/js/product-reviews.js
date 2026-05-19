@@ -366,7 +366,20 @@ function displayReviews(reviews) {
  * Create review HTML
  */
 function createReviewHtml(review) {
-  const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
+  // Ensure rating is a number and validate it
+  const rating = parseInt(review.rating, 10) || 0;
+  const validRating = Math.min(Math.max(rating, 0), 5); // Clamp between 0-5
+  const percentage = (validRating / 5) * 100;
+  
+  // Debug logging
+  console.log('Review data:', {
+    originalRating: review.rating,
+    parsedRating: rating,
+    validRating: validRating,
+    percentage: percentage,
+    customerName: review.customerName
+  });
+  
   const date = new Date(review.createdDate).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
@@ -383,8 +396,8 @@ function createReviewHtml(review) {
       <div class="vs-post-comment">
         <div class="comment-content">
           <div class="comment-content__header">
-            <div class="star-rating" role="img" aria-label="Rated ${review.rating} out of 5" style="color: #D3A334; font-size: 16px;">
-              ${stars}
+            <div class="star-rating" role="img" aria-label="Rated ${validRating} out of 5">
+              <span style="width: ${percentage}% !important;"></span>
             </div>
             <h4 class="name">${escapeHtml(review.customerName)}</h4>
             <span class="commented-on">${date}</span>

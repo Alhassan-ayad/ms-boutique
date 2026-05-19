@@ -313,7 +313,11 @@ function updateProductImages(product) {
       
       const imgDiv = document.createElement('div');
       imgDiv.className = 'img';
-      imgDiv.innerHTML = `<img src="${validSrc}" alt="${product.name} - Image ${index + 1}" onerror="this.src='${PLACEHOLDER_IMAGE}'">`;
+      const img = document.createElement('img');
+      img.src = validSrc;
+      img.alt = `${product.name} - Image ${index + 1}`;
+      img.onerror = function() { this.src = PLACEHOLDER_IMAGE; };
+      imgDiv.appendChild(img);
       mainImagesContainer.appendChild(imgDiv);
     });
   }
@@ -327,7 +331,14 @@ function updateProductImages(product) {
       const validSrc = (imgSrc && imgSrc !== 'undefined' && imgSrc !== 'null') ? imgSrc : PLACEHOLDER_IMAGE;
       
       const thumbDiv = document.createElement('div');
-      thumbDiv.innerHTML = `<div class="thumb"><img src="${validSrc}" alt="${product.name} - Thumb ${index + 1}" onerror="this.src='${PLACEHOLDER_IMAGE}'"></div>`;
+      const thumbInnerDiv = document.createElement('div');
+      thumbInnerDiv.className = 'thumb';
+      const thumbImg = document.createElement('img');
+      thumbImg.src = validSrc;
+      thumbImg.alt = `${product.name} - Thumb ${index + 1}`;
+      thumbImg.onerror = function() { this.src = PLACEHOLDER_IMAGE; };
+      thumbInnerDiv.appendChild(thumbImg);
+      thumbDiv.appendChild(thumbInnerDiv);
       thumbContainer.appendChild(thumbDiv);
     });
   }

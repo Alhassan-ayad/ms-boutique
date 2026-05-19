@@ -713,6 +713,46 @@
   <!-- Product Reviews Handler -->
   <script src="assets/js/product-reviews.js?v=1.4"></script>
   <script src="assets/js/audio-player.js?v=1.2"></script>
+  
+  <!-- Star Rating Fix for Dynamic Reviews -->
+  <style>
+    .comment-list .star-rating {
+      position: relative;
+      overflow: hidden;
+      width: 92px;
+      height: 1.2em;
+      display: block;
+    }
+    
+    .comment-list .star-rating:before {
+      content: "\f005\f005\f005\f005\f005";
+      position: absolute;
+      left: 0;
+      top: 0;
+      display: block;
+      overflow: hidden;
+    }
+    
+    .comment-list .star-rating span {
+      display: block !important;
+      position: absolute !important;
+      overflow: hidden !important;
+      top: 0 !important;
+      left: 0 !important;
+      padding: 0 !important;
+      height: 100% !important;
+      background: inherit;
+    }
+    
+    .comment-list .star-rating span:before {
+      content: "\f005\f005\f005\f005\f005";
+      position: absolute;
+      left: 0;
+      top: 0;
+      display: block;
+      overflow: hidden;
+    }
+  </style>
 </body>
 
 </html>
